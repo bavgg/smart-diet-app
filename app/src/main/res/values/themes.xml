@@ -1,0 +1,22 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.DietApp" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Customize your light theme here. -->
+        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="bottomSheetStyle">@style/Widget.Material3.BottomSheet</item>
+    </style>
+
+    <style name="Theme.DietApp" parent="Base.Theme.DietApp" />
+<!--    <style name="ModalBottomSheet" parent="Widget.Material3.BottomSheet.DragHandle">-->
+<!--        &lt;!&ndash; Apply attributes here &ndash;&gt;-->
+<!--    </style>-->
+
+<!--    <style name="ModalBottomSheetDialog" parent="ThemeOverlay.Material3.BottomSheetDialog">-->
+<!--        <item name="bottomSheetStyle">@style/ModalBottomSheet</item>-->
+<!--    </style>-->
+
+<!--    <style name="AppTheme" parent="Theme.Material3.Light">-->
+<!--        <item name="bottomSheetDialogTheme">@style/ModalBottomSheetDialog</item>-->
+<!--    </style>-->
+
+</resources>
