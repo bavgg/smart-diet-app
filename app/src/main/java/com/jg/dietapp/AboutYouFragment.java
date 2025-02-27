@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.activity.OnBackPressedCallback;
@@ -13,9 +14,12 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.material.card.MaterialCardView;
 
+import java.util.Objects;
+
 public class AboutYouFragment extends Fragment {
     MaterialCardView sexSelector, ageSelector, heightSelector, weightSelector;
     TextView sexSelectorValue, ageSelectorValue, heightSelectorValue, weightSelectorValue;
+    Button continueButton;
 
     @Nullable
     @Override
@@ -58,12 +62,16 @@ public class AboutYouFragment extends Fragment {
         ageSelectorValue = view.findViewById(R.id.ageSelectorValue);
         heightSelector = view.findViewById(R.id.heightSelector);
         heightSelectorValue = view.findViewById(R.id.heightSelectorValue);
+        weightSelector = view.findViewById(R.id.weightSelector);
+        weightSelectorValue = view.findViewById(R.id.weightSelectorValue);
+        continueButton = view.findViewById(R.id.continueButton);
 
         // Show SexDialog when clicked
         sexSelector.setOnClickListener(v -> {
             SexDialog sexDialog = new SexDialog();
             sexDialog.setSexSelectionListener(sex -> {
                 sexSelectorValue.setText(sex);
+                continueButton.setEnabled(isFilled());
             });
             sexDialog.show(getParentFragmentManager(), "SexDialog");
         });
@@ -75,6 +83,7 @@ public class AboutYouFragment extends Fragment {
             HeightDialog heightDialog = new HeightDialog();
             heightDialog.setHeightSelectionListener(height -> {
                 heightSelectorValue.setText(height);
+                continueButton.setEnabled(isFilled());
             });
             heightDialog.show(getParentFragmentManager(), "HeightDialog");
         });
@@ -83,31 +92,42 @@ public class AboutYouFragment extends Fragment {
             AgeDialog ageDialog = new AgeDialog();
             ageDialog.setSexSelectionListener(age -> {
                 ageSelectorValue.setText(age);
+                continueButton.setEnabled(isFilled());
             });
             ageDialog.show(getParentFragmentManager(), "AgeDialog");
         });
+
+        weightSelector.setOnClickListener(v -> {
+            WeightDialog weightDialog = new WeightDialog();
+            weightDialog.setHeightSelectionListener(weight -> {
+                weightSelectorValue.setText(weight);
+                continueButton.setEnabled(isFilled());
+            });
+            weightDialog.show(getParentFragmentManager(), "WeightDialog");
+
+        });
+
+        continueButton.setOnClickListener(v -> {
+
+            Utils.LOGGER.info("Hello");
+            requireActivity().getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, new AboutYouFragment())
+                    .addToBackStack(null) // Optional: Allows back navigation
+                    .commit();
+        });
     }
-//
-//    private void validateAndContinue() {
-//        String name = nameInput.getText().toString().trim();
-//        String age = ageInput.getText().toString().trim();
-//
-//        if (TextUtils.isEmpty(name)) {
-//            nameInput.setError("Name is required");
-//            return;
-//        }
-//
-//        if (TextUtils.isEmpty(age)) {
-//            ageInput.setError("Age is required");
-//            return;
-//        }
-//
-//        // Store input data
-//        formData.put("name", name);
-//        formData.put("age", age);
-//
-//        // Proceed to next step (e.g., dismiss and open next fragment)
-//        Toast.makeText(getContext(), "Form Submitted!", Toast.LENGTH_SHORT).show();
-//        dismiss(); // Close the bottom sheet
-//    }
+
+    private boolean isFilled() {
+        String sex = sexSelectorValue.getText().toString();
+        String age = ageSelectorValue.getText().toString();
+        String height = heightSelectorValue.getText().toString();
+        String weight = weightSelectorValue.getText().toString();
+
+        return !Objects.equals(sex, "Select") &&
+                !Objects.equals(age, "Select") &&
+                !Objects.equals(height, "Select") &&
+                !Objects.equals(weight, "Select");
+
+    }
+
 }

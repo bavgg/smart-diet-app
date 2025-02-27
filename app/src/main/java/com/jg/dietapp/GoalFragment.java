@@ -4,12 +4,10 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.card.MaterialCardView;
@@ -51,19 +49,6 @@ public class GoalFragment extends Fragment {
                         .commit();
             }
         });
-
-        // Close Bottom Sheet on Button Click
-//        Button startNow = view.findViewById(R.id.startNow);
-
-//        startNow.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                requireActivity().getSupportFragmentManager().beginTransaction()
-//                        .replace(R.id.fragment_container, new GoalFragment())
-//                        .addToBackStack(null) // Optional: Allows back navigation
-//                        .commit();
-//            }
-//        });
 
     }
 }

@@ -16,7 +16,15 @@ public class SharedViewModel extends ViewModel {
         return cmValue;
     }
 
+    private double lbs = 154;
 
 
+    public void setLbs(int lbs, int lbsDecimal) {
+        this.lbs = lbs + (lbsDecimal / 10.0f);
+    }
+
+    public double getLbs() {
+        return lbs;
+    }
 
 }

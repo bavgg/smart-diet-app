@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+    <NumberPicker
+        android:layout_marginEnd="24dp"
+        android:id="@+id/lbsPicker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:gravity="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:textStyle="bold"
+        android:id="@+id/ftLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="76dp"
+        android:text="."
+        android:textSize="18sp"
+        app:layout_constraintStart_toEndOf="@id/cmPicker"
+        app:layout_constraintTop_toTopOf="@id/cmPicker" />
+    <NumberPicker
+        android:id="@+id/lbsPickerDecimal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:gravity="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/inLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="76dp"
+        android:text="lbs"
+        android:textSize="18sp"
+        app:layout_constraintStart_toEndOf="@id/cmPicker"
+        app:layout_constraintTop_toTopOf="@id/cmPicker" />
+
+</LinearLayout>
