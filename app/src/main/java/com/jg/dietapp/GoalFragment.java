@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import com.google.android.material.card.MaterialCardView;
 
 public class GoalFragment extends Fragment {
+    CustomCard card1;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -24,11 +25,9 @@ public class GoalFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         // Close Bottom Sheet on Button Click
-        MaterialCardView card1 = view.findViewById(R.id.card1);
+        card1 = view.findViewById(R.id.card1);
 
-        if (getActivity() instanceof MainActivity) {
-            ((MainActivity) getActivity()).updateProgress(25);
-        }
+
 
         requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), new OnBackPressedCallback(true) {
             @Override
@@ -39,9 +38,15 @@ public class GoalFragment extends Fragment {
                 getParentFragmentManager().popBackStack();
             }
         });
+
         card1.setOnClickListener(new View.OnClickListener() {
+
+
             @Override
             public void onClick(View view) {
+                if (getActivity() instanceof MainActivity) {
+                    ((MainActivity) getActivity()).updateProgress(25);
+                }
                 card1.setCardElevation(10f);
                 requireActivity().getSupportFragmentManager().beginTransaction()
                         .replace(R.id.fragment_container, new AboutYouFragment())

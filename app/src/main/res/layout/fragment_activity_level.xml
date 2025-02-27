@@ -14,12 +14,12 @@
         android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="What's your goal?"/>
+        android:text="What's your activity level?"/>
     <TextView
         android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="We'll help you find the right calorie intake to achieve it"/>
+        />
 
     <View
         android:layout_width="match_parent"
@@ -27,44 +27,50 @@
         android:layout_weight="1"
         />
 
+
+
     <com.jg.dietapp.CustomCard
-        android:clickable="true"
-        android:focusable="true"
-        android:id="@+id/card1"
-        android:layout_marginTop="4dp"
-        android:layout_marginBottom="4dp"
-        app:cardIcon="@drawable/baseline_trending_down_16"
-        app:head="Fat Loss"
-        app:body="Optimize weight loss and preserve muscle mass"
+        android:layout_margin="4dp"
+        app:head="Sedentary"
+        app:body="Little or no exercise"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
     <com.jg.dietapp.CustomCard
-        android:clickable="true"
-        android:focusable="true"
-        android:id="@+id/card2"
-        android:layout_marginTop="4dp"
-        android:layout_marginBottom="4dp"
-        app:cardIcon="@drawable/baseline_trending_up_16"
-        app:head="Muscle Gain"
-        app:body="Increase your weight and get stronger"
+        android:layout_margin="4dp"
+        app:head="Lightly active"
+        app:body="Exercise 2-3 days per week"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
-
-
 
     <com.jg.dietapp.CustomCard
-        android:clickable="true"
-        android:focusable="true"
-        android:layout_marginTop="4dp"
-        android:layout_marginBottom="50dp"
-        android:id="@+id/card3"
-        app:cardIcon="@drawable/baseline_trending_flat_16"
-        app:head="Weight Maintenance"
-        app:body="Keep your weight stable and aim for body recomposition"
+        android:layout_margin="4dp"
+        app:head="Moderately active"
+        app:body="Exercise 4-5 days per week"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <com.jg.dietapp.CustomCard
+        android:layout_margin="4dp"
+        app:head="Very active"
+        app:body="Exercise 6-7 days per week"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <com.jg.dietapp.CustomCard
+        android:layout_margin="4dp"
+        app:head="Professional athlete"
+        app:body="Intense exercise 6-7 days per week"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
 
+    <TextView
+        android:layout_marginBottom="38dp"
+        android:layout_marginTop="38dp"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Don't worry, you can change this later"/>
 
 </LinearLayout>

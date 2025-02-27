@@ -1,0 +1,13 @@
+<resources>
+    <declare-styleable name="CustomCard">
+        <attr name="head" format="string"/>
+        <attr name="body" format="string"/>
+        <attr name="cardIcon" format="reference"/>
+    </declare-styleable>
+
+    <declare-styleable name="CustomSelect">
+        <attr name="icon" format="reference"/>
+        <attr name="title" format="string"/>
+        <attr name="selectValue" format="string"/>
+    </declare-styleable>
+</resources>

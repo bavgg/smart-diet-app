@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -31,9 +32,13 @@ public class StartFragment extends Fragment {
 
         startNow.setOnClickListener(new View.OnClickListener() {
 
+
             @Override
             public void onClick(View view) {
 
+                if (getActivity() instanceof MainActivity) {
+                    ((MainActivity) getActivity()).updateProgress(25);
+                }
                 requireActivity().getSupportFragmentManager().beginTransaction()
                         .replace(R.id.fragment_container, new GoalFragment())
                         .addToBackStack(null) // Optional: Allows back navigation

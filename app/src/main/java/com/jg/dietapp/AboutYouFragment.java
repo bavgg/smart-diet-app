@@ -1,11 +1,13 @@
 package com.jg.dietapp;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
@@ -17,9 +19,9 @@ import com.google.android.material.card.MaterialCardView;
 import java.util.Objects;
 
 public class AboutYouFragment extends Fragment {
-    MaterialCardView sexSelector, ageSelector, heightSelector, weightSelector;
-    TextView sexSelectorValue, ageSelectorValue, heightSelectorValue, weightSelectorValue;
+//    MaterialCardView  sexSelector, ageSelector, heightSelector, weightSelector;
     Button continueButton;
+    CustomSelect sexSelector, ageSelector, heightSelector, weightSelector;
 
     @Nullable
     @Override
@@ -32,12 +34,21 @@ public class AboutYouFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         // Update progress if the fragment is inside MainActivity
-        if (getActivity() instanceof MainActivity) {
-            ((MainActivity) getActivity()).updateProgress(25);
-        }
+//        if (getActivity() instanceof MainActivity) {
+//            ((MainActivity) getActivity()).updateProgress(25);
+//        }
 
-        // Setup back press behavior
-        setupBackPressHandler();
+
+
+        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                if (getActivity() instanceof MainActivity) {
+                    ((MainActivity) getActivity()).updateProgress(-25);
+                }
+                getParentFragmentManager().popBackStack();
+            }
+        });
 
         // Setup click listeners for sex & age selection
         setupClickListeners(view);
@@ -57,32 +68,33 @@ public class AboutYouFragment extends Fragment {
 
     private void setupClickListeners(View view) {
         sexSelector = view.findViewById(R.id.sexSelector);
-        sexSelectorValue = view.findViewById(R.id.sexSelectorValue);
         ageSelector = view.findViewById(R.id.ageSelector);
-        ageSelectorValue = view.findViewById(R.id.ageSelectorValue);
         heightSelector = view.findViewById(R.id.heightSelector);
-        heightSelectorValue = view.findViewById(R.id.heightSelectorValue);
         weightSelector = view.findViewById(R.id.weightSelector);
-        weightSelectorValue = view.findViewById(R.id.weightSelectorValue);
         continueButton = view.findViewById(R.id.continueButton);
+
+
+
+
+
 
         // Show SexDialog when clicked
         sexSelector.setOnClickListener(v -> {
             SexDialog sexDialog = new SexDialog();
             sexDialog.setSexSelectionListener(sex -> {
-                sexSelectorValue.setText(sex);
+                sexSelector.setSelectValue(sex);
                 continueButton.setEnabled(isFilled());
             });
             sexDialog.show(getParentFragmentManager(), "SexDialog");
         });
 
         // Show AgeDialog when clicked
-        ageSelector.setOnClickListener(v -> new AgeDialog().show(getParentFragmentManager(), "AgeDialog"));
+//        ageSelector.setOnClickListener(v -> new AgeDialog().show(getParentFragmentManager(), "AgeDialog"));
         heightSelector.setOnClickListener(v -> {
 
             HeightDialog heightDialog = new HeightDialog();
             heightDialog.setHeightSelectionListener(height -> {
-                heightSelectorValue.setText(height);
+                heightSelector.setSelectValue(height);
                 continueButton.setEnabled(isFilled());
             });
             heightDialog.show(getParentFragmentManager(), "HeightDialog");
@@ -91,7 +103,7 @@ public class AboutYouFragment extends Fragment {
         ageSelector.setOnClickListener(v -> {
             AgeDialog ageDialog = new AgeDialog();
             ageDialog.setSexSelectionListener(age -> {
-                ageSelectorValue.setText(age);
+                ageSelector.setSelectValue(age);
                 continueButton.setEnabled(isFilled());
             });
             ageDialog.show(getParentFragmentManager(), "AgeDialog");
@@ -100,7 +112,7 @@ public class AboutYouFragment extends Fragment {
         weightSelector.setOnClickListener(v -> {
             WeightDialog weightDialog = new WeightDialog();
             weightDialog.setHeightSelectionListener(weight -> {
-                weightSelectorValue.setText(weight);
+                weightSelector.setSelectValue(weight);
                 continueButton.setEnabled(isFilled());
             });
             weightDialog.show(getParentFragmentManager(), "WeightDialog");
@@ -111,17 +123,17 @@ public class AboutYouFragment extends Fragment {
 
             Utils.LOGGER.info("Hello");
             requireActivity().getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container, new AboutYouFragment())
+                    .replace(R.id.fragment_container, new ActivityLevelFragment())
                     .addToBackStack(null) // Optional: Allows back navigation
                     .commit();
         });
     }
 
     private boolean isFilled() {
-        String sex = sexSelectorValue.getText().toString();
-        String age = ageSelectorValue.getText().toString();
-        String height = heightSelectorValue.getText().toString();
-        String weight = weightSelectorValue.getText().toString();
+        String sex = sexSelector.getSelectValue();
+        String age = ageSelector.getSelectValue();
+        String height = heightSelector.getSelectValue();
+        String weight = weightSelector.getSelectValue();
 
         return !Objects.equals(sex, "Select") &&
                 !Objects.equals(age, "Select") &&

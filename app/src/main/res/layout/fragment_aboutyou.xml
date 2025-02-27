@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    android:layout_width="match_parent"
+<LinearLayout android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
@@ -10,143 +10,57 @@
         android:layout_height="match_parent"
         android:layout_weight="1" />
 
-    <com.google.android.material.card.MaterialCardView
+    <com.jg.dietapp.CustomSelect
+
+        android:layout_marginVertical="4dp"
         android:clickable="true"
         android:focusable="true"
         android:id="@+id/sexSelector"
+        app:title="Sex"
+        app:icon="@drawable/baseline_people_16"
+        app:selectValue="Select"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginVertical="8dp">
+        android:layout_height="wrap_content"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+    <com.jg.dietapp.CustomSelect
 
-            android:paddingHorizontal="16dp"
-            android:paddingVertical="8dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_weight="1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Sex"/>
-            <TextView
-                android:id="@+id/sexSelectorValue"
-                android:gravity="end"
-                android:layout_weight="1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Select"/>
-
-
-        </LinearLayout>
-
-    </com.google.android.material.card.MaterialCardView>
-
-    <com.google.android.material.card.MaterialCardView
+        android:layout_marginVertical="4dp"
         android:clickable="true"
         android:focusable="true"
         android:id="@+id/ageSelector"
+        app:title="Age"
+        app:icon="@drawable/baseline_cake_16"
+        app:selectValue="Select"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-         android:layout_marginVertical="8dp">
+        android:layout_height="wrap_content"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+    <com.jg.dietapp.CustomSelect
 
-            android:paddingHorizontal="16dp"
-            android:paddingVertical="8dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_weight="1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Age"/>
-            <TextView
-                android:id="@+id/ageSelectorValue"
-                android:gravity="end"
-                android:layout_weight="1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Select"/>
-
-
-        </LinearLayout>
-
-    </com.google.android.material.card.MaterialCardView>
-
-    <com.google.android.material.card.MaterialCardView
+        android:layout_marginVertical="4dp"
         android:clickable="true"
         android:focusable="true"
         android:id="@+id/heightSelector"
+        app:title="Height"
+        app:icon="@drawable/baseline_straighten_16"
+        app:selectValue="Select"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-         android:layout_marginVertical="8dp">
+        android:layout_height="wrap_content"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+    <com.jg.dietapp.CustomSelect
 
-            android:paddingHorizontal="16dp"
-            android:paddingVertical="8dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_weight="1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Height"/>
-            <TextView
-                android:id="@+id/heightSelectorValue"
-                android:gravity="end"
-                android:layout_weight="1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Select"/>
-
-
-        </LinearLayout>
-
-    </com.google.android.material.card.MaterialCardView>
-
-    <com.google.android.material.card.MaterialCardView
+        android:layout_marginVertical="4dp"
         android:clickable="true"
         android:focusable="true"
         android:id="@+id/weightSelector"
+        app:title="Weight"
+        app:icon="@drawable/baseline_scale_16"
+        app:selectValue="Select"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-         android:layout_marginVertical="8dp">
+        android:layout_height="wrap_content"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-
-            android:paddingHorizontal="16dp"
-            android:paddingVertical="8dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_weight="1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Weight"/>
-            <TextView
-                android:id="@+id/weightSelectorValue"
-                android:gravity="end"
-                android:layout_weight="1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Select"/>
-
-
-        </LinearLayout>
-
-    </com.google.android.material.card.MaterialCardView>
 
     <Button
+        android:layout_marginTop="16dp"
         android:id="@+id/continueButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
