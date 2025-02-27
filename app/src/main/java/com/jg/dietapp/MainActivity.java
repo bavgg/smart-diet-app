@@ -18,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
     private int currentIndex = 0;
     private final Fragment[] fragments = {new StartFragment(), new GoalFragment(), new AchieveFragment(), new AboutYouFragment()};
     private int progress = 0;
+    public static SharedViewModel sharedViewModel = new SharedViewModel();
     LinearProgressIndicator progressIndicator;
 
     @Override

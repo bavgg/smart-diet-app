@@ -12,6 +12,16 @@ import androidx.annotation.Nullable;
 
 public class AgeDialog extends com.google.android.material.bottomsheet.BottomSheetDialogFragment {
 
+    private AgeDialog.AgeSelectionListener ageSelectionListener;
+
+    public interface AgeSelectionListener {
+        void onAgeSelected(String age);
+    }
+
+    public void setSexSelectionListener(AgeDialog.AgeSelectionListener listener) {
+        this.ageSelectionListener = listener;
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -25,6 +35,14 @@ public class AgeDialog extends com.google.android.material.bottomsheet.BottomShe
         agePicker.setMinValue(1);  // Minimum age
         agePicker.setMaxValue(120); // Maximum age
         agePicker.setValue(25);  // Default selected age
+        
+        Button okButton = view.findViewById(R.id.okButton);
+        
+        okButton.setOnClickListener(v -> {
+            int selectedAge = agePicker.getValue();
+            ageSelectionListener.onAgeSelected(selectedAge + " years");
+            dismiss();  
+        });
 
 
     }

@@ -31,5 +31,13 @@
         android:layout_marginHorizontal="155dp"
         app:layout_constraintEnd_toEndOf="parent"
         />
+    <Button
+        android:id="@+id/okButton"
+        android:textColor="@color/white"
+        android:layout_width="match_parent"
+        android:backgroundTint="@color/primary"
+        android:layout_height="wrap_content"
+        android:text="OK"
+        />
 
 </LinearLayout>

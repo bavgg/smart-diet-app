@@ -55,6 +55,9 @@ public class AboutYouFragment extends Fragment {
         sexSelector = view.findViewById(R.id.sexSelector);
         sexSelectorValue = view.findViewById(R.id.sexSelectorValue);
         ageSelector = view.findViewById(R.id.ageSelector);
+        ageSelectorValue = view.findViewById(R.id.ageSelectorValue);
+        heightSelector = view.findViewById(R.id.heightSelector);
+        heightSelectorValue = view.findViewById(R.id.heightSelectorValue);
 
         // Show SexDialog when clicked
         sexSelector.setOnClickListener(v -> {
@@ -67,6 +70,22 @@ public class AboutYouFragment extends Fragment {
 
         // Show AgeDialog when clicked
         ageSelector.setOnClickListener(v -> new AgeDialog().show(getParentFragmentManager(), "AgeDialog"));
+        heightSelector.setOnClickListener(v -> {
+
+            HeightDialog heightDialog = new HeightDialog();
+            heightDialog.setHeightSelectionListener(height -> {
+                heightSelectorValue.setText(height);
+            });
+            heightDialog.show(getParentFragmentManager(), "HeightDialog");
+        });
+
+        ageSelector.setOnClickListener(v -> {
+            AgeDialog ageDialog = new AgeDialog();
+            ageDialog.setSexSelectionListener(age -> {
+                ageSelectorValue.setText(age);
+            });
+            ageDialog.show(getParentFragmentManager(), "AgeDialog");
+        });
     }
 //
 //    private void validateAndContinue() {

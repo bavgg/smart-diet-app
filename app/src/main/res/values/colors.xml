@@ -6,4 +6,7 @@
     <color name="lightPurple">#E7DEF8</color>
     <color name="gray">#C4BFC8</color>
     <color name="lightWhite">#FEF7FF</color>
+    <color name="primary">#6750A4</color>
+    <color name="primaryTint">#e1dced</color>
+    e1dced
 </resources>
