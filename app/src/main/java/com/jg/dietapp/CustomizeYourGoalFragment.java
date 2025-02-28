@@ -57,7 +57,7 @@ public class CustomizeYourGoalFragment extends Fragment {
 
         createMyPlanButton.setOnClickListener(v -> {
             updateProgress();
-            nextFragment(new ActivityLevelFragment());
+            nextFragment(new YouAreAllSetFragment());
         });
 
     }
@@ -71,7 +71,7 @@ public class CustomizeYourGoalFragment extends Fragment {
                 !Objects.equals(goalWeight, "Select");
     }
 
-    private void nextFragment(ActivityLevelFragment nextFragment) {
+    private void nextFragment(Fragment nextFragment) {
         requireActivity().getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fragment_container, nextFragment)
                 .addToBackStack(null) // Optional: Allows back navigation
