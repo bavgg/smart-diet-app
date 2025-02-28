@@ -6,20 +6,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
-import android.widget.Toast;
+
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.google.android.material.card.MaterialCardView;
 
 import java.util.Objects;
 
 public class AboutYouFragment extends Fragment {
-//    MaterialCardView  sexSelector, ageSelector, heightSelector, weightSelector;
     Button continueButton;
     CustomSelect sexSelector, ageSelector, heightSelector, weightSelector;
 
@@ -33,13 +30,6 @@ public class AboutYouFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        // Update progress if the fragment is inside MainActivity
-//        if (getActivity() instanceof MainActivity) {
-//            ((MainActivity) getActivity()).updateProgress(25);
-//        }
-
-
-
         requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
@@ -50,20 +40,8 @@ public class AboutYouFragment extends Fragment {
             }
         });
 
-        // Setup click listeners for sex & age selection
+        setupPressBackListener();
         setupClickListeners(view);
-    }
-
-    private void setupBackPressHandler() {
-        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), new OnBackPressedCallback(true) {
-            @Override
-            public void handleOnBackPressed() {
-                if (getActivity() instanceof MainActivity) {
-                    ((MainActivity) getActivity()).updateProgress(-25);
-                }
-                getParentFragmentManager().popBackStack();
-            }
-        });
     }
 
     private void setupClickListeners(View view) {
@@ -75,10 +53,6 @@ public class AboutYouFragment extends Fragment {
 
 
 
-
-
-
-        // Show SexDialog when clicked
         sexSelector.setOnClickListener(v -> {
             SexDialog sexDialog = new SexDialog();
             sexDialog.setSexSelectionListener(sex -> {
@@ -88,12 +62,11 @@ public class AboutYouFragment extends Fragment {
             sexDialog.show(getParentFragmentManager(), "SexDialog");
         });
 
-        // Show AgeDialog when clicked
-//        ageSelector.setOnClickListener(v -> new AgeDialog().show(getParentFragmentManager(), "AgeDialog"));
+
         heightSelector.setOnClickListener(v -> {
 
             HeightDialog heightDialog = new HeightDialog();
-            heightDialog.setHeightSelectionListener(height -> {
+            heightDialog.setOnOkClickListener(height -> {
                 heightSelector.setSelectValue(height);
                 continueButton.setEnabled(isFilled());
             });
@@ -111,7 +84,7 @@ public class AboutYouFragment extends Fragment {
 
         weightSelector.setOnClickListener(v -> {
             WeightDialog weightDialog = new WeightDialog();
-            weightDialog.setHeightSelectionListener(weight -> {
+            weightDialog.setOnOkClickListener(weight -> {
                 weightSelector.setSelectValue(weight);
                 continueButton.setEnabled(isFilled());
             });
@@ -121,11 +94,29 @@ public class AboutYouFragment extends Fragment {
 
         continueButton.setOnClickListener(v -> {
 
-            Utils.LOGGER.info("Hello");
+            updateProgress();
             requireActivity().getSupportFragmentManager().beginTransaction()
                     .replace(R.id.fragment_container, new ActivityLevelFragment())
-                    .addToBackStack(null) // Optional: Allows back navigation
+                    .addToBackStack(null)
                     .commit();
+        });
+    }
+
+    private void updateProgress() {
+        if (getActivity() instanceof MainActivity) {
+            ((MainActivity) getActivity()).updateProgress(25);
+        }
+    }
+
+    private void setupPressBackListener() {
+        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                if (getActivity() instanceof MainActivity) {
+                    ((MainActivity) getActivity()).updateProgress(-25);
+                }
+                getParentFragmentManager().popBackStack();
+            }
         });
     }
 

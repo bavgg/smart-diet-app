@@ -17,16 +17,14 @@ import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class HeightDialog extends com.google.android.material.bottomsheet.BottomSheetDialogFragment {
-    private final Fragment[] fragments = {new HeightDialogFragmentA(), new HeightDialogFragmentB()};
 
-    private HeightDialog.HeightSelectionListener heightSelectionListener;
-
-    public interface HeightSelectionListener {
-        void onHeightSelected(String height);
+    // Interface for handling OkClick Button
+    private HeightDialog.OkClickListener okClickListener;
+    public interface OkClickListener {
+        void onOkClick(String weight);
     }
-
-    public void setHeightSelectionListener(HeightDialog.HeightSelectionListener listener) {
-        this.heightSelectionListener = listener;
+    public void setOnOkClickListener(HeightDialog.OkClickListener listener) {
+        this.okClickListener = listener;
     }
 
     @Nullable
@@ -78,14 +76,14 @@ public class HeightDialog extends com.google.android.material.bottomsheet.Bottom
             int cValue = sharedViewModel.getCmValue();
             if(Objects.equals(cmFeet.get(), "cm")){
                 String cmText = cValue + " cm";
-                heightSelectionListener.onHeightSelected(cmText);
+                okClickListener.onOkClick(cmText);
             }else if(Objects.equals(cmFeet.get(), "ft")) {
 
                 int feet = (int) (cValue / 30.48); // Convert cm to feet
                 int inches = (int) Math.ceil((cValue % 30.48) / 2.54);
                 String ftInText = feet + " ft " + inches + " in";
 
-                heightSelectionListener.onHeightSelected(ftInText);
+                okClickListener.onOkClick(ftInText);
             }
             dismiss();
         });

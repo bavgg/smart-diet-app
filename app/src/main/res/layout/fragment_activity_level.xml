@@ -30,6 +30,10 @@
 
 
     <com.jg.dietapp.CustomCard
+        android:id="@+id/activityLevelCard1"
+        android:clickable="true"
+        android:focusable="true"
+        app:cardIcon="@drawable/baseline_looks_one_24"
         android:layout_margin="4dp"
         app:head="Sedentary"
         app:body="Little or no exercise"
@@ -37,6 +41,10 @@
         android:layout_height="wrap_content"/>
 
     <com.jg.dietapp.CustomCard
+        android:id="@+id/activityLevelCard2"
+        android:clickable="true"
+        android:focusable="true"
+        app:cardIcon="@drawable/baseline_looks_two_16"
         android:layout_margin="4dp"
         app:head="Lightly active"
         app:body="Exercise 2-3 days per week"
@@ -44,6 +52,10 @@
         android:layout_height="wrap_content"/>
 
     <com.jg.dietapp.CustomCard
+        android:id="@+id/activityLevelCard3"
+        android:clickable="true"
+        android:focusable="true"
+        app:cardIcon="@drawable/baseline_looks_3_16"
         android:layout_margin="4dp"
         app:head="Moderately active"
         app:body="Exercise 4-5 days per week"
@@ -51,6 +63,10 @@
         android:layout_height="wrap_content"/>
 
     <com.jg.dietapp.CustomCard
+        android:id="@+id/activityLevelCard4"
+        android:clickable="true"
+        android:focusable="true"
+        app:cardIcon="@drawable/baseline_looks_4_16"
         android:layout_margin="4dp"
         app:head="Very active"
         app:body="Exercise 6-7 days per week"
@@ -58,6 +74,10 @@
         android:layout_height="wrap_content"/>
 
     <com.jg.dietapp.CustomCard
+        android:id="@+id/activityLevelCard5"
+        android:clickable="true"
+        android:focusable="true"
+        app:cardIcon="@drawable/baseline_looks_5_16"
         android:layout_margin="4dp"
         app:head="Professional athlete"
         app:body="Intense exercise 6-7 days per week"

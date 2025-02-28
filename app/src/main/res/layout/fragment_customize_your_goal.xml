@@ -1,6 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+
     android:layout_height="match_parent">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:textStyle="bold"
+        android:textSize="18dp"
+        android:layout_marginTop="142dp"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Customize your goal"/>
+    <TextView
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Last step to get your calories and macros"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        />
+
+
+
+    <com.jg.dietapp.CustomSelect
+
+        android:layout_marginVertical="4dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:id="@+id/currentWeightSelector"
+        app:title="Current Weight"
+        app:icon="@drawable/baseline_scale_16"
+        app:selectValue="Select"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <com.jg.dietapp.CustomSelect
+
+        android:layout_marginVertical="4dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:id="@+id/goalWeightSelector"
+        app:title="Goal Weight"
+        app:icon="@drawable/baseline_rocket_launch_16"
+        app:selectValue="Select"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <com.jg.dietapp.CustomSelect
+
+        android:layout_marginVertical="4dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:id="@+id/speedSelector"
+        app:title="Speed"
+        app:icon="@drawable/baseline_speed_16"
+        app:selectValue="Select"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+
+    <Button
+        android:layout_marginTop="16dp"
+        android:id="@+id/createMyPlanButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:enabled="false"
+        android:text="Create My Plan"
+        />
+
+</LinearLayout>

@@ -9,7 +9,6 @@ import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 
 import com.google.android.material.card.MaterialCardView;
 
@@ -17,14 +16,14 @@ import java.text.DecimalFormat;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
 
-public class WeightDialog extends com.google.android.material.bottomsheet.BottomSheetDialogFragment {
+public class CurrentWeightDialog extends com.google.android.material.bottomsheet.BottomSheetDialogFragment {
 
     // Interface for handling OkClick Button
-    private WeightDialog.OkClickListener okClickListener;
+    private CurrentWeightDialog.OkClickListener okClickListener;
     public interface OkClickListener {
-        void onOkClick(String weight);
+        void onOkClick(String currentWeight);
     }
-    public void setOnOkClickListener(WeightDialog.OkClickListener listener) {
+    public void setOnOkClickListener(CurrentWeightDialog.OkClickListener listener) {
         this.okClickListener = listener;
     }
 
@@ -37,63 +36,55 @@ public class WeightDialog extends com.google.android.material.bottomsheet.Bottom
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        // Initialize the views
         MaterialCardView kg = view.findViewById(R.id.kg);
         MaterialCardView lbs = view.findViewById(R.id.lbs);
-        Button okButton = view.findViewById(R.id.okButton);
 
-        // Initialize the shared view model
-        SharedViewModel sharedViewModel = MainActivity.sharedViewModel;
+        AtomicReference<String> kgLbs = new AtomicReference<>("kg");
 
-        // Initialize the selected unit to kg
-        AtomicReference<String> selectedUnit = new AtomicReference<>("kg");
-
-        // Loading the first dialog fragment for kg
         getChildFragmentManager().beginTransaction()
                 .replace(R.id.fragment_container, new WeightDialogA())
                 .commit();
 
-        // Event listeners for selecting which unit to use and switching between dialog fragments
         kg.setOnClickListener(v -> {
-            selectedUnit.set("kg");
-
+            kgLbs.set("kg");
             getChildFragmentManager().beginTransaction()
                     .replace(R.id.fragment_container, new WeightDialogA())
                     .commit();
-
-
             kg.setStrokeColor(Color.BLACK);
             lbs.setStrokeColor(Color.WHITE);
             lbs.setCardBackgroundColor(Color.TRANSPARENT);
 
         });
-        lbs.setOnClickListener(v -> {
-            selectedUnit.set("lbs");
 
+        lbs.setOnClickListener(v -> {
+            kgLbs.set("lbs");
             getChildFragmentManager().beginTransaction()
                     .replace(R.id.fragment_container, new WeightDialogB())
                     .commit();
-
             lbs.setStrokeColor(Color.BLACK);
             kg.setStrokeColor(Color.WHITE);
             kg.setCardBackgroundColor(Color.TRANSPARENT);
 
         });
 
-        // Listener to pass the selected weight from the dialog to the parent fragment when the OK button is clicked
+        Button okButton = view.findViewById(R.id.okButton);
+
+        SharedViewModel sharedViewModel = MainActivity.sharedViewModel;
+
         okButton.setOnClickListener(v -> {
 
             double lbsValue = sharedViewModel.getLbs();
             DecimalFormat df = new DecimalFormat("#.#");
 
-            if(Objects.equals(selectedUnit.get(), "kg")){
+            if(Objects.equals(kgLbs.get(), "kg")){
+                System.out.println("Kilogram");
                 Double kg1 = Utils.lbsToKg(lbsValue);
                 String kgString = df.format(kg1);
 
                 String a = kgString + " kg";
                 okClickListener.onOkClick(a);
-            }else if(Objects.equals(selectedUnit.get(), "lbs")) {
+            }else if(Objects.equals(kgLbs.get(), "lbs")) {
+                System.out.println("Pounds");
 
                 String lbsString = df.format(lbsValue);
 
