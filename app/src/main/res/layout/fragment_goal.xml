@@ -30,7 +30,7 @@
     <com.jg.dietapp.CustomCard
         android:clickable="true"
         android:focusable="true"
-        android:id="@+id/card1"
+        android:id="@+id/fatLossCard"
         android:layout_marginTop="4dp"
         android:layout_marginBottom="4dp"
         app:cardIcon="@drawable/baseline_trending_down_16"
@@ -42,7 +42,7 @@
     <com.jg.dietapp.CustomCard
         android:clickable="true"
         android:focusable="true"
-        android:id="@+id/card2"
+        android:id="@+id/muscleGainCard"
         android:layout_marginTop="4dp"
         android:layout_marginBottom="4dp"
         app:cardIcon="@drawable/baseline_trending_up_16"
@@ -58,7 +58,7 @@
         android:focusable="true"
         android:layout_marginTop="4dp"
         android:layout_marginBottom="50dp"
-        android:id="@+id/card3"
+        android:id="@+id/weightMaintenanceCard"
         app:cardIcon="@drawable/baseline_trending_flat_16"
         app:head="Weight Maintenance"
         app:body="Keep your weight stable and aim for body recomposition"

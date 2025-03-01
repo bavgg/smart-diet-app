@@ -4,14 +4,13 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.google.android.material.card.MaterialCardView;
 
-public class SexDialog extends com.google.android.material.bottomsheet.BottomSheetDialogFragment {
+public class DialogSex extends com.google.android.material.bottomsheet.BottomSheetDialogFragment {
     private SexSelectionListener sexSelectionListener;
 
     public interface SexSelectionListener {

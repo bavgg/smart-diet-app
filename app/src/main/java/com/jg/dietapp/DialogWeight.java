@@ -9,7 +9,6 @@ import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 
 import com.google.android.material.card.MaterialCardView;
 
@@ -17,14 +16,14 @@ import java.text.DecimalFormat;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
 
-public class WeightDialog extends com.google.android.material.bottomsheet.BottomSheetDialogFragment {
+public class DialogWeight extends com.google.android.material.bottomsheet.BottomSheetDialogFragment {
 
     // Interface for handling OkClick Button
-    private WeightDialog.OkClickListener okClickListener;
+    private DialogWeight.OkClickListener okClickListener;
     public interface OkClickListener {
         void onOkClick(String weight);
     }
-    public void setOnOkClickListener(WeightDialog.OkClickListener listener) {
+    public void setOnOkClickListener(DialogWeight.OkClickListener listener) {
         this.okClickListener = listener;
     }
 
@@ -51,7 +50,7 @@ public class WeightDialog extends com.google.android.material.bottomsheet.Bottom
 
         // Loading the first dialog fragment for kg
         getChildFragmentManager().beginTransaction()
-                .replace(R.id.fragment_container, new WeightDialogA())
+                .replace(R.id.fragment_container, new DialogWeightA())
                 .commit();
 
         // Event listeners for selecting which unit to use and switching between dialog fragments
@@ -59,7 +58,7 @@ public class WeightDialog extends com.google.android.material.bottomsheet.Bottom
             selectedUnit.set("kg");
 
             getChildFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container, new WeightDialogA())
+                    .replace(R.id.fragment_container, new DialogWeightA())
                     .commit();
 
 
@@ -72,7 +71,7 @@ public class WeightDialog extends com.google.android.material.bottomsheet.Bottom
             selectedUnit.set("lbs");
 
             getChildFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container, new WeightDialogB())
+                    .replace(R.id.fragment_container, new DialogWeightB())
                     .commit();
 
             lbs.setStrokeColor(Color.BLACK);

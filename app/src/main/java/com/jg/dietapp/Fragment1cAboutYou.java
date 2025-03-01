@@ -1,6 +1,5 @@
 package com.jg.dietapp;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +15,8 @@ import androidx.fragment.app.Fragment;
 
 import java.util.Objects;
 
-public class AboutYouFragment extends Fragment {
+public class Fragment1cAboutYou extends Fragment {
+    SharedDataUser userData = MainActivity.userData;
     Button continueButton;
     CustomSelect sexSelector, ageSelector, heightSelector, weightSelector;
 
@@ -29,10 +29,6 @@ public class AboutYouFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        UserData userData = MainActivity.userData;
-        String test = userData.getTest();
-        System.out.println(test);
 
         requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), new OnBackPressedCallback(true) {
             @Override
@@ -56,9 +52,8 @@ public class AboutYouFragment extends Fragment {
         continueButton = view.findViewById(R.id.continueButton);
 
 
-
         sexSelector.setOnClickListener(v -> {
-            SexDialog sexDialog = new SexDialog();
+            DialogSex sexDialog = new DialogSex();
             sexDialog.setSexSelectionListener(sex -> {
                 sexSelector.setSelectValue(sex);
                 continueButton.setEnabled(isFilled());
@@ -66,10 +61,9 @@ public class AboutYouFragment extends Fragment {
             sexDialog.show(getParentFragmentManager(), "SexDialog");
         });
 
-
         heightSelector.setOnClickListener(v -> {
 
-            HeightDialog heightDialog = new HeightDialog();
+            DialogHeight heightDialog = new DialogHeight();
             heightDialog.setOnOkClickListener(height -> {
                 heightSelector.setSelectValue(height);
                 continueButton.setEnabled(isFilled());
@@ -78,7 +72,7 @@ public class AboutYouFragment extends Fragment {
         });
 
         ageSelector.setOnClickListener(v -> {
-            AgeDialog ageDialog = new AgeDialog();
+            DialogAge ageDialog = new DialogAge();
             ageDialog.setSexSelectionListener(age -> {
                 ageSelector.setSelectValue(age);
                 continueButton.setEnabled(isFilled());
@@ -87,7 +81,7 @@ public class AboutYouFragment extends Fragment {
         });
 
         weightSelector.setOnClickListener(v -> {
-            WeightDialog weightDialog = new WeightDialog();
+            DialogWeight weightDialog = new DialogWeight();
             weightDialog.setOnOkClickListener(weight -> {
                 weightSelector.setSelectValue(weight);
                 continueButton.setEnabled(isFilled());
@@ -97,10 +91,19 @@ public class AboutYouFragment extends Fragment {
         });
 
         continueButton.setOnClickListener(v -> {
+            String sex = sexSelector.getSelectValue();
+            String age = ageSelector.getSelectValue();
+            String height = heightSelector.getSelectValue();
+            String weight = weightSelector.getSelectValue();
+
+            userData.setSex(sex);
+            userData.setAge(age);
+            userData.setHeight(height);
+            userData.setWeight(weight);
 
             updateProgress();
             requireActivity().getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container, new ActivityLevelFragment())
+                    .replace(R.id.fragment_container, new Fragment1dActivityLevel())
                     .addToBackStack(null)
                     .commit();
         });

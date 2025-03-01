@@ -9,21 +9,20 @@ import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 
 import com.google.android.material.card.MaterialCardView;
 
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
 
-public class HeightDialog extends com.google.android.material.bottomsheet.BottomSheetDialogFragment {
+public class DialogHeight extends com.google.android.material.bottomsheet.BottomSheetDialogFragment {
 
     // Interface for handling OkClick Button
-    private HeightDialog.OkClickListener okClickListener;
+    private DialogHeight.OkClickListener okClickListener;
     public interface OkClickListener {
         void onOkClick(String weight);
     }
-    public void setOnOkClickListener(HeightDialog.OkClickListener listener) {
+    public void setOnOkClickListener(DialogHeight.OkClickListener listener) {
         this.okClickListener = listener;
     }
 
@@ -42,13 +41,13 @@ public class HeightDialog extends com.google.android.material.bottomsheet.Bottom
         AtomicReference<String> cmFeet = new AtomicReference<>("cm");
 
         getChildFragmentManager().beginTransaction()
-                .replace(R.id.fragment_container, new HeightDialogFragmentA())
+                .replace(R.id.fragment_container, new DialogHeightFragmentA())
                 .commit();
 
         cm.setOnClickListener(v -> {
             cmFeet.set("cm");
             getChildFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container, new HeightDialogFragmentA())
+                    .replace(R.id.fragment_container, new DialogHeightFragmentA())
                     .commit();
             cm.setStrokeColor(Color.BLACK);
             ft.setStrokeColor(Color.WHITE);
@@ -59,7 +58,7 @@ public class HeightDialog extends com.google.android.material.bottomsheet.Bottom
         ft.setOnClickListener(v -> {
             cmFeet.set("ft");
             getChildFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container, new HeightDialogFragmentB())
+                    .replace(R.id.fragment_container, new DialogHeightFragmentB())
                     .commit();
             ft.setStrokeColor(Color.BLACK);
             cm.setStrokeColor(Color.WHITE);

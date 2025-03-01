@@ -13,7 +13,7 @@ import androidx.fragment.app.Fragment;
 
 import java.util.Objects;
 
-public class CustomizeYourGoalFragment extends Fragment {
+public class Fragment1eCustomizeYourGoal extends Fragment {
     CustomSelect currentWeightSelector, goalWeightSelector, speedSelector;
     Button createMyPlanButton;
 
@@ -33,7 +33,7 @@ public class CustomizeYourGoalFragment extends Fragment {
         setupPressBackListener();
 
         currentWeightSelector.setOnClickListener(v -> {
-            WeightDialog currentWeightDialog = new WeightDialog();
+            DialogWeight currentWeightDialog = new DialogWeight();
             currentWeightDialog.setOnOkClickListener(weight -> {
                 currentWeightSelector.setSelectValue(weight);
                 createMyPlanButton.setEnabled(isFilled());
@@ -42,7 +42,7 @@ public class CustomizeYourGoalFragment extends Fragment {
         });
 
         goalWeightSelector.setOnClickListener(v -> {
-            WeightDialog goalWeightDialog = new WeightDialog();
+            DialogWeight goalWeightDialog = new DialogWeight();
             goalWeightDialog.setOnOkClickListener(weight -> {
                 goalWeightSelector.setSelectValue(weight);
                 createMyPlanButton.setEnabled(isFilled());
@@ -57,7 +57,7 @@ public class CustomizeYourGoalFragment extends Fragment {
 
         createMyPlanButton.setOnClickListener(v -> {
             updateProgress();
-            nextFragment(new YouAreAllSetFragment());
+            nextFragment(new Fragment1fYouAreAllSet());
         });
 
     }

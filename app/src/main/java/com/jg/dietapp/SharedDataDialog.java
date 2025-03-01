@@ -1,6 +1,6 @@
 package com.jg.dietapp;
 
-public class DialogData {
+public class SharedDataDialog {
     private int cmValue = 165;
 
 

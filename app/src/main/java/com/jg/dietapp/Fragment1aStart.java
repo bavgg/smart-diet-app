@@ -5,14 +5,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.google.android.material.progressindicator.LinearProgressIndicator;
-
-public class StartFragment extends Fragment {
+public class Fragment1aStart extends Fragment {
 
     @Nullable
     @Override
@@ -40,7 +37,7 @@ public class StartFragment extends Fragment {
                     ((MainActivity) getActivity()).updateProgress(25);
                 }
                 requireActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container, new GoalFragment())
+                        .replace(R.id.fragment_container, new Fragment1bGoal())
                         .addToBackStack(null) // Optional: Allows back navigation
                         .commit();
             }

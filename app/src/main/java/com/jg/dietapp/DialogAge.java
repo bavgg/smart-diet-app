@@ -10,15 +10,15 @@ import android.widget.NumberPicker;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-public class AgeDialog extends com.google.android.material.bottomsheet.BottomSheetDialogFragment {
+public class DialogAge extends com.google.android.material.bottomsheet.BottomSheetDialogFragment {
 
-    private AgeDialog.AgeSelectionListener ageSelectionListener;
+    private DialogAge.AgeSelectionListener ageSelectionListener;
 
     public interface AgeSelectionListener {
         void onAgeSelected(String age);
     }
 
-    public void setSexSelectionListener(AgeDialog.AgeSelectionListener listener) {
+    public void setSexSelectionListener(DialogAge.AgeSelectionListener listener) {
         this.ageSelectionListener = listener;
     }
 

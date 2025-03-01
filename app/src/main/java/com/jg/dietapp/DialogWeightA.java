@@ -1,6 +1,5 @@
 package com.jg.dietapp;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,11 +9,8 @@ import android.widget.NumberPicker;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 
-import com.google.android.material.card.MaterialCardView;
-
-public class WeightDialogA extends Fragment {
+public class DialogWeightA extends Fragment {
 
     @Nullable
     @Override

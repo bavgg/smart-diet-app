@@ -1,6 +1,5 @@
 package com.jg.dietapp;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 
-public class WeightDialogB extends Fragment {
+public class DialogWeightB extends Fragment {
 
     @Nullable
     @Override
