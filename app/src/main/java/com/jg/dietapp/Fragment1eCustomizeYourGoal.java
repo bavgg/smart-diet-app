@@ -1,5 +1,7 @@
 package com.jg.dietapp;
 
+import static com.jg.dietapp.MainActivity.userData;
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +16,7 @@ import androidx.fragment.app.Fragment;
 import java.util.Objects;
 
 public class Fragment1eCustomizeYourGoal extends Fragment {
-    CustomSelect currentWeightSelector, goalWeightSelector, speedSelector;
+    CustomSelect currentWeightSelector, goalWeightSelector;
     Button createMyPlanButton;
 
     @Nullable
@@ -27,7 +29,6 @@ public class Fragment1eCustomizeYourGoal extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         currentWeightSelector = view.findViewById(R.id.currentWeightSelector);
         goalWeightSelector = view.findViewById(R.id.goalWeightSelector);
-        speedSelector = view.findViewById(R.id.speedSelector);
         createMyPlanButton = view.findViewById(R.id.createMyPlanButton);
 
         setupPressBackListener();
@@ -50,12 +51,15 @@ public class Fragment1eCustomizeYourGoal extends Fragment {
             goalWeightDialog.show(getParentFragmentManager(), "GoalWeightDialog");
         });
 
-        speedSelector.setOnClickListener(v -> {
 
-
-        });
 
         createMyPlanButton.setOnClickListener(v -> {
+            String currentWeight = currentWeightSelector.getSelectValue();
+            String goalWeight = goalWeightSelector.getSelectValue();
+
+            userData.setCurrentWeight(currentWeight);
+            userData.setGoalWeight(goalWeight);
+
             updateProgress();
             nextFragment(new Fragment1fYouAreAllSet());
         });
@@ -65,7 +69,6 @@ public class Fragment1eCustomizeYourGoal extends Fragment {
     private boolean isFilled() {
         String currentWeight = currentWeightSelector.getSelectValue();
         String goalWeight = goalWeightSelector.getSelectValue();
-//        String height = speedSelector.getSelectValue();
 
         return !Objects.equals(currentWeight, "Select") &&
                 !Objects.equals(goalWeight, "Select");
@@ -74,7 +77,7 @@ public class Fragment1eCustomizeYourGoal extends Fragment {
     private void nextFragment(Fragment nextFragment) {
         requireActivity().getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fragment_container, nextFragment)
-                .addToBackStack(null) // Optional: Allows back navigation
+                .addToBackStack(null)
                 .commit();
     }
 

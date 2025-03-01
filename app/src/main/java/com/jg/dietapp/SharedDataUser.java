@@ -1,5 +1,8 @@
 package com.jg.dietapp;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class SharedDataUser {
     private String goal;
     private String sex;
@@ -9,6 +12,20 @@ public class SharedDataUser {
     private String activityLevel;
     private String currentWeight;
     private String goalWeight;
+    private List<String> all = new ArrayList<>();
+
+    public List<String> getAll() {
+        all.add(goal);
+        all.add(sex);
+        all.add(age);
+        all.add(height);
+        all.add(weight);
+        all.add(activityLevel);
+        all.add(currentWeight);
+        all.add(goalWeight);
+
+        return all;
+    }
 
     public String getGoal() {
         return goal;
