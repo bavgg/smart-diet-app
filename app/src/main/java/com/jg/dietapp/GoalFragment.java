@@ -44,6 +44,8 @@ public class GoalFragment extends Fragment {
 
             @Override
             public void onClick(View view) {
+                UserData userData = MainActivity.userData;
+                userData.setTest("fat loss");
                 if (getActivity() instanceof MainActivity) {
                     ((MainActivity) getActivity()).updateProgress(25);
                 }

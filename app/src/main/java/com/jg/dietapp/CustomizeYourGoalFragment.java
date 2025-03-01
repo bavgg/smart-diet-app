@@ -33,12 +33,12 @@ public class CustomizeYourGoalFragment extends Fragment {
         setupPressBackListener();
 
         currentWeightSelector.setOnClickListener(v -> {
-            CurrentWeightDialog currentWeightDialog = new CurrentWeightDialog();
+            WeightDialog currentWeightDialog = new WeightDialog();
             currentWeightDialog.setOnOkClickListener(weight -> {
                 currentWeightSelector.setSelectValue(weight);
                 createMyPlanButton.setEnabled(isFilled());
             });
-            currentWeightDialog.show(getParentFragmentManager(), "WeightDialog");
+            currentWeightDialog.show(getParentFragmentManager(), "CurrentWeightDialog");
         });
 
         goalWeightSelector.setOnClickListener(v -> {

@@ -18,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
 
     private int progress = 0;
     public static SharedViewModel sharedViewModel = new SharedViewModel();
+    public static UserData userData = new UserData();
     LinearProgressIndicator progressIndicator;
 
     @Override

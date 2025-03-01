@@ -1,10 +1,6 @@
 package com.jg.dietapp;
 
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
-
-public class SharedViewModel extends ViewModel {
+public class DialogData {
     private int cmValue = 165;
 
 
@@ -27,5 +23,4 @@ public class SharedViewModel extends ViewModel {
     public double getLbs() {
         return lbs;
     }
-
 }

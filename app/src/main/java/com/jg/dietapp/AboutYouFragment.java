@@ -30,6 +30,10 @@ public class AboutYouFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        UserData userData = MainActivity.userData;
+        String test = userData.getTest();
+        System.out.println(test);
+
         requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
