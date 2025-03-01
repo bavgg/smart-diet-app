@@ -1,5 +1,7 @@
 package com.jg.dietapp;
 
+import static com.jg.dietapp.MainActivity.sharedDataDialog;
+
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -43,7 +45,6 @@ public class DialogWeight extends com.google.android.material.bottomsheet.Bottom
         Button okButton = view.findViewById(R.id.okButton);
 
         // Initialize the shared view model
-        SharedViewModel sharedViewModel = MainActivity.sharedViewModel;
 
         // Initialize the selected unit to kg
         AtomicReference<String> selectedUnit = new AtomicReference<>("kg");
@@ -83,7 +84,7 @@ public class DialogWeight extends com.google.android.material.bottomsheet.Bottom
         // Listener to pass the selected weight from the dialog to the parent fragment when the OK button is clicked
         okButton.setOnClickListener(v -> {
 
-            double lbsValue = sharedViewModel.getLbs();
+            double lbsValue = sharedDataDialog.getLbs();
             DecimalFormat df = new DecimalFormat("#.#");
 
             if(Objects.equals(selectedUnit.get(), "kg")){

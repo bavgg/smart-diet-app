@@ -10,7 +10,7 @@ import com.google.android.material.progressindicator.LinearProgressIndicator;
 public class MainActivity extends AppCompatActivity {
 
     private static int progress = 0;
-    public static SharedViewModel sharedViewModel = new SharedViewModel();
+    public static SharedDataDialog sharedDataDialog = new SharedDataDialog();
     public static SharedDataUser userData = new SharedDataUser();
     static LinearProgressIndicator progressIndicator;
 

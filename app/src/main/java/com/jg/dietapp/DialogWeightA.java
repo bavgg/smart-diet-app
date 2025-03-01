@@ -1,5 +1,7 @@
 package com.jg.dietapp;
 
+import static com.jg.dietapp.MainActivity.sharedDataDialog;
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,9 +28,8 @@ public class DialogWeightA extends Fragment {
         NumberPicker kgPicker = view.findViewById(R.id.kgPicker);
         NumberPicker kgPickerDecimal = view.findViewById(R.id.kgPickerDecimal);
 
-        SharedViewModel sharedViewModel = MainActivity.sharedViewModel;
 
-        double lbs = sharedViewModel.getLbs();
+        double lbs = sharedDataDialog.getLbs();
 
 //        convert lbs to kg
         double kg = lbs * 0.453592;
@@ -48,7 +49,7 @@ public class DialogWeightA extends Fragment {
             int lbsWhole = (int) lbsV;
             int lbsDecimal = (int) ((lbsV - lbsWhole) * 10);
 
-            sharedViewModel.setLbs(lbsWhole, lbsDecimal);
+            sharedDataDialog.setLbs(lbsWhole, lbsDecimal);
         });
 
         kgPickerDecimal.setMinValue(0);
@@ -57,7 +58,7 @@ public class DialogWeightA extends Fragment {
 
         kgPickerDecimal.setOnValueChangedListener((picker, oldVal, kgDecimalVal) -> {
             int kgWholeVal = kgPicker.getValue();
-            sharedViewModel.setLbs(kgWholeVal, kgDecimalVal);
+            sharedDataDialog.setLbs(kgWholeVal, kgDecimalVal);
         });
 
 
