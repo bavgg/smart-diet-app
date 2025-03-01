@@ -1,5 +1,8 @@
 package com.jg.dietapp;
 
+import static com.jg.dietapp.MainActivity.decreaseProgress;
+import static com.jg.dietapp.MainActivity.increaseProgress;
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,55 +36,47 @@ public class Fragment1dActivityLevel extends Fragment {
 
         sedentaryCard.setOnClickListener(v -> {
             userData.setActivityLevel("sedentary");
-            updateProgress();
-            nextFragment(new Fragment1eCustomizeYourGoal());
+            increaseProgress();
+            nextFragment(new Fragment1eDietaryPreferences());
         });
 
         lightlyActiveCard.setOnClickListener(v -> {
             userData.setActivityLevel("lightly active");
-            updateProgress();
-            nextFragment(new Fragment1eCustomizeYourGoal());
+            increaseProgress();
+            nextFragment(new Fragment1eDietaryPreferences());
         });
 
         moderatelyActiveCard.setOnClickListener(v -> {
             userData.setActivityLevel("moderately active");
-            updateProgress();
-            nextFragment(new Fragment1eCustomizeYourGoal());
+            increaseProgress();
+            nextFragment(new Fragment1eDietaryPreferences());
         });
 
         veryActiveCard.setOnClickListener(v -> {
             userData.setActivityLevel("very active");
-            updateProgress();
-            nextFragment(new Fragment1eCustomizeYourGoal());
+            increaseProgress();
+            nextFragment(new Fragment1eDietaryPreferences());
         });
 
         professionalAthleteCard.setOnClickListener(v -> {
             userData.setActivityLevel("professional athlete");
-            updateProgress();
-            nextFragment(new Fragment1eCustomizeYourGoal());
+            increaseProgress();
+            nextFragment(new Fragment1eDietaryPreferences());
         });
     }
 
-    private void nextFragment(Fragment1eCustomizeYourGoal customizeYourGoalFragment) {
+    private void nextFragment(Fragment nextFragment) {
         requireActivity().getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragment_container, customizeYourGoalFragment)
+                .replace(R.id.fragment_container, nextFragment)
                 .addToBackStack(null)
                 .commit();
-    }
-
-    private void updateProgress() {
-        if (getActivity() instanceof MainActivity) {
-            ((MainActivity) getActivity()).updateProgress(25);
-        }
     }
 
     private void setupPressBackListener() {
         requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
-                if (getActivity() instanceof MainActivity) {
-                    ((MainActivity) getActivity()).updateProgress(-25);
-                }
+                decreaseProgress();
                 getParentFragmentManager().popBackStack();
             }
         });

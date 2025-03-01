@@ -1,5 +1,7 @@
 package com.jg.dietapp;
 
+import static com.jg.dietapp.MainActivity.decreaseProgress;
+import static com.jg.dietapp.MainActivity.increaseProgress;
 import static com.jg.dietapp.MainActivity.userData;
 
 import android.os.Bundle;
@@ -15,7 +17,7 @@ import androidx.fragment.app.Fragment;
 
 import java.util.Objects;
 
-public class Fragment1eCustomizeYourGoal extends Fragment {
+public class Fragment1fCustomizeYourGoal extends Fragment {
     CustomSelect currentWeightSelector, goalWeightSelector;
     Button createMyPlanButton;
 
@@ -60,8 +62,8 @@ public class Fragment1eCustomizeYourGoal extends Fragment {
             userData.setCurrentWeight(currentWeight);
             userData.setGoalWeight(goalWeight);
 
-            updateProgress();
-            nextFragment(new Fragment1fYouAreAllSet());
+            increaseProgress();
+            nextFragment(new Fragment1gYouAreAllSet());
         });
 
     }
@@ -81,19 +83,11 @@ public class Fragment1eCustomizeYourGoal extends Fragment {
                 .commit();
     }
 
-    private void updateProgress() {
-        if (getActivity() instanceof MainActivity) {
-            ((MainActivity) getActivity()).updateProgress(25);
-        }
-    }
-
     private void setupPressBackListener() {
         requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
-                if (getActivity() instanceof MainActivity) {
-                    ((MainActivity) getActivity()).updateProgress(-25);
-                }
+                decreaseProgress();
                 getParentFragmentManager().popBackStack();
             }
         });

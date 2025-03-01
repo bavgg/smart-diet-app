@@ -14,7 +14,7 @@
         android:id="@+id/progressIndicator"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:max="100"
+        android:max="8"
         android:progress="0"
         app:trackThickness="8dp"
         style="@style/Widget.MaterialComponents.LinearProgressIndicator"/>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+
+    android:layout_height="match_parent">
+
+    <TextView
+        android:textStyle="bold"
+        android:textSize="18dp"
+        android:layout_marginTop="142dp"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Dietary Preferences"/>
+    <TextView
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text=""/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        />
+
+    <com.jg.dietapp.CustomCard
+        android:clickable="true"
+        android:focusable="true"
+        android:id="@+id/veganCard"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
+        app:cardIcon="@drawable/baseline_trending_down_16"
+        app:head="Vegan"
+        app:body="Optimize weight loss and preserve muscle mass"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <com.jg.dietapp.CustomCard
+        android:clickable="true"
+        android:focusable="true"
+        android:id="@+id/ketoCard"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
+        app:cardIcon="@drawable/baseline_trending_up_16"
+        app:head="Keto"
+        app:body="Increase your weight and get stronger"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+
+
+    <com.jg.dietapp.CustomCard
+        android:clickable="true"
+        android:focusable="true"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="50dp"
+        android:id="@+id/paleoCard"
+        app:cardIcon="@drawable/baseline_trending_flat_16"
+        app:head="Paleo"
+        app:body="Keep your weight stable and aim for body recomposition"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+
+
+
+
+</LinearLayout>

@@ -14,13 +14,12 @@
         android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Dietary Preferences &amp; Restrictions"/>
+        android:text="Food Restrictions"/>
     <TextView
         android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text=""
-        />
+        android:text=""/>
 
     <View
         android:layout_width="match_parent"
@@ -28,52 +27,51 @@
         android:layout_weight="1"
         />
 
-
-
-    <com.jg.dietapp.CustomSelect
-
-        android:layout_marginVertical="4dp"
+    <com.jg.dietapp.CustomCard
         android:clickable="true"
         android:focusable="true"
-        android:id="@+id/currentWeightSelector"
-        app:title="Dietary Preference"
-        app:icon="@drawable/baseline_fastfood_16"
-        app:selectValue="Select"
+        android:id="@+id/nutsCard"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
+        app:cardIcon="@drawable/baseline_trending_down_16"
+        app:head="Nuts"
+        app:body="Optimize weight loss and preserve muscle mass"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
-    <com.jg.dietapp.CustomSelect
-
-        android:layout_marginVertical="4dp"
+    <com.jg.dietapp.CustomCard
         android:clickable="true"
         android:focusable="true"
-        android:id="@+id/goalWeightSelector"
-        app:title="Food Restrictions"
-        app:icon="@drawable/baseline_do_not_disturb_16"
-        app:selectValue="Select"
+        android:id="@+id/lactoseCard"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
+        app:cardIcon="@drawable/baseline_trending_up_16"
+        app:head="Lactose"
+        app:body="Increase your weight and get stronger"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
-    <com.jg.dietapp.CustomSelect
 
-        android:layout_marginVertical="4dp"
+
+    <com.jg.dietapp.CustomCard
         android:clickable="true"
         android:focusable="true"
-        android:id="@+id/speedSelector"
-        app:title="Meal Timing Preference"
-        app:icon="@drawable/baseline_access_time_filled_16"
-        app:selectValue="Select"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="50dp"
+        android:id="@+id/glutenCard"
+        app:cardIcon="@drawable/baseline_trending_flat_16"
+        app:head="Gluten"
+        app:body="Keep your weight stable and aim for body recomposition"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
 
     <Button
         android:layout_marginTop="16dp"
-        android:id="@+id/createMyPlanButton"
+        android:id="@+id/continueButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:enabled="false"
-        android:text="Create My Plan"
+        android:text="Continue"
         />
 
 </LinearLayout>

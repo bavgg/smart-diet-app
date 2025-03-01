@@ -9,10 +9,10 @@ import com.google.android.material.progressindicator.LinearProgressIndicator;
 
 public class MainActivity extends AppCompatActivity {
 
-    private int progress = 0;
+    private static int progress = 0;
     public static SharedViewModel sharedViewModel = new SharedViewModel();
     public static SharedDataUser userData = new SharedDataUser();
-    LinearProgressIndicator progressIndicator;
+    static LinearProgressIndicator progressIndicator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,8 +28,13 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void updateProgress(int value) {
-        progress += value;
+    public static void increaseProgress() {
+        progress += 1;
+        progressIndicator.setProgress(progress);
+    }
+
+    public static void decreaseProgress() {
+        progress -= 1;
         progressIndicator.setProgress(progress);
     }
 }

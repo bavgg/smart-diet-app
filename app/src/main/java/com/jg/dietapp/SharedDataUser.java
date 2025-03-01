@@ -12,6 +12,9 @@ public class SharedDataUser {
     private String activityLevel;
     private String currentWeight;
     private String goalWeight;
+    private String dietPreference;
+    private List<String> foodRestrictions;
+
     private List<String> all = new ArrayList<>();
 
     public List<String> getAll() {
@@ -51,6 +54,13 @@ public class SharedDataUser {
     public String getGoalWeight() {
         return goalWeight;
     }
+    public String getDietPreference() {
+        return dietPreference;
+    }
+    public List<String> getFoodRestrictions() {
+        return foodRestrictions;
+    }
+
 
 
     public void setGoal(String goal) {
@@ -81,5 +91,12 @@ public class SharedDataUser {
     public void setGoalWeight(String goalWeight) {
         this.goalWeight = goalWeight;
     }
+    public void setDietPreference(String dietPreference) {
+        this.dietPreference = dietPreference;
+    }
+    public void setFoodRestrictions(List<String> foodRestrictions) {
+        this.foodRestrictions = foodRestrictions;
+    }
+
 
 }

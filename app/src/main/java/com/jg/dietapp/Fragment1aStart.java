@@ -1,4 +1,6 @@
 package com.jg.dietapp;
+import static com.jg.dietapp.MainActivity.increaseProgress;
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,18 +26,11 @@ public class Fragment1aStart extends Fragment {
         // Close Bottom Sheet on Button Click
         Button startNow = view.findViewById(R.id.startNow);
 
-
-
-
         startNow.setOnClickListener(new View.OnClickListener() {
-
-
             @Override
             public void onClick(View view) {
 
-                if (getActivity() instanceof MainActivity) {
-                    ((MainActivity) getActivity()).updateProgress(25);
-                }
+                increaseProgress();
                 requireActivity().getSupportFragmentManager().beginTransaction()
                         .replace(R.id.fragment_container, new Fragment1bGoal())
                         .addToBackStack(null) // Optional: Allows back navigation

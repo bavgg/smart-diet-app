@@ -1,5 +1,8 @@
 package com.jg.dietapp;
 
+import static com.jg.dietapp.MainActivity.decreaseProgress;
+import static com.jg.dietapp.MainActivity.increaseProgress;
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,15 +33,6 @@ public class Fragment1cAboutYou extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), new OnBackPressedCallback(true) {
-            @Override
-            public void handleOnBackPressed() {
-                if (getActivity() instanceof MainActivity) {
-                    ((MainActivity) getActivity()).updateProgress(-25);
-                }
-                getParentFragmentManager().popBackStack();
-            }
-        });
 
         setupPressBackListener();
         setupClickListeners(view);
@@ -101,7 +95,7 @@ public class Fragment1cAboutYou extends Fragment {
             userData.setHeight(height);
             userData.setWeight(weight);
 
-            updateProgress();
+            increaseProgress();
             requireActivity().getSupportFragmentManager().beginTransaction()
                     .replace(R.id.fragment_container, new Fragment1dActivityLevel())
                     .addToBackStack(null)
@@ -109,19 +103,11 @@ public class Fragment1cAboutYou extends Fragment {
         });
     }
 
-    private void updateProgress() {
-        if (getActivity() instanceof MainActivity) {
-            ((MainActivity) getActivity()).updateProgress(25);
-        }
-    }
-
     private void setupPressBackListener() {
         requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
-                if (getActivity() instanceof MainActivity) {
-                    ((MainActivity) getActivity()).updateProgress(-25);
-                }
+                decreaseProgress();
                 getParentFragmentManager().popBackStack();
             }
         });
