@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "577016543182",
+    "project_id": "smart-diet-app-96aee",
+    "storage_bucket": "smart-diet-app-96aee.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:577016543182:android:ed0d8f0e11b5052c751d9f",
+        "android_client_info": {
+          "package_name": "com.jg.dietapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAHVm_GU7_iTMxzku3c69QyfLfHZyXn7q4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
