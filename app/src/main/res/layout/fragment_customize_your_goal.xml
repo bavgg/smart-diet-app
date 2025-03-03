@@ -54,21 +54,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
-    <com.jg.dietapp.CustomSelect
 
-        android:layout_marginVertical="4dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:id="@+id/speedSelector"
-        app:title="Speed"
-        app:icon="@drawable/baseline_speed_16"
-        app:selectValue="Select"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
 
 
     <Button
-        android:layout_marginTop="16dp"
+        android:layout_marginBottom="256dp"
+        android:layout_marginTop="6dp"
         android:id="@+id/createMyPlanButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

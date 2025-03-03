@@ -2,6 +2,7 @@ package com.jg.dietapp;
 
 import static com.jg.dietapp.MainActivity.decreaseProgress;
 import static com.jg.dietapp.MainActivity.increaseProgress;
+import static com.jg.dietapp.MainActivity.userInput;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,6 +14,9 @@ import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Fragment1eFoodRestrictions extends Fragment {
     CustomCard nutsCard, lactoseCard, glutenCard;
@@ -33,6 +37,7 @@ public class Fragment1eFoodRestrictions extends Fragment {
         glutenCard = view.findViewById(R.id.glutenCard);
 
         continueButton = view.findViewById(R.id.continueButton);
+        List<EnumFoodAllergen> foodAllergens = new ArrayList<>();
 
         setupPressBackListener();
 
@@ -79,6 +84,17 @@ public class Fragment1eFoodRestrictions extends Fragment {
         });
 
         continueButton.setOnClickListener(v -> {
+            if (nutsCard.isSelected()) {
+                foodAllergens.add(EnumFoodAllergen.NUTS);
+            }
+            if (lactoseCard.isSelected()) {
+                foodAllergens.add(EnumFoodAllergen.LACTOSE);
+            }
+            if (glutenCard.isSelected()) {
+                foodAllergens.add(EnumFoodAllergen.GLUTEN);
+            }
+
+            userInput.setFoodAllergens(foodAllergens);
             nextFragment(new Fragment1fCustomizeYourGoal());
             increaseProgress();
         });

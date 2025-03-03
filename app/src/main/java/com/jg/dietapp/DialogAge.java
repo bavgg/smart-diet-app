@@ -15,7 +15,7 @@ public class DialogAge extends com.google.android.material.bottomsheet.BottomShe
     private DialogAge.AgeSelectionListener ageSelectionListener;
 
     public interface AgeSelectionListener {
-        void onAgeSelected(String age);
+        void onAgeSelected(int age);
     }
 
     public void setSexSelectionListener(DialogAge.AgeSelectionListener listener) {
@@ -40,7 +40,7 @@ public class DialogAge extends com.google.android.material.bottomsheet.BottomShe
         
         okButton.setOnClickListener(v -> {
             int selectedAge = agePicker.getValue();
-            ageSelectionListener.onAgeSelected(selectedAge + " years");
+            ageSelectionListener.onAgeSelected(selectedAge);
             dismiss();  
         });
 

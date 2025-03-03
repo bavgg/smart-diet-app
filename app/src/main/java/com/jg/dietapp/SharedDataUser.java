@@ -14,8 +14,16 @@ public class SharedDataUser {
     private String goalWeight;
     private String dietPreference;
     private List<String> foodRestrictions;
+    private boolean userSubmitted = false;
 
     private List<String> all = new ArrayList<>();
+
+    public boolean getUserSubmitted() {
+        return this.userSubmitted;
+    }
+    public void setUserSubmitted(boolean userSubmitted) {
+        this.userSubmitted = userSubmitted;
+    }
 
     public List<String> getAll() {
         all.add(goal);

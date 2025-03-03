@@ -2,6 +2,7 @@ package com.jg.dietapp;
 
 import static com.jg.dietapp.MainActivity.decreaseProgress;
 import static com.jg.dietapp.MainActivity.increaseProgress;
+import static com.jg.dietapp.MainActivity.userInput;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -15,7 +16,6 @@ import androidx.fragment.app.Fragment;
 
 public class Fragment1dActivityLevel extends Fragment {
     CustomCard sedentaryCard, lightlyActiveCard, moderatelyActiveCard, veryActiveCard, professionalAthleteCard;
-    SharedDataUser userData = MainActivity.userData;
 
     @Nullable
     @Override
@@ -35,31 +35,31 @@ public class Fragment1dActivityLevel extends Fragment {
         setupPressBackListener();
 
         sedentaryCard.setOnClickListener(v -> {
-            userData.setActivityLevel("sedentary");
+            userInput.setActivityLevel(EnumActivityLevel.SEDENTARY);
             increaseProgress();
             nextFragment(new Fragment1eDietaryPreferences());
         });
 
         lightlyActiveCard.setOnClickListener(v -> {
-            userData.setActivityLevel("lightly active");
+            userInput.setActivityLevel(EnumActivityLevel.LIGHT_ACTIVITY);
             increaseProgress();
             nextFragment(new Fragment1eDietaryPreferences());
         });
 
         moderatelyActiveCard.setOnClickListener(v -> {
-            userData.setActivityLevel("moderately active");
+            userInput.setActivityLevel(EnumActivityLevel.MODERATE_ACTIVITY);
             increaseProgress();
             nextFragment(new Fragment1eDietaryPreferences());
         });
 
         veryActiveCard.setOnClickListener(v -> {
-            userData.setActivityLevel("very active");
+            userInput.setActivityLevel(EnumActivityLevel.HEAVY_ACTIVITY);
             increaseProgress();
             nextFragment(new Fragment1eDietaryPreferences());
         });
 
         professionalAthleteCard.setOnClickListener(v -> {
-            userData.setActivityLevel("professional athlete");
+            userInput.setActivityLevel(EnumActivityLevel.EXCESSIVE_ACTIVITY);
             increaseProgress();
             nextFragment(new Fragment1eDietaryPreferences());
         });

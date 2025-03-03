@@ -2,7 +2,7 @@ package com.jg.dietapp;
 
 import static com.jg.dietapp.MainActivity.decreaseProgress;
 import static com.jg.dietapp.MainActivity.increaseProgress;
-import static com.jg.dietapp.MainActivity.userData;
+import static com.jg.dietapp.MainActivity.userInput;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -38,11 +38,25 @@ public class Fragment1eDietaryPreferences extends Fragment {
         setupPressBackListener();
 
         veganCard.setOnClickListener(v -> {
-            veganCard.setSelected(true);
-            ketoCard.setSelected(false);
-            paleoCard.setSelected(false);
 
-            userData.setDietPreference("vegan");
+
+            userInput.setDietType(EnumDietType.VEGETARIAN);
+            nextFragment(new Fragment1eFoodRestrictions());
+            increaseProgress();
+        });
+
+        ketoCard.setOnClickListener(v -> {
+
+
+            userInput.setDietType(EnumDietType.KETO);
+            nextFragment(new Fragment1eFoodRestrictions());
+            increaseProgress();
+        });
+
+        veganCard.setOnClickListener(v -> {
+
+
+            userInput.setDietType(EnumDietType.PALEO);
             nextFragment(new Fragment1eFoodRestrictions());
             increaseProgress();
         });

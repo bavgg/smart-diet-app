@@ -1,6 +1,6 @@
 package com.jg.dietapp;
 
-import static com.jg.dietapp.MainActivity.userData;
+import static com.jg.dietapp.MainActivity.userInput;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -28,10 +28,8 @@ public class Fragment1gYouAreAllSet extends Fragment {
 
         TextView userDataText = view.findViewById(R.id.userData);
 
-        List<String> all = userData.getAll();
-        String result = String.join(", ", all);
 
-        userDataText.setText(result);
+        System.out.println(userInput);
 
     }
 }

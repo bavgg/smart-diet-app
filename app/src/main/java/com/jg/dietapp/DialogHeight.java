@@ -22,7 +22,7 @@ public class DialogHeight extends com.google.android.material.bottomsheet.Bottom
     // Interface for handling OkClick Button
     private DialogHeight.OkClickListener okClickListener;
     public interface OkClickListener {
-        void onOkClick(String weight);
+        void onOkClick(int height, String unit);
     }
     public void setOnOkClickListener(DialogHeight.OkClickListener listener) {
         this.okClickListener = listener;
@@ -74,15 +74,15 @@ public class DialogHeight extends com.google.android.material.bottomsheet.Bottom
 
             int cValue = sharedDataDialog.getCmValue();
             if(Objects.equals(cmFeet.get(), "cm")){
-                String cmText = cValue + " cm";
-                okClickListener.onOkClick(cmText);
+//                String cmText = cValue + " cm";
+                okClickListener.onOkClick(cValue, "cm");
             }else if(Objects.equals(cmFeet.get(), "ft")) {
 
-                int feet = (int) (cValue / 30.48); // Convert cm to feet
-                int inches = (int) Math.ceil((cValue % 30.48) / 2.54);
-                String ftInText = feet + " ft " + inches + " in";
+//                int feet = (int) (cValue / 30.48); // Convert cm to feet
+//                int inches = (int) Math.ceil((cValue % 30.48) / 2.54);
+//                String ftInText = feet + " ft " + inches + " in";
 
-                okClickListener.onOkClick(ftInText);
+                okClickListener.onOkClick(cValue, "ft");
             }
             dismiss();
         });

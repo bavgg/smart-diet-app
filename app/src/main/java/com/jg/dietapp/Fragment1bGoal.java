@@ -15,7 +15,7 @@ import androidx.fragment.app.Fragment;
 
 public class Fragment1bGoal extends Fragment {
     CustomCard fatLossCard, muscleGainCard, weightMaintenanceCard;
-    SharedDataUser userData = MainActivity.userData;
+    ModelUserInput userInput = MainActivity.userInput;
 
     @Nullable
     @Override
@@ -34,7 +34,7 @@ public class Fragment1bGoal extends Fragment {
         setupBackPressedListener();
 
         fatLossCard.setOnClickListener(v -> {
-            userData.setGoal("fat loss");
+            userInput.setGoal(EnumGoal.LOSE_WEIGHT);
             increaseProgress();
             fatLossCard.setCardElevation(10f);
 
@@ -42,7 +42,7 @@ public class Fragment1bGoal extends Fragment {
         });
 
         muscleGainCard.setOnClickListener(v -> {
-            userData.setGoal("muscle gain");
+            userInput.setGoal(EnumGoal.GAIN_MUSCLE);
             increaseProgress();
             muscleGainCard.setCardElevation(10f);
 
@@ -50,7 +50,7 @@ public class Fragment1bGoal extends Fragment {
         });
 
         weightMaintenanceCard.setOnClickListener(v -> {
-            userData.setGoal("weight maintenance");
+            userInput.setGoal(EnumGoal.MAINTAIN_WEIGHT);
             increaseProgress();
             weightMaintenanceCard.setCardElevation(10f);
 

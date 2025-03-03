@@ -23,7 +23,7 @@ public class DialogWeight extends com.google.android.material.bottomsheet.Bottom
     // Interface for handling OkClick Button
     private DialogWeight.OkClickListener okClickListener;
     public interface OkClickListener {
-        void onOkClick(String weight);
+        void onOkClick(Double weight, String unit);
     }
     public void setOnOkClickListener(DialogWeight.OkClickListener listener) {
         this.okClickListener = listener;
@@ -39,22 +39,17 @@ public class DialogWeight extends com.google.android.material.bottomsheet.Bottom
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        // Initialize the views
         MaterialCardView kg = view.findViewById(R.id.kg);
         MaterialCardView lbs = view.findViewById(R.id.lbs);
         Button okButton = view.findViewById(R.id.okButton);
 
-        // Initialize the shared view model
 
-        // Initialize the selected unit to kg
         AtomicReference<String> selectedUnit = new AtomicReference<>("kg");
 
-        // Loading the first dialog fragment for kg
         getChildFragmentManager().beginTransaction()
                 .replace(R.id.fragment_container, new DialogWeightA())
                 .commit();
 
-        // Event listeners for selecting which unit to use and switching between dialog fragments
         kg.setOnClickListener(v -> {
             selectedUnit.set("kg");
 
@@ -81,24 +76,18 @@ public class DialogWeight extends com.google.android.material.bottomsheet.Bottom
 
         });
 
-        // Listener to pass the selected weight from the dialog to the parent fragment when the OK button is clicked
         okButton.setOnClickListener(v -> {
 
             double lbsValue = sharedDataDialog.getLbs();
-            DecimalFormat df = new DecimalFormat("#.#");
 
             if(Objects.equals(selectedUnit.get(), "kg")){
-                Double kg1 = Utils.lbsToKg(lbsValue);
-                String kgString = df.format(kg1);
 
-                String a = kgString + " kg";
-                okClickListener.onOkClick(a);
+
+                okClickListener.onOkClick(lbsValue, "kg");
             }else if(Objects.equals(selectedUnit.get(), "lbs")) {
 
-                String lbsString = df.format(lbsValue);
 
-                String b = lbsString + " lbs ";
-                okClickListener.onOkClick(b);
+                okClickListener.onOkClick(lbsValue, "lbs");
             }
             dismiss();
         });

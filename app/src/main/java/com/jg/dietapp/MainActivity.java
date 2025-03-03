@@ -1,19 +1,31 @@
 package com.jg.dietapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.progressindicator.LinearProgressIndicator;
+import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity {
 
     private static int progress = 0;
     public static SharedDataDialog sharedDataDialog = new SharedDataDialog();
-    public static SharedDataUser userData = new SharedDataUser();
+    public static ModelUserInput userInput = new ModelUserInput();
     static LinearProgressIndicator progressIndicator;
 
+    @Override
+    public void onStart(){
+        super.onStart();
+
+        if(userInput.getUserSubmitted()) {
+            Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+            startActivity(intent);
+            finish();
+        }
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
