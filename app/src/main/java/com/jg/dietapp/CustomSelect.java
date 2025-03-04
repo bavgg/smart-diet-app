@@ -2,18 +2,11 @@ package com.jg.dietapp;
 
 
 import android.content.Context;
-import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
-import android.graphics.Color;
-import android.graphics.drawable.Icon;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import androidx.core.content.ContextCompat;
 
 import com.google.android.material.card.MaterialCardView;
 
@@ -29,15 +22,11 @@ public class CustomSelect extends MaterialCardView {
     private void init(Context context, AttributeSet attrs) {
         LayoutInflater.from(context).inflate(R.layout.custom_select, this, true);
 
-        MaterialCardView selectCard = findViewById(R.id.customSelectCard);
         ImageView icon = findViewById(R.id.icon);
         TextView title = findViewById(R.id.title);
         selectValue = findViewById(R.id.selectValue);
 
-
-
-
-        // Get custom attributes
+        // Get attributes
         TypedArray attributes = context.obtainStyledAttributes(attrs, R.styleable.CustomSelect);
         int iconAttr = attributes.getResourceId(R.styleable.CustomSelect_icon, 0);
         String titleAttr = attributes.getString(R.styleable.CustomSelect_title);
@@ -55,7 +44,6 @@ public class CustomSelect extends MaterialCardView {
         if (iconAttr != 0) {
             icon.setImageResource(iconAttr);
         }
-
 
     }
 

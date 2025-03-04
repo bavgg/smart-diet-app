@@ -1,0 +1,58 @@
+<LinearLayout android:orientation="vertical"
+    android:padding="16dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_constraintTop_toTopOf="parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:textSize="22dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Breakfast"
+        />
+
+    <com.jg.dietapp.CustomMealList
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        app:calorie="124"
+        app:mealImage="@drawable/baseline_fastfood_16"
+        app:mealName="Adobong Pata"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+
+        android:layout_marginTop="22dp"
+        android:textSize="22dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Lunch"
+        />
+
+    <com.jg.dietapp.CustomMealList
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        app:calorie="124"
+        app:mealImage="@drawable/baseline_fastfood_16"
+        app:mealName="Adobong Pata"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:layout_marginTop="22dp"
+        android:textSize="22dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Dinner"
+        />
+
+    <com.jg.dietapp.CustomMealList
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        app:calorie="124"
+        app:mealImage="@drawable/baseline_fastfood_16"
+        app:mealName="Adobong Pata"
+        tools:ignore="MissingConstraints" />
+
+
+</LinearLayout>

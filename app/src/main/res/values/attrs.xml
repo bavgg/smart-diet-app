@@ -10,4 +10,10 @@
         <attr name="title" format="string"/>
         <attr name="selectValue" format="string"/>
     </declare-styleable>
+
+    <declare-styleable name="CustomMealList">
+        <attr name="mealImage" format="reference"/>
+        <attr name="mealName" format="string"/>
+        <attr name="calorie" format="string"/>
+    </declare-styleable>
 </resources>
