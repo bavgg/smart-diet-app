@@ -1,5 +1,7 @@
 package com.jg.dietapp;
 
+import static com.jg.dietapp.MainActivity.userInput;
+
 import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
@@ -15,20 +17,17 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
 
-        GeneratorMeal mealGenerator = new GeneratorMeal();
+//        GeneratorMeal mealGenerator = new GeneratorMeal();
 
-        // Generate Meal Plan
-        List<ModelMeal> mealPlan = mealGenerator.generateMealPlan();
-        System.out.println("===== Meal Plan =====");
-        for (ModelMeal meal : mealPlan) {
-            System.out.println(meal);
-        }
+//        userInput = getUserInput(); // Assume user input is retrieved
+//        List<ModelMeal> meals = mealGenerator.generateMealPlan(this, userInput);
+//        List<ModelExercise> exercises = ExerciseGenerator.generateExercisePlan(this, userInput);
 
-        // Generate Exercise Plan
-        List<ModelExercise> exercisePlan = GeneratorExercise.generateExercisePlan();
-        System.out.println("\n===== Exercise Plan =====");
-        for (ModelExercise exercise : exercisePlan) {
-            System.out.println(exercise);
-        }
+//        // Generate Exercise Plan
+//        List<ModelExercise> exercisePlan = GeneratorExercise.generateExercisePlan();
+//        System.out.println("\n===== Exercise Plan =====");
+//        for (ModelExercise exercise : exercisePlan) {
+//            System.out.println(exercise);
+//        }
     }
 }

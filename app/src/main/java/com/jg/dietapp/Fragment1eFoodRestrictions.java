@@ -15,8 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class Fragment1eFoodRestrictions extends Fragment {
     CustomCard nutsCard, lactoseCard, glutenCard;
@@ -37,7 +36,7 @@ public class Fragment1eFoodRestrictions extends Fragment {
         glutenCard = view.findViewById(R.id.glutenCard);
 
         continueButton = view.findViewById(R.id.continueButton);
-        List<EnumFoodAllergen> foodAllergens = new ArrayList<>();
+        AtomicReference<String> foodAllergens = new AtomicReference<>("");
 
         setupPressBackListener();
 
@@ -85,16 +84,16 @@ public class Fragment1eFoodRestrictions extends Fragment {
 
         continueButton.setOnClickListener(v -> {
             if (nutsCard.isSelected()) {
-                foodAllergens.add(EnumFoodAllergen.NUTS);
+                foodAllergens.updateAndGet(value -> value + ",Nuts");
             }
             if (lactoseCard.isSelected()) {
-                foodAllergens.add(EnumFoodAllergen.LACTOSE);
+                foodAllergens.updateAndGet(value -> value + ",Lactose");
             }
             if (glutenCard.isSelected()) {
-                foodAllergens.add(EnumFoodAllergen.GLUTEN);
+                foodAllergens.updateAndGet(value -> value + ",Gluten");
             }
 
-            userInput.setFoodAllergens(foodAllergens);
+            userInput.setFoodAllergens(foodAllergens.get());
             nextFragment(new Fragment1fCustomizeYourGoal());
             increaseProgress();
         });

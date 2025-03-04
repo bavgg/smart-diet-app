@@ -1,6 +1,7 @@
 package com.jg.dietapp;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
@@ -15,6 +16,8 @@ public class MainActivity extends AppCompatActivity {
     public static SharedDataDialog sharedDataDialog = new SharedDataDialog();
     public static ModelUserInput userInput = new ModelUserInput();
     static LinearProgressIndicator progressIndicator;
+    private DatabaseHelper databaseHelper;
+
 
     @Override
     public void onStart(){
@@ -31,6 +34,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
+
+        // ✅ Initialize DatabaseHelper (this triggers the seeding)
+        databaseHelper = new DatabaseHelper(this);
+        SQLiteDatabase db = databaseHelper.getWritableDatabase(); // Ensures database is created
+
 
         progressIndicator = findViewById(R.id.progressIndicator);
 

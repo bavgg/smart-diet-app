@@ -15,13 +15,13 @@ public class ModelUserInput {
     private EnumDietType dietType;
 //    private EnumFoodAllergen[] foodAllergens;
     private boolean userSubmitted = false;
-    private List<EnumFoodAllergen> foodAllergens;
+    private String foodAllergens;
 
     public ModelUserInput(){
 
     }
     public ModelUserInput(EnumGoal goal, EnumSex sex, int age, int height, int weight, double goalWeight,
-                          EnumActivityLevel activityLevel, EnumDietType dietType, List<EnumFoodAllergen> foodAllergens) {
+                          EnumActivityLevel activityLevel, EnumDietType dietType, String foodAllergens) {
         this.goal = goal;
         this.sex = sex;
         this.age = age;
@@ -43,7 +43,7 @@ public class ModelUserInput {
     public double getGoalWeight() { return goalWeight; }
     public EnumActivityLevel getActivityLevel() { return activityLevel; }
     public EnumDietType getDietType() { return dietType; }
-    public List<EnumFoodAllergen> getFoodAllergens() { return foodAllergens; }
+    public String getFoodAllergens() { return foodAllergens; }
 
     // Setters
     public void setUserSubmitted(boolean userSubmitted) { this.userSubmitted = userSubmitted; }
@@ -55,7 +55,7 @@ public class ModelUserInput {
     public void setGoalWeight(double goalWeight) { this.goalWeight = goalWeight; }
     public void setActivityLevel(EnumActivityLevel activityLevel) { this.activityLevel = activityLevel; }
     public void setDietType(EnumDietType dietType) { this.dietType = dietType; }
-    public void setFoodAllergens(List<EnumFoodAllergen> foodAllergens) { this.foodAllergens = foodAllergens; }
+    public void setFoodAllergens(String foodAllergens) { this.foodAllergens = foodAllergens; }
 
 
     @NonNull
