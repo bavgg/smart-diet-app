@@ -5,12 +5,12 @@ import java.util.List;
 
 public class ModelMeal {
     private String name;
-    private int calories;
+    private double calories;
     private int protein;
     private int carbs;
     private int fats;
 
-    public ModelMeal(String name, int calories, int protein, int carbs, int fats) {
+    public ModelMeal(String name, double calories, int protein, int carbs, int fats) {
         this.name = name;
         this.calories = calories;
         this.protein = protein;
@@ -19,7 +19,7 @@ public class ModelMeal {
     }
 
     public String getName() { return name; }
-    public int getCalories() { return calories; }
+    public double getCalories() { return calories; }
     public int getProtein() { return protein; }
     public int getCarbs() { return carbs; }
     public int getFats() { return fats; }

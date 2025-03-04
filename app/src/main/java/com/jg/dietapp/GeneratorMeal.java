@@ -4,12 +4,13 @@ import static com.jg.dietapp.MainActivity.userInput;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
-public class MealGenerator {
+public class GeneratorMeal {
     public List<ModelMeal> generateMealPlan() {
         List<ModelMeal> meals = new ArrayList<>();
 
-        int baseCalories = getBaseCalories(userInput.getActivityLevel());
+        double baseCalories = getBaseCalories(userInput.getActivityLevel());
 
 
         if (userInput.getGoal() == EnumGoal.LOSE_WEIGHT) {
@@ -25,9 +26,10 @@ public class MealGenerator {
         return meals;
     }
 
-    private int getBaseCalories(EnumActivityLevel activityLevel) {
+
+    private double getBaseCalories(EnumActivityLevel activityLevel) {
         switch (activityLevel) {
-            case SEDENTARY: return 1800;
+            case SEDENTARY: return calculateBMR(userInput.getWeight(), userInput.getHeight(), userInput.getAge(), userInput.getSex());
             case LIGHT_ACTIVITY: return 2000;
             case MODERATE_ACTIVITY: return 2200;
             case HEAVY_ACTIVITY: return 2500;
@@ -36,7 +38,7 @@ public class MealGenerator {
         }
     }
 
-    private ModelMeal selectMeal(String mealType, int calories) {
+    private ModelMeal selectMeal(String mealType, double calories) {
         List<ModelMeal> mealOptions = new ArrayList<>();
 
         switch (userInput.getDietType()) {
@@ -71,6 +73,22 @@ public class MealGenerator {
         }
         return false;
     }
+
+    private double calculateBMR(double weight, double height, int age, EnumSex gender) {
+        if(userInput.getSex() == EnumSex.MALE) {
+            return 88.362 + (13.397 * weight) + (4.799 * height) - (5.677 * age);
+        } else {
+            return 447.593 + (9.247 * weight) + (3.098 * height) - (4.330 * age);
+        }
+    }
+
+//    private double calculateTDEE(double bmr, EnumActivityLevel activityLevel) {
+//        switch (activityLevel) {
+//            case SEDENTARY: return bmr * 1.2;
+//            case LIGHT_ACTIVITY: return bmr * 1.375;
+//
+//        }
+//    }
 
 
 }

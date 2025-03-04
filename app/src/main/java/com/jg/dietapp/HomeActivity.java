@@ -1,7 +1,6 @@
 package com.jg.dietapp;
 
 import android.os.Bundle;
-import android.widget.ListView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,7 +15,7 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
 
-        MealGenerator mealGenerator = new MealGenerator();
+        GeneratorMeal mealGenerator = new GeneratorMeal();
 
         // Generate Meal Plan
         List<ModelMeal> mealPlan = mealGenerator.generateMealPlan();

@@ -69,7 +69,8 @@ public class Fragment1cAboutYou extends Fragment {
                 if(Objects.equals(unit, "cm")){
                     heightSelector.setSelectValue(height + " cm");
                 }else if(Objects.equals(unit, "ft")){
-                    heightSelector.setSelectValue(height + " ft");
+                    String ftInch = Utils.cmToFeetInches(height);
+                    heightSelector.setSelectValue(ftInch);
                 }
                 heightInfo.set(height);
                 continueButton.setEnabled(isFilled());

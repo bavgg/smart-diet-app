@@ -2,11 +2,12 @@ package com.jg.dietapp;
 
 import static com.jg.dietapp.MainActivity.userInput;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,6 +17,7 @@ import java.util.List;
 
 public class Fragment1gYouAreAllSet extends Fragment {
 
+    Button nextButton;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -26,7 +28,18 @@ public class Fragment1gYouAreAllSet extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        TextView userDataText = view.findViewById(R.id.userData);
+        nextButton = view.findViewById(R.id.nextButton);
+        GeneratorMeal mealGenerator = new GeneratorMeal();
+        List<ModelMeal> meals = mealGenerator.generateMealPlan();
+
+        for (ModelMeal meal : meals) {
+            System.out.println("Meal: " + meal.getName() + ", Calories: " + meal.getCalories());
+        }
+
+        nextButton.setOnClickListener(v -> {
+            Intent intent = new Intent(getContext(), HomeActivity.class);
+            startActivity(intent);
+        });
 
 
         System.out.println(userInput);
