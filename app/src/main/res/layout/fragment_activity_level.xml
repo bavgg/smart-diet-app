@@ -27,7 +27,7 @@
         android:layout_weight="1"
         />
 
-    <com.jg.dietapp.CustomCard
+    <com.jg.dietapp.components.CustomCard
         android:id="@+id/sedentaryCard"
         android:clickable="true"
         android:focusable="true"
@@ -38,7 +38,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
-    <com.jg.dietapp.CustomCard
+    <com.jg.dietapp.components.CustomCard
         android:id="@+id/lightlyActiveCard"
         android:clickable="true"
         android:focusable="true"
@@ -49,7 +49,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
-    <com.jg.dietapp.CustomCard
+    <com.jg.dietapp.components.CustomCard
         android:id="@+id/moderatelyActiveCard"
         android:clickable="true"
         android:focusable="true"
@@ -60,7 +60,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
-    <com.jg.dietapp.CustomCard
+    <com.jg.dietapp.components.CustomCard
         android:id="@+id/veryActiveCard"
         android:clickable="true"
         android:focusable="true"
@@ -71,7 +71,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
-    <com.jg.dietapp.CustomCard
+    <com.jg.dietapp.components.CustomCard
         android:id="@+id/professionalAthleteCard"
         android:clickable="true"
         android:focusable="true"

@@ -13,13 +13,13 @@
         android:text="Breakfast"
         />
 
-    <com.jg.dietapp.CustomMealList
+    <com.jg.dietapp.components.CustomMealList
         android:layout_width="match_parent"
         android:layout_height="42dp"
         app:calorie="124"
         app:mealImage="@drawable/baseline_fastfood_16"
         app:mealName="Adobong Pata"
-        tools:ignore="MissingConstraints" />
+         />
 
     <TextView
 
@@ -30,13 +30,13 @@
         android:text="Lunch"
         />
 
-    <com.jg.dietapp.CustomMealList
+    <com.jg.dietapp.components.CustomMealList
         android:layout_width="match_parent"
         android:layout_height="42dp"
         app:calorie="124"
         app:mealImage="@drawable/baseline_fastfood_16"
         app:mealName="Adobong Pata"
-        tools:ignore="MissingConstraints" />
+      />
 
     <TextView
         android:layout_marginTop="22dp"
@@ -46,13 +46,13 @@
         android:text="Dinner"
         />
 
-    <com.jg.dietapp.CustomMealList
+    <com.jg.dietapp.components.CustomMealList
         android:layout_width="match_parent"
         android:layout_height="42dp"
         app:calorie="124"
         app:mealImage="@drawable/baseline_fastfood_16"
         app:mealName="Adobong Pata"
-        tools:ignore="MissingConstraints" />
+         />
 
 
 </LinearLayout>

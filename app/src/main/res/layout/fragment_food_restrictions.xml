@@ -27,7 +27,7 @@
         android:layout_weight="1"
         />
 
-    <com.jg.dietapp.CustomCard
+    <com.jg.dietapp.components.CustomCard
         android:clickable="true"
         android:focusable="true"
         android:id="@+id/nutsCard"
@@ -39,7 +39,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
-    <com.jg.dietapp.CustomCard
+    <com.jg.dietapp.components.CustomCard
         android:clickable="true"
         android:focusable="true"
         android:id="@+id/lactoseCard"
@@ -53,7 +53,7 @@
 
 
 
-    <com.jg.dietapp.CustomCard
+    <com.jg.dietapp.components.CustomCard
         android:clickable="true"
         android:focusable="true"
         android:layout_marginTop="4dp"
