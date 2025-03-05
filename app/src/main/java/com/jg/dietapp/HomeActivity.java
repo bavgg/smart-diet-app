@@ -1,13 +1,14 @@
 package com.jg.dietapp;
 
-import static com.jg.dietapp.MainActivity.userInput;
-
 import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
-import java.util.List;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.jg.dietapp.fragments.home.FragmentPlan;
+import com.jg.dietapp.fragments.home.FragmentSettings;
 
 public class HomeActivity extends AppCompatActivity {
     @Override
@@ -16,6 +17,26 @@ public class HomeActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_home);
 
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
+
+        // Load fragment
+        loadFragment(new FragmentPlan());
+
+        bottomNavigationView.setOnItemSelectedListener(item -> {
+            Fragment selectedFragment = null;
+
+            if (item.getItemId() == R.id.nav_home) {
+                selectedFragment = new FragmentPlan();
+            } else if (item.getItemId() == R.id.nav_settings) {
+                selectedFragment = new FragmentSettings();
+            }
+
+            if (selectedFragment != null) {
+                loadFragment(selectedFragment);
+            }
+
+            return true;
+        });
 
 //        GeneratorMeal mealGenerator = new GeneratorMeal();
 
@@ -29,5 +50,11 @@ public class HomeActivity extends AppCompatActivity {
 //        for (ModelExercise exercise : exercisePlan) {
 //            System.out.println(exercise);
 //        }
+    }
+
+    private void loadFragment(Fragment fragment) {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container_view, fragment)
+                .commit();
     }
 }

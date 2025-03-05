@@ -44,16 +44,16 @@
 
 
 <!--            spacer -->
-            <View
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_weight="1" />
+<!--            <View-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="1dp"-->
+<!--                android:layout_weight="1" />-->
 
             <TextView
                 android:id="@+id/calorie_count_text"
-                android:layout_marginStart="12dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
                 android:text="496" />
 
             <TextView
@@ -65,10 +65,10 @@
 
             <RadioButton
                 android:id="@+id/radioButton"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="8dp"
                 android:gravity="center" />
-
 
 
         </LinearLayout>

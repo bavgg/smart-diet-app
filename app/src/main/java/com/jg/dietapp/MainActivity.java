@@ -35,18 +35,23 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+
+    // Entry point
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
+        // Initialize database
         DatabaseHelper databaseHelper = new DatabaseHelper(this);
         SQLiteDatabase db = databaseHelper.getWritableDatabase();
 
 
+        // Initialize progress indicator component
         progressIndicator = findViewById(R.id.progressIndicator);
 
+        // Load fragment
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fragment_container, new Fragment1aStart())
                 .commit();

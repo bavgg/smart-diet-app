@@ -35,16 +35,14 @@ public class Fragment1gYouAreAllSet extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         nextButton = view.findViewById(R.id.nextButton);
-        GeneratorMeal generatorMeal = new GeneratorMeal(userInput);
-        List<Meal> meals = generatorMeal.generateMealPlan(getContext());
+
 
         userInput.setUserSubmitted(true);
 
         sharedPrefsHelper.saveUser(getContext(), userInput);
 
 
-        System.out.println(meals);
-        System.out.println("Calories: " + generatorMeal.getBaseCalories());
+
 
 //        for (ModelMeal meal : meals) {
 //            System.out.println("Meal: " + meal.getName() + ", Calories: " + meal.getCalories());

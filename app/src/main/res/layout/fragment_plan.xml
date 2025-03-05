@@ -14,8 +14,9 @@
         />
 
     <com.jg.dietapp.components.CustomMealList
+        android:id="@+id/meal_list1"
         android:layout_width="match_parent"
-        android:layout_height="42dp"
+        android:layout_height="wrap_content"
         app:calorie="124"
         app:mealImage="@drawable/baseline_fastfood_16"
         app:mealName="Adobong Pata"
@@ -31,8 +32,9 @@
         />
 
     <com.jg.dietapp.components.CustomMealList
+        android:id="@+id/meal_list2"
         android:layout_width="match_parent"
-        android:layout_height="42dp"
+        android:layout_height="wrap_content"
         app:calorie="124"
         app:mealImage="@drawable/baseline_fastfood_16"
         app:mealName="Adobong Pata"
@@ -47,8 +49,9 @@
         />
 
     <com.jg.dietapp.components.CustomMealList
+        android:id="@+id/meal_list3"
         android:layout_width="match_parent"
-        android:layout_height="42dp"
+        android:layout_height="wrap_content"
         app:calorie="124"
         app:mealImage="@drawable/baseline_fastfood_16"
         app:mealName="Adobong Pata"

@@ -50,7 +50,12 @@ public class CustomMealList extends MaterialCardView {
         }
     }
 
-    public void setRadioButton() {
+    public void setMealName(String mealName) {
+        TextView mealNameTextView = findViewById(R.id.meal_name);
+        mealNameTextView.setText(mealName);
+
+    }
+    public void toggleRadioButton() {
         boolean isRadioButtonChecked = radioButton.isChecked();
         radioButton.setChecked(!isRadioButtonChecked);
     }

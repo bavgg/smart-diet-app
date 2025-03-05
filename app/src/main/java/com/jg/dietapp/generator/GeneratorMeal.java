@@ -21,9 +21,13 @@ public class GeneratorMeal {
     }
 
     List<Meal> mealOptions;
-    public List<Meal> generateMealPlan(Context context) {
+    public List<Meal>[] generateMealPlan(Context context) {
         DAOMeal mealDAO = new DAOMeal(context);
         List<Meal> mealPlan = new ArrayList<>();
+
+        List<Meal> breakfastMealPlan = new ArrayList<>();
+        List<Meal> lunchMealPlan = new ArrayList<>();
+        List<Meal> dinnerMealPlan = new ArrayList<>();
 
 //      // lactose-free, gluten-free, nut-free
 
@@ -33,11 +37,13 @@ public class GeneratorMeal {
                 userInput.getFoodAllergens()
         );
 
-//        System.out.println("Meal Options: " + mealOptions);
+        System.out.println("Meal Options: " + mealOptions);
 
 
         // Step 1: Calculate Daily Calorie Needs
         double baseCalories = getBaseCalories();
+
+
 
         // Step 2: Adjust Calories Based on Goal
         if (userInput.getGoal() == EnumGoal.LOSE_WEIGHT) {
@@ -46,17 +52,19 @@ public class GeneratorMeal {
             baseCalories += 300;
         }
 
+        System.out.println("Base Calories: " + baseCalories);
+
         // Step 3: Distribute Calories Across Meals
         double breakfastCalories = baseCalories * 0.3; // 30% for Breakfast
         double lunchCalories = baseCalories * 0.4; // 40% for Lunch
         double dinnerCalories = baseCalories * 0.3; // 30% for Dinner
 
         // Step 4: Fetch Meals Matching Diet, Allergens, and Calories
-        mealPlan.add(selectMeal( breakfastCalories));
-        mealPlan.add(selectMeal(  lunchCalories));
-        mealPlan.add(selectMeal(  dinnerCalories));
+        breakfastMealPlan.addAll(selectMeals(breakfastCalories));
+        lunchMealPlan.addAll(selectMeals(lunchCalories));
+        dinnerMealPlan.addAll(selectMeals(dinnerCalories));
 
-        return mealPlan;
+        return new List[]{breakfastMealPlan, lunchMealPlan, dinnerMealPlan};
     }
 
     public double getBaseCalories() {
@@ -81,22 +89,30 @@ public class GeneratorMeal {
         }
     }
 
-    private Meal selectMeal(double targetCalories) {
-        // Select a meal closest to the calorie target
-        Meal bestMatch = null;
-        double minDifference = Double.MAX_VALUE;
+    private List<Meal> selectMeals(double targetCalories) {
+        List<Meal> selectedMeals = new ArrayList<>();
+        double totalCalories = 0;
 
-        for (Meal meal : mealOptions) {
-            double diff = Math.abs(meal.getCalories() - targetCalories);
-            if (diff < minDifference) {
-                minDifference = diff;
-                bestMatch = meal;
+        while (!mealOptions.isEmpty() && totalCalories < targetCalories) {
+            Meal bestMatch = null;
+            double minDifference = Double.MAX_VALUE;
+
+            for (Meal meal : mealOptions) {
+                double diff = Math.abs((totalCalories + meal.getCalories()) - targetCalories);
+                if (diff < minDifference) {
+                    minDifference = diff;
+                    bestMatch = meal;
+                }
             }
+
+            if (bestMatch == null) break;
+
+            selectedMeals.add(bestMatch);
+            totalCalories += bestMatch.getCalories();
+            mealOptions.remove(bestMatch);
         }
 
-        mealOptions.remove(bestMatch);
-
-        return bestMatch;
+        return selectedMeals;
     }
 
 
