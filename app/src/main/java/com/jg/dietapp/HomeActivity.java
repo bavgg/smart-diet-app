@@ -10,7 +10,14 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.jg.dietapp.fragments.home.FragmentPlan;
 import com.jg.dietapp.fragments.home.FragmentSettings;
 
+
 public class HomeActivity extends AppCompatActivity {
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,18 +45,6 @@ public class HomeActivity extends AppCompatActivity {
             return true;
         });
 
-//        GeneratorMeal mealGenerator = new GeneratorMeal();
-
-//        userInput = getUserInput(); // Assume user input is retrieved
-//        List<ModelMeal> meals = mealGenerator.generateMealPlan(this, userInput);
-//        List<ModelExercise> exercises = ExerciseGenerator.generateExercisePlan(this, userInput);
-
-//        // Generate Exercise Plan
-//        List<ModelExercise> exercisePlan = GeneratorExercise.generateExercisePlan();
-//        System.out.println("\n===== Exercise Plan =====");
-//        for (ModelExercise exercise : exercisePlan) {
-//            System.out.println(exercise);
-//        }
     }
 
     private void loadFragment(Fragment fragment) {

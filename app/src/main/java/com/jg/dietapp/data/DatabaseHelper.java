@@ -24,7 +24,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "diet_type TEXT, " +
                 "allergens TEXT, " +
                 "prep_time INTEGER, " +
-                "cuisine TEXT)"
+                "culture TEXT, " +
+                "region TEXT, " +
+                "servings_grams INTEGER)"
         );
 
         db.execSQL("CREATE TABLE exercises (" +
@@ -41,49 +43,62 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.beginTransaction(); // ✅ Begin transaction for performance
         try {
             // Manually inserting 50 meals with different cuisines
-            db.execSQL("INSERT INTO meals (name, calories, protein, carbs, fats, diet_type, allergens, prep_time, cuisine) VALUES " +
-                    "('Sushi (Salmon Roll)', 300, 25, 45, 8, 'LOW_FAT', 'Seafood', 20, 'Japanese'), " +
-                    "('Tacos al Pastor', 450, 35, 40, 15, 'PALEO', 'None', 25, 'Mexican'), " +
-                    "('Chicken Tikka Masala', 500, 40, 50, 20, 'HIGH_PROTEIN', 'Dairy', 40, 'Indian'), " +
-                    "('Ratatouille', 250, 10, 35, 5, 'VEGETARIAN', 'None', 30, 'French'), " +
-                    "('Falafel Wrap', 400, 20, 50, 15, 'VEGETARIAN', 'Gluten', 20, 'Middle Eastern'), " +
-                    "('Beef Pho', 450, 35, 60, 10, 'LOW_FAT', 'None', 40, 'Vietnamese'), " +
-                    "('Borscht', 300, 10, 40, 8, 'VEGETARIAN', 'None', 35, 'Russian'), " +
-                    "('Kimchi Fried Rice', 500, 20, 70, 12, 'VEGETARIAN', 'None', 25, 'Korean'), " +
-                    "('Paella', 480, 30, 60, 12, 'PALEO', 'Seafood', 45, 'Spanish'), " +
-                    "('Shakshuka', 350, 20, 40, 10, 'VEGETARIAN', 'Eggs', 30, 'North African'), " +
-                    "('Poutine', 600, 15, 70, 30, 'HIGH_CARB', 'Dairy', 20, 'Canadian'), " +
-                    "('Moussaka', 550, 25, 50, 20, 'LOW_CARB', 'Dairy', 50, 'Greek'), " +
-                    "('Bulgogi', 500, 35, 55, 12, 'HIGH_PROTEIN', 'None', 30, 'Korean'), " +
-                    "('Pad Thai', 450, 30, 65, 10, 'LOW_FAT', 'Peanuts', 35, 'Thai'), " +
-                    "('Goulash', 400, 40, 50, 15, 'PALEO', 'None', 45, 'Hungarian'), " +
-                    "('Jollof Rice', 500, 25, 80, 12, 'VEGAN', 'None', 40, 'West African'), " +
-                    "('Empanadas', 450, 15, 50, 20, 'LOW_CARB', 'Gluten', 35, 'Argentinian'), " +
-                    "('Churrasco', 700, 60, 30, 40, 'KETO', 'None', 50, 'Brazilian'), " +
-                    "('Shabu-Shabu', 400, 45, 30, 10, 'LOW_FAT', 'None', 30, 'Japanese'), " +
-                    "('Bibimbap', 450, 30, 60, 15, 'VEGETARIAN', 'Eggs', 25, 'Korean'), " +
-                    "('Feijoada', 600, 50, 55, 25, 'HIGH_PROTEIN', 'None', 50, 'Brazilian'), " +
-                    "('Biryani', 550, 35, 80, 15, 'HIGH_CARB', 'Dairy', 60, 'Indian'), " +
-                    "('Fajitas', 400, 35, 45, 12, 'PALEO', 'None', 30, 'Mexican'), " +
-                    "('Ceviche', 350, 40, 20, 8, 'KETO', 'Seafood', 25, 'Peruvian'), " +
-                    "('Kebab', 500, 45, 35, 20, 'PALEO', 'None', 40, 'Turkish'), " +
-                    "('Pierogi', 450, 15, 60, 20, 'VEGETARIAN', 'Gluten', 30, 'Polish'), " +
-                    "('Dolma', 400, 20, 45, 10, 'VEGAN', 'None', 35, 'Middle Eastern'), " +
-                    "('Khachapuri', 600, 25, 60, 30, 'VEGETARIAN', 'Dairy', 40, 'Georgian'), " +
-                    "('Bratwurst with Sauerkraut', 500, 40, 30, 25, 'LOW_CARB', 'None', 35, 'German'), " +
-                    "('Tamales', 350, 15, 55, 10, 'VEGAN', 'Gluten', 50, 'Mexican'), " +
-                    "('Laksa', 550, 30, 70, 15, 'LOW_FAT', 'Seafood', 45, 'Malaysian'), " +
-                    "('Arepas', 400, 10, 45, 12, 'VEGETARIAN', 'None', 30, 'Venezuelan'), " +
-                    "('Chana Masala', 450, 25, 65, 10, 'VEGAN', 'None', 40, 'Indian'), " +
-                    "('Katsu Curry', 600, 40, 75, 20, 'HIGH_CARB', 'Gluten', 35, 'Japanese'), " +
-                    "('Clam Chowder', 500, 30, 40, 15, 'LOW_CARB', 'Seafood', 50, 'American'), " +
-                    "('Baba Ganoush', 300, 10, 30, 12, 'VEGAN', 'None', 25, 'Middle Eastern'), " +
-                    "('Sauerbraten', 550, 50, 35, 18, 'LOW_CARB', 'None', 60, 'German'), " +
-                    "('Tteokbokki', 450, 10, 80, 8, 'VEGAN', 'None', 25, 'Korean'), " +
-                    "('Stuffed Peppers', 400, 30, 40, 12, 'PALEO', 'None', 35, 'Mediterranean'), " +
-                    "('Pav Bhaji', 550, 20, 90, 12, 'VEGAN', 'Gluten', 40, 'Indian'), " +
-                    "('Miso Soup', 200, 12, 25, 6, 'LOW_FAT', 'Soy', 15, 'Japanese'), " +
-                    "('Chili Con Carne', 600, 50, 40, 20, 'HIGH_PROTEIN', 'None', 50, 'Tex-Mex') ");
+            db.execSQL("INSERT INTO meals (name, calories, protein, carbs, fats, diet_type, allergens, prep_time, culture, region, servings_grams)  VALUES " +
+//                  // Tagalog (Luzon)
+                    "('Adobo', 250, 30, 10, 12, 'Omnivore', 'Soy', 45, 'Tagalog', 'Luzon', 150), " +
+                    "('Sinigang na Baboy', 200, 25, 15, 8, 'Omnivore', 'None', 50, 'Tagalog', 'Luzon', 200), " +
+                    "('Bulalo', 400, 35, 5, 25, 'Omnivore', 'None', 120, 'Tagalog', 'Luzon', 300), " +
+                    "('Kaldereta', 450, 40, 20, 22, 'Omnivore', 'None', 90, 'Tagalog', 'Luzon', 250), " +
+                    "('Pancit Canton', 300, 12, 45, 10, 'Omnivore', 'Gluten', 30, 'Tagalog', 'Luzon', 180), " +
+
+                    // Ilocano (Luzon)
+                    "('Pinakbet', 180, 6, 25, 5, 'Vegetarian', 'None', 40, 'Ilocano', 'Luzon', 200), " +
+                    "('Bagnet', 500, 45, 10, 30, 'Omnivore', 'None', 60, 'Ilocano', 'Luzon', 150), " +
+                    "('Dinengdeng', 150, 10, 20, 4, 'Vegetarian', 'None', 30, 'Ilocano', 'Luzon', 180), " +
+                    "('Poqui-Poqui', 220, 8, 20, 10, 'Vegetarian', 'Egg', 30, 'Ilocano', 'Luzon', 180), " +
+                    "('Igado', 350, 40, 10, 20, 'Omnivore', 'None', 50, 'Ilocano', 'Luzon', 200), " +
+
+                    // Kapampangan (Luzon)
+                    "('Sisig', 600, 50, 5, 40, 'Omnivore', 'None', 45, 'Kapampangan', 'Luzon', 180)," +
+                    "('Bringhe', 400, 15, 50, 12, 'Omnivore', 'Gluten', 60, 'Kapampangan', 'Luzon', 250)," +
+                    "('Tocino', 300, 25, 30, 15, 'Omnivore', 'None', 24, 'Kapampangan', 'Luzon', 120)," +
+                    "('Morcon', 450, 40, 10, 22, 'Omnivore', 'Egg', 90, 'Kapampangan', 'Luzon', 220)," +
+                    "('Burong Isda', 200, 15, 20, 5, 'Omnivore', 'Fish', 48, 'Kapampangan', 'Luzon', 180)," +
+
+                    // Bicolano (Luzon)
+                    "('Bicol Express', 380, 30, 20, 25, 'Omnivore', 'Coconut', 60, 'Bicolano', 'Luzon', 200)," +
+                    "('Laing', 180, 6, 15, 10, 'Vegetarian', 'Coconut', 40, 'Bicolano', 'Luzon', 120),"  +
+                    "('Kinunot', 250, 35, 5, 12, 'Pescatarian', 'Fish', 45, 'Bicolano', 'Luzon', 180)," +
+                    "('Sinantolan', 200, 10, 25, 8, 'Vegetarian', 'Coconut', 30, 'Bicolano', 'Luzon', 150)," +
+                    "('Tilmok', 280, 20, 10, 15, 'Pescatarian', 'Shellfish', 50, 'Bicolano', 'Luzon', 220)," +
+
+                    // Cebuano (Visayas)
+                    "('Lechon Cebu', 600, 50, 5, 40, 'Omnivore', 'None', 120, 'Cebuano', 'Visayas', 300)," +
+                    "('Bam-i', 350, 20, 50, 12, 'Omnivore', 'Gluten', 45, 'Cebuano', 'Visayas', 200)," +
+                    "('Puso Rice', 150, 3, 30, 1, 'Vegetarian', 'None', 15, 'Cebuano', 'Visayas', 180)," +
+                    "('Ngohiong', 250, 10, 30, 10, 'Vegetarian', 'None', 40, 'Cebuano', 'Visayas', 180)," +
+                    "('Kinilaw', 200, 30, 5, 8, 'Pescatarian', 'Fish', 30, 'Cebuano', 'Visayas', 150), " +
+
+                    // Muslim-Filipino (Mindanao)
+                    "('Beef Rendang', 500, 40, 20, 25, 'Halal', 'Coconut', 90, 'Muslim-Filipino', 'Mindanao', 250)," +
+                    "('Tiyula Itum', 400, 35, 10, 20, 'Halal', 'None', 90, 'Muslim-Filipino', 'Mindanao', 300)," +
+                    "('Pyanggang Manok', 380, 30, 15, 22, 'Halal', 'Coconut', 75, 'Muslim-Filipino', 'Mindanao', 250)," +
+                    "('Pastil', 300, 25, 40, 10, 'Halal', 'None', 60, 'Muslim-Filipino', 'Mindanao', 200)," +
+                    "('Lokot-Lokot', 150, 2, 30, 3, 'Halal', 'None', 30, 'Muslim-Filipino', 'Mindanao', 100)," +
+
+                    // Indigenous Cordilleran (Luzon)
+                    "('Pinikpikan', 350, 40, 5, 20, 'Omnivore', 'None', 90, 'Cordilleran', 'Luzon', 250)," +
+                    "('Etag', 450, 50, 5, 30, 'Omnivore', 'None', 48, 'Cordilleran', 'Luzon', 200)," +
+                    "('Inasin', 300, 35, 5, 20, 'Omnivore', 'None', 60, 'Cordilleran', 'Luzon', 220)," +
+                    "('Linapay', 280, 25, 15, 15, 'Omnivore', 'None', 75, 'Cordilleran', 'Luzon', 200)," +
+                    "('Watwat', 320, 30, 5, 18, 'Omnivore', 'None', 60, 'Cordilleran', 'Luzon', 200)," +
+
+                    // Chavacano (Zamboanga)
+                    "('Satti', 400, 35, 10, 20, 'Omnivore', 'None', 40, 'Chavacano', 'Mindanao', 200)," +
+                    "('Tamal', 250, 10, 30, 8, 'Omnivore', 'Gluten', 60, 'Chavacano', 'Mindanao', 200)," +
+                    "('Curacha with Alavar Sauce', 500, 40, 10, 25, 'Pescatarian', 'Shellfish', 75, 'Chavacano', 'Mindanao', 250)," +
+                    "('Kiampong', 300, 8, 50, 5, 'Vegetarian', 'None', 45, 'Chavacano', 'Mindanao', 200)," +
+                    "('Maja Blanca', 200, 5, 30, 8, 'Vegetarian', 'Coconut', 30, 'Chavacano', 'Mindanao', 150)");
 
             // Manually inserting exercises
             db.execSQL("INSERT INTO exercises (name, category, duration, calories_burned) VALUES " +

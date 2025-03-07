@@ -1,6 +1,5 @@
-package com.jg.dietapp;
+package com.jg.dietapp.utils;
 
-import java.util.Objects;
 import java.util.logging.Logger;
 
 public class Utils {

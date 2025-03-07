@@ -10,8 +10,10 @@ public class Meal {
     private String dietType;
     private String allergens;
     private int prepTime; // minutes
+    private String cuisine;
+    private int servingsGrams;
 
-    public Meal(String name, double calories, int protein, int carbs, int fats, String dietType, String allergens, int prepTime) {
+    public Meal(String name, double calories, int protein, int carbs, int fats, String dietType, String allergens, int prepTime, String cuisine, int servingsGrams) {
         this.name = name;
         this.calories = calories;
         this.protein = protein;
@@ -20,6 +22,8 @@ public class Meal {
         this.dietType = dietType;
         this.allergens = allergens;
         this.prepTime = prepTime;
+        this.cuisine = cuisine;
+        this.servingsGrams = servingsGrams;
     }
 
     public String getName() { return name; }
@@ -30,6 +34,12 @@ public class Meal {
     public String getDietType() { return dietType; }
     public String getAllergens() { return allergens; }
     public int getPrepTime() { return prepTime; }
+    public String getCuisine() {
+        return cuisine;
+    }
+    public int getServingsGrams() {
+        return servingsGrams;
+    }
 
     @Override
     public String toString() {

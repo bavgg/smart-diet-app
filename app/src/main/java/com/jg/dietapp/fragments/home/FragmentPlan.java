@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,12 +15,14 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.progressindicator.CircularProgressIndicator;
 import com.jg.dietapp.R;
 import com.jg.dietapp.adapters.MealAdapter;
 import com.jg.dietapp.components.CustomMealList;
 import com.jg.dietapp.generator.GeneratorMeal;
 import com.jg.dietapp.models.Meal;
 import com.jg.dietapp.shared.UserInput;
+import com.jg.dietapp.utils.MacronutrientCalculator;
 
 import java.util.List;
 
@@ -43,12 +46,57 @@ public class FragmentPlan extends Fragment {
         GeneratorMeal generatorMeal = new GeneratorMeal(userInput);
         List<Meal>[] meals = generatorMeal.generateMealPlan(getContext());
 
+        List<Meal> breakfastMeals = meals[0];
+        List<Meal> lunchMeals = meals[1];
+        List<Meal> dinnerMeals = meals[2];
+
+        int baseCalories = (int) (generatorMeal.getBaseCalories());
+
+        MacronutrientCalculator macronutrientCalculator = new MacronutrientCalculator(baseCalories);
+        int protein = (int) (macronutrientCalculator.getProtein());
+        int carbs = (int) (macronutrientCalculator.getCarbs());
+        int fat = (int) (macronutrientCalculator.getFat());
+
+        TextView currentProteinText = view.findViewById(R.id.protein_current_text);
+        TextView currentCarbsText = view.findViewById(R.id.carbs_current_text);
+        TextView currentFatText = view.findViewById(R.id.fat_current_text);
+
+        TextView goalProteinText = view.findViewById(R.id.protein_goal_text);
+        TextView goalCarbsText = view.findViewById(R.id.carbs_goal_text);
+        TextView goalFatText = view.findViewById(R.id.fat_goal_text);
+
+        String proteinText = protein + "";
+        String carbsText = carbs + "";
+        String fatText = fat + "";
+
+        goalProteinText.setText(proteinText);
+        goalCarbsText.setText(carbsText);
+        goalFatText.setText(fatText);
+
+        System.out.println(protein);
+        System.out.println(carbs);
+        System.out.println(fat);
+
+
+        // Circular progress bar
+        CircularProgressIndicator circularProgressIndicator = view.findViewById(R.id.progress_circular);
+        double completedCalories = 250;
+
+        int progress = (int) ((completedCalories * 100) / baseCalories); // Convert to percentage
+        circularProgressIndicator.setProgressCompat(progress, true);
+
+        TextView currentCaloriesText = view.findViewById(R.id.current_calories);
+        TextView goalCaloriesText = view.findViewById(R.id.goal_calories);
+        goalCaloriesText.setText(baseCalories + "");
+        System.out.println("BASE: " + baseCalories);
+
+
 
         // Breakfast
         recyclerViewBreakfastMeals = view.findViewById(R.id.recyclerViewBreakfastMeals);
         recyclerViewBreakfastMeals.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        List<Meal> breakfastMeals = meals[0];
+
         breakfastMealsAdapter = new MealAdapter(breakfastMeals);
         recyclerViewBreakfastMeals.setAdapter(breakfastMealsAdapter);
 
@@ -56,7 +104,7 @@ public class FragmentPlan extends Fragment {
         recyclerViewLunchMeals = view.findViewById(R.id.recyclerViewLunchMeals);
         recyclerViewLunchMeals.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        List<Meal> lunchMeals = meals[1];
+
         lunchMealsAdapter = new MealAdapter(lunchMeals);
         recyclerViewLunchMeals.setAdapter(lunchMealsAdapter);
 
@@ -64,20 +112,9 @@ public class FragmentPlan extends Fragment {
         recyclerViewDinnerMeals = view.findViewById(R.id.recyclerViewDinnerMeals);
         recyclerViewDinnerMeals.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        List<Meal> dinnerMeals = meals[2];
+
         dinnerMealsAdapter = new MealAdapter(dinnerMeals);
         recyclerViewDinnerMeals.setAdapter(dinnerMealsAdapter);
-
-
-//        CustomMealList meal1 = view.findViewById(R.id.meal_list1);
-//        CustomMealList meal2 = view.findViewById(R.id.meal_list2);
-//        CustomMealList meal3 = view.findViewById(R.id.meal_list3);
-//        meal1.setOnClickListener(v -> {
-//            meal1.toggleRadioButton();
-//        });
-
-
-
 
 
         double breakfastTotalCal = 0;

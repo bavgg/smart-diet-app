@@ -3,7 +3,7 @@ package com.jg.dietapp.generator;
 
 import android.content.Context;
 
-import com.jg.dietapp.Utils;
+import com.jg.dietapp.utils.Utils;
 import com.jg.dietapp.data.DAOMeal;
 import com.jg.dietapp.enums.EnumGoal;
 import com.jg.dietapp.enums.EnumSex;
@@ -15,6 +15,7 @@ import java.util.List;
 
 public class GeneratorMeal {
     UserInput userInput;
+    double baseCalories;
 
     public GeneratorMeal(UserInput userInput) {
         this.userInput = userInput;
@@ -41,10 +42,10 @@ public class GeneratorMeal {
 
 
         // Step 1: Calculate Daily Calorie Needs
-        double baseCalories = getBaseCalories();
+        double TDEE = calculateTDEE();
 
 
-
+        baseCalories = TDEE;
         // Step 2: Adjust Calories Based on Goal
         if (userInput.getGoal() == EnumGoal.LOSE_WEIGHT) {
             baseCalories -= 300;
@@ -52,7 +53,7 @@ public class GeneratorMeal {
             baseCalories += 300;
         }
 
-        System.out.println("Base Calories: " + baseCalories);
+        System.out.println("Base Calories after: " + baseCalories);
 
         // Step 3: Distribute Calories Across Meals
         double breakfastCalories = baseCalories * 0.3; // 30% for Breakfast
@@ -68,7 +69,12 @@ public class GeneratorMeal {
     }
 
     public double getBaseCalories() {
+        return baseCalories;
+    }
+
+    private double calculateTDEE() {
         double bmr = calculateBMR(userInput.getWeight(), userInput.getHeight(), userInput.getAge(), userInput.getSex());
+        System.out.println("BMR " +bmr);
 
         switch (userInput.getActivityLevel()) {
             case SEDENTARY: return bmr * 1.2;

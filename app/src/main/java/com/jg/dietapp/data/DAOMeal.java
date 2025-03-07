@@ -28,8 +28,19 @@ public class DAOMeal {
         values.put("fats", meal.getFats());
         values.put("diet_type", meal.getDietType());
         values.put("allergens", meal.getAllergens());
-        db.insert("meals", null, values);
+        values.put("prep_time", meal.getPrepTime());  // ✅ Added Prep Time
+        values.put("cuisine", meal.getCuisine());    // ✅ Added Cuisine
+        values.put("servings_grams", meal.getServingsGrams()); // ✅ Added Servings in Grams
+
+        long result = db.insert("meals", null, values);
+
+        if (result == -1) {
+            System.out.println("Failed to insert meal");
+        } else {
+            System.out.println("Meal inserted successfully, ID: " + result);
+        }
     }
+
 
     public List<Meal> getMealsByDietAndAllergens(String dietType, String foodAllergens) {
 
@@ -64,7 +75,9 @@ public class DAOMeal {
                     cursor.getInt(5),     // Fats
                     cursor.getString(6),  // Diet Type
                     cursor.getString(7),  // Allergens
-                    cursor.getInt(8)      // Prep Time
+                    cursor.getInt(8),      // Prep Time
+                    cursor.getString(9),  // Cuisine
+                    cursor.getInt(9)       // Servings in Grams
             ));
         }
         cursor.close();

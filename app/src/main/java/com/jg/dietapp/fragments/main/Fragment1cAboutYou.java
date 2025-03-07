@@ -24,7 +24,7 @@ import com.jg.dietapp.dialogs.DialogSex;
 import com.jg.dietapp.dialogs.DialogWeight;
 import com.jg.dietapp.enums.EnumSex;
 import com.jg.dietapp.R;
-import com.jg.dietapp.Utils;
+import com.jg.dietapp.utils.Utils;
 
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
