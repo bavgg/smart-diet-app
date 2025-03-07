@@ -1,7 +1,7 @@
 package com.jg.dietapp.fragments.home;
 
 import static com.jg.dietapp.MainActivity.sharedPrefsHelper;
-import static com.jg.dietapp.MainActivity.userInput;
+//import static com.jg.dietapp.MainActivity.userInput;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,8 +11,11 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.jg.dietapp.R;
+import com.jg.dietapp.adapters.MealAdapter;
 import com.jg.dietapp.components.CustomMealList;
 import com.jg.dietapp.generator.GeneratorMeal;
 import com.jg.dietapp.models.Meal;
@@ -21,27 +24,61 @@ import com.jg.dietapp.shared.UserInput;
 import java.util.List;
 
 public class FragmentPlan extends Fragment {
+    private RecyclerView recyclerViewBreakfastMeals, recyclerViewLunchMeals, recyclerViewDinnerMeals;
+    private MealAdapter breakfastMealsAdapter, lunchMealsAdapter, dinnerMealsAdapter;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_plan, container, false);
+
+
+
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        CustomMealList meal1 = view.findViewById(R.id.meal_list1);
-        CustomMealList meal2 = view.findViewById(R.id.meal_list2);
-        CustomMealList meal3 = view.findViewById(R.id.meal_list3);
-        meal1.setOnClickListener(v -> {
-            meal1.toggleRadioButton();
-        });
-
         UserInput userInput = sharedPrefsHelper.getUser(getContext());
-
         GeneratorMeal generatorMeal = new GeneratorMeal(userInput);
         List<Meal>[] meals = generatorMeal.generateMealPlan(getContext());
+
+
+        // Breakfast
+        recyclerViewBreakfastMeals = view.findViewById(R.id.recyclerViewBreakfastMeals);
+        recyclerViewBreakfastMeals.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        List<Meal> breakfastMeals = meals[0];
+        breakfastMealsAdapter = new MealAdapter(breakfastMeals);
+        recyclerViewBreakfastMeals.setAdapter(breakfastMealsAdapter);
+
+        // Lunch
+        recyclerViewLunchMeals = view.findViewById(R.id.recyclerViewLunchMeals);
+        recyclerViewLunchMeals.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        List<Meal> lunchMeals = meals[1];
+        lunchMealsAdapter = new MealAdapter(lunchMeals);
+        recyclerViewLunchMeals.setAdapter(lunchMealsAdapter);
+
+        // Dinner
+        recyclerViewDinnerMeals = view.findViewById(R.id.recyclerViewDinnerMeals);
+        recyclerViewDinnerMeals.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        List<Meal> dinnerMeals = meals[2];
+        dinnerMealsAdapter = new MealAdapter(dinnerMeals);
+        recyclerViewDinnerMeals.setAdapter(dinnerMealsAdapter);
+
+
+//        CustomMealList meal1 = view.findViewById(R.id.meal_list1);
+//        CustomMealList meal2 = view.findViewById(R.id.meal_list2);
+//        CustomMealList meal3 = view.findViewById(R.id.meal_list3);
+//        meal1.setOnClickListener(v -> {
+//            meal1.toggleRadioButton();
+//        });
+
+
+
+
 
         double breakfastTotalCal = 0;
 

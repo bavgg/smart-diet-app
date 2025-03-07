@@ -27,7 +27,7 @@ public class CustomMealList extends MaterialCardView {
 
         radioButton = findViewById(R.id.radioButton);
         ImageView mealImage = findViewById(R.id.meal_image);
-        TextView mealName = findViewById(R.id.meal_name);
+        TextView mealName = findViewById(R.id.meal_name_text);
         TextView calorieCountText = findViewById(R.id.calorie_count_text);
 
         // Get attributes
