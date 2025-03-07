@@ -21,7 +21,7 @@ import com.jg.dietapp.R;
 
 public class Fragment1eDietaryPreferences extends Fragment {
     Button continueButton;
-    CustomCard veganCard, ketoCard, paleoCard;
+    CustomCard vegetarianCard, omnivoreCard, halalCard, pescatarianCard;
 
     @Nullable
     @Override
@@ -33,32 +33,41 @@ public class Fragment1eDietaryPreferences extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        veganCard = view.findViewById(R.id.veganCard);
-        ketoCard = view.findViewById(R.id.ketoCard);
-        paleoCard = view.findViewById(R.id.paleoCard);
+        vegetarianCard = view.findViewById(R.id.vegetarianCard);
+        omnivoreCard = view.findViewById(R.id.omnivoreCard);
+        halalCard = view.findViewById(R.id.halalCard);
+        pescatarianCard = view.findViewById(R.id.pescatarianCard);
 
         setupPressBackListener();
 
-        veganCard.setOnClickListener(v -> {
+        vegetarianCard.setOnClickListener(v -> {
 
 
-            userInput.setDietType(EnumDietType.VEGETARIAN);
+            userInput.setDietType(EnumDietType.Vegetarian);
             nextFragment(new Fragment1eFoodRestrictions());
             increaseProgress();
         });
 
-        ketoCard.setOnClickListener(v -> {
+        omnivoreCard.setOnClickListener(v -> {
 
 
-            userInput.setDietType(EnumDietType.KETO);
+            userInput.setDietType(EnumDietType.Omnivore);
             nextFragment(new Fragment1eFoodRestrictions());
             increaseProgress();
         });
 
-        veganCard.setOnClickListener(v -> {
+        halalCard.setOnClickListener(v -> {
 
 
-            userInput.setDietType(EnumDietType.PALEO);
+            userInput.setDietType(EnumDietType.Halal);
+            nextFragment(new Fragment1eFoodRestrictions());
+            increaseProgress();
+        });
+
+        pescatarianCard.setOnClickListener(v -> {
+
+
+            userInput.setDietType(EnumDietType.Pescatarian);
             nextFragment(new Fragment1eFoodRestrictions());
             increaseProgress();
         });

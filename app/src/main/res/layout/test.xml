@@ -27,4 +27,8 @@
         android:text="Diet Type"
         android:textSize="14sp"
         android:textColor="@android:color/darker_gray" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 </LinearLayout>

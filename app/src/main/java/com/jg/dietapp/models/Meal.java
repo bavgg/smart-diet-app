@@ -10,10 +10,11 @@ public class Meal {
     private String dietType;
     private String allergens;
     private int prepTime; // minutes
-    private String cuisine;
+    private String culture;
+    private String region;
     private int servingsGrams;
 
-    public Meal(String name, double calories, int protein, int carbs, int fats, String dietType, String allergens, int prepTime, String cuisine, int servingsGrams) {
+    public Meal(String name, double calories, int protein, int carbs, int fats, String dietType, String allergens, int prepTime, String culture, String region, int servingsGrams) {
         this.name = name;
         this.calories = calories;
         this.protein = protein;
@@ -22,7 +23,8 @@ public class Meal {
         this.dietType = dietType;
         this.allergens = allergens;
         this.prepTime = prepTime;
-        this.cuisine = cuisine;
+        this.culture = culture;
+        this.region = region;
         this.servingsGrams = servingsGrams;
     }
 
@@ -34,8 +36,11 @@ public class Meal {
     public String getDietType() { return dietType; }
     public String getAllergens() { return allergens; }
     public int getPrepTime() { return prepTime; }
-    public String getCuisine() {
-        return cuisine;
+    public String getCulture() {
+        return culture;
+    }
+    public String getRegion() {
+        return region;
     }
     public int getServingsGrams() {
         return servingsGrams;

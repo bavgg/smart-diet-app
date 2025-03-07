@@ -21,7 +21,7 @@ import com.jg.dietapp.R;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class Fragment1eFoodRestrictions extends Fragment {
-    CustomCard nutsCard, lactoseCard, glutenCard;
+    CustomCard soyCard, glutenCard, eggCard, fishCard;
     Button continueButton;
 
     @Nullable
@@ -34,40 +34,27 @@ public class Fragment1eFoodRestrictions extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        nutsCard = view.findViewById(R.id.nutsCard);
-        lactoseCard = view.findViewById(R.id.lactoseCard);
+        soyCard = view.findViewById(R.id.soyCard);
         glutenCard = view.findViewById(R.id.glutenCard);
+        eggCard = view.findViewById(R.id.eggCard);
+        fishCard = view.findViewById(R.id.fishCard);
 
         continueButton = view.findViewById(R.id.continueButton);
         AtomicReference<String> foodAllergens = new AtomicReference<>("");
 
         setupPressBackListener();
 
-        nutsCard.setOnClickListener(v -> {
-            boolean isSelected = nutsCard.isSelected();
+        soyCard.setOnClickListener(v -> {
+            boolean isSelected = soyCard.isSelected();
 
-            nutsCard.setSelected(!isSelected);
-
-            if (!isSelected) {
-                nutsCard.setElevation(10f);
-                nutsCard.setSelected(true);
-            } else {
-                nutsCard.setElevation(0f);
-                nutsCard.setSelected(false);
-            }
-        });
-
-        lactoseCard.setOnClickListener(v -> {
-            boolean isSelected = lactoseCard.isSelected();
-
-            lactoseCard.setSelected(!isSelected);
+            soyCard.setSelected(!isSelected);
 
             if (!isSelected) {
-                lactoseCard.setElevation(10f);
-                lactoseCard.setSelected(true);
+                soyCard.setElevation(10f);
+                soyCard.setSelected(true);
             } else {
-                lactoseCard.setElevation(0f);
-                lactoseCard.setSelected(false);
+                soyCard.setElevation(0f);
+                soyCard.setSelected(false);
             }
         });
 
@@ -85,15 +72,46 @@ public class Fragment1eFoodRestrictions extends Fragment {
             }
         });
 
-        continueButton.setOnClickListener(v -> {
-            if (nutsCard.isSelected()) {
-                foodAllergens.updateAndGet(value -> value + ",Nuts");
+        eggCard.setOnClickListener(v -> {
+            boolean isSelected = eggCard.isSelected();
+
+            eggCard.setSelected(!isSelected);
+
+            if (!isSelected) {
+                eggCard.setElevation(10f);
+                eggCard.setSelected(true);
+            } else {
+                eggCard.setElevation(0f);
+                eggCard.setSelected(false);
             }
-            if (lactoseCard.isSelected()) {
-                foodAllergens.updateAndGet(value -> value + ",Lactose");
+        });
+
+        fishCard.setOnClickListener(v -> {
+            boolean isSelected = fishCard.isSelected();
+
+            fishCard.setSelected(!isSelected);
+
+            if (!isSelected) {
+                fishCard.setElevation(10f);
+                fishCard.setSelected(true);
+            } else {
+                fishCard.setElevation(0f);
+                fishCard.setSelected(false);
+            }
+        });
+
+        continueButton.setOnClickListener(v -> {
+            if (soyCard.isSelected()) {
+                foodAllergens.updateAndGet(value -> value + ",Soy");
             }
             if (glutenCard.isSelected()) {
                 foodAllergens.updateAndGet(value -> value + ",Gluten");
+            }
+            if (eggCard.isSelected()) {
+                foodAllergens.updateAndGet(value -> value + ",Egg");
+            }
+            if (fishCard.isSelected()) {
+                foodAllergens.updateAndGet(value -> value + ",Fish");
             }
 
             userInput.setFoodAllergens(foodAllergens.get());

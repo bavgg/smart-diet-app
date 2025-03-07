@@ -27,14 +27,16 @@
         android:layout_weight="1"
         />
 
+
+
     <com.jg.dietapp.components.CustomCard
         android:clickable="true"
         android:focusable="true"
-        android:id="@+id/veganCard"
+        android:id="@+id/vegetarianCard"
         android:layout_marginTop="4dp"
         android:layout_marginBottom="4dp"
-        app:cardIcon="@drawable/baseline_trending_down_16"
-        app:head="Vegan"
+        app:cardIcon="@drawable/eco_24px"
+        app:head="Vegetarian"
         app:body="Optimize weight loss and preserve muscle mass"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
@@ -42,11 +44,23 @@
     <com.jg.dietapp.components.CustomCard
         android:clickable="true"
         android:focusable="true"
-        android:id="@+id/ketoCard"
+        android:id="@+id/omnivoreCard"
         android:layout_marginTop="4dp"
         android:layout_marginBottom="4dp"
-        app:cardIcon="@drawable/baseline_trending_up_16"
-        app:head="Keto"
+        app:cardIcon="@drawable/restaurant_24px"
+        app:head="Omnivore"
+        app:body="Increase your weight and get stronger"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <com.jg.dietapp.components.CustomCard
+        android:clickable="true"
+        android:focusable="true"
+        android:id="@+id/halalCard"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
+        app:cardIcon="@drawable/brightness_7_24px"
+        app:head="Halal"
         app:body="Increase your weight and get stronger"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
@@ -58,9 +72,9 @@
         android:focusable="true"
         android:layout_marginTop="4dp"
         android:layout_marginBottom="50dp"
-        android:id="@+id/paleoCard"
-        app:cardIcon="@drawable/baseline_trending_flat_16"
-        app:head="Paleo"
+        android:id="@+id/pescatarianCard"
+        app:cardIcon="@drawable/set_meal_24px"
+        app:head="Pescatarian"
         app:body="Keep your weight stable and aim for body recomposition"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>

@@ -1,5 +1,5 @@
 package com.jg.dietapp.enums;
 
 public enum EnumFoodAllergen {
-    NUTS, LACTOSE, GLUTEN
+    SOY, GLUTEN, EGG, FISH, NONE
 }

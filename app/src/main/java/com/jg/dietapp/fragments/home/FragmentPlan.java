@@ -46,6 +46,8 @@ public class FragmentPlan extends Fragment {
         GeneratorMeal generatorMeal = new GeneratorMeal(userInput);
         List<Meal>[] meals = generatorMeal.generateMealPlan(getContext());
 
+
+
         List<Meal> breakfastMeals = meals[0];
         List<Meal> lunchMeals = meals[1];
         List<Meal> dinnerMeals = meals[2];

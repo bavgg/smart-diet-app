@@ -3,6 +3,7 @@ package com.jg.dietapp;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,6 +27,11 @@ public class MainActivity extends AppCompatActivity {
     public void onStart(){
         super.onStart();
 
+        // Initialize database
+        DatabaseHelper databaseHelper = new DatabaseHelper(this);
+        SQLiteDatabase db = databaseHelper.getWritableDatabase();
+        databaseHelper.seedDatabase(db);
+
         UserInput user = sharedPrefsHelper.getUser(this);
 
         if(user.getUserSubmitted()) {
@@ -34,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
             finish();
         }
 
+        Log.d("MainActivity", "User input: " + user);
     }
 
     // Entry point
@@ -43,9 +50,7 @@ public class MainActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
-        // Initialize database
-        DatabaseHelper databaseHelper = new DatabaseHelper(this);
-        SQLiteDatabase db = databaseHelper.getWritableDatabase();
+
 
 
         // Initialize progress indicator component

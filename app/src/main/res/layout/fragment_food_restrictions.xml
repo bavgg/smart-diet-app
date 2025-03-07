@@ -30,11 +30,11 @@
     <com.jg.dietapp.components.CustomCard
         android:clickable="true"
         android:focusable="true"
-        android:id="@+id/nutsCard"
+        android:id="@+id/soyCard"
         android:layout_marginTop="4dp"
         android:layout_marginBottom="4dp"
-        app:cardIcon="@drawable/baseline_trending_down_16"
-        app:head="Nuts"
+        app:cardIcon="@drawable/grain_24px"
+        app:head="Soy"
         app:body="Optimize weight loss and preserve muscle mass"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
@@ -42,11 +42,23 @@
     <com.jg.dietapp.components.CustomCard
         android:clickable="true"
         android:focusable="true"
-        android:id="@+id/lactoseCard"
+        android:id="@+id/glutenCard"
         android:layout_marginTop="4dp"
         android:layout_marginBottom="4dp"
-        app:cardIcon="@drawable/baseline_trending_up_16"
-        app:head="Lactose"
+        app:cardIcon="@drawable/bakery_dining_24px"
+        app:head="Gluten"
+        app:body="Increase your weight and get stronger"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <com.jg.dietapp.components.CustomCard
+        android:clickable="true"
+        android:focusable="true"
+        android:id="@+id/eggCard"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
+        app:cardIcon="@drawable/egg_alt_24px"
+        app:head="Egg"
         app:body="Increase your weight and get stronger"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
@@ -58,12 +70,13 @@
         android:focusable="true"
         android:layout_marginTop="4dp"
         android:layout_marginBottom="50dp"
-        android:id="@+id/glutenCard"
-        app:cardIcon="@drawable/baseline_trending_flat_16"
-        app:head="Gluten"
+        android:id="@+id/fishCard"
+        app:cardIcon="@drawable/set_meal_24px"
+        app:head="Fish"
         app:body="Keep your weight stable and aim for body recomposition"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
+
 
 
     <Button

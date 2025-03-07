@@ -1,11 +1,17 @@
 package com.jg.dietapp.data;
 
+import static com.jg.dietapp.MainActivity.sharedPrefsHelper;
+import static com.jg.dietapp.MainActivity.userInput;
+
+import static java.security.AccessController.getContext;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.jg.dietapp.models.Meal;
+import com.jg.dietapp.shared.UserInput;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -29,7 +35,8 @@ public class DAOMeal {
         values.put("diet_type", meal.getDietType());
         values.put("allergens", meal.getAllergens());
         values.put("prep_time", meal.getPrepTime());  // ✅ Added Prep Time
-        values.put("cuisine", meal.getCuisine());    // ✅ Added Cuisine
+        values.put("culture", meal.getCulture());    // ✅ Added Cuisine
+        values.put("region", meal.getRegion());
         values.put("servings_grams", meal.getServingsGrams()); // ✅ Added Servings in Grams
 
         long result = db.insert("meals", null, values);
@@ -51,6 +58,8 @@ public class DAOMeal {
         // Add dietType as the first parameter
         selectionArgs.add(dietType);
 
+        System.out.println("User input: " + userInput);
+
         // Split the food allergens string into a list
         if (foodAllergens != null && !foodAllergens.isEmpty()) {
             String[] allergensArray = foodAllergens.split(",");
@@ -61,6 +70,8 @@ public class DAOMeal {
                 selectionArgs.add("%" + allergen.trim() + "%");
             }
         }
+
+        System.out.println("Selection args: " + selectionArgs);
 
 
         // Execute query
@@ -75,9 +86,10 @@ public class DAOMeal {
                     cursor.getInt(5),     // Fats
                     cursor.getString(6),  // Diet Type
                     cursor.getString(7),  // Allergens
-                    cursor.getInt(8),      // Prep Time
-                    cursor.getString(9),  // Cuisine
-                    cursor.getInt(9)       // Servings in Grams
+                    cursor.getInt(8),      // Prep Time\
+                    cursor.getString(9),      // Culture
+                    cursor.getString(10),  // Region
+                    cursor.getInt(11)       // Servings in Grams
             ));
         }
         cursor.close();
