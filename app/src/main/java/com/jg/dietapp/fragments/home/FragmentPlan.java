@@ -12,60 +12,74 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.progressindicator.CircularProgressIndicator;
+import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.jg.dietapp.R;
 import com.jg.dietapp.adapters.MealAdapter;
-import com.jg.dietapp.components.CustomMealList;
 import com.jg.dietapp.generator.GeneratorMeal;
 import com.jg.dietapp.models.Meal;
 import com.jg.dietapp.shared.UserInput;
 import com.jg.dietapp.utils.MacronutrientCalculator;
+import com.jg.dietapp.viewmodel.NutritionViewModel;
 
 import java.util.List;
 
 public class FragmentPlan extends Fragment {
     private RecyclerView recyclerViewBreakfastMeals, recyclerViewLunchMeals, recyclerViewDinnerMeals;
     private MealAdapter breakfastMealsAdapter, lunchMealsAdapter, dinnerMealsAdapter;
+    private UserInput userInput;
+    private TextView currentProteinText, currentCarbsText, currentFatText, currentCaloriesText;
+    private TextView goalProteinText, goalCarbsText, goalFatText, goalCaloriesText;
+    private LinearProgressIndicator progressIndicatorProtein, progressIndicatorCarbs, progressIndicatorFat;
+
+    private List<Meal>[] meals;
+    private GeneratorMeal generatorMeal;
+    private NutritionViewModel mealViewModel;
+    private List<Meal> breakfastMeals, lunchMeals, dinnerMeals;
+    private int baseCalories;
+    private MacronutrientCalculator macronutrientCalculator;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_plan, container, false);
-
-
-
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        UserInput userInput = sharedPrefsHelper.getUser(getContext());
-        GeneratorMeal generatorMeal = new GeneratorMeal(userInput);
-        List<Meal>[] meals = generatorMeal.generateMealPlan(getContext());
+        userInput = sharedPrefsHelper.getUser(getContext());
+        generatorMeal = new GeneratorMeal(userInput);
+        meals = generatorMeal.generateMealPlan(getContext());
+        mealViewModel = new ViewModelProvider(this).get(NutritionViewModel.class);
 
+        breakfastMeals = meals[0];
+        lunchMeals = meals[1];
+        dinnerMeals = meals[2];
 
-
-        List<Meal> breakfastMeals = meals[0];
-        List<Meal> lunchMeals = meals[1];
-        List<Meal> dinnerMeals = meals[2];
-
-        int baseCalories = (int) (generatorMeal.getBaseCalories());
-
-        MacronutrientCalculator macronutrientCalculator = new MacronutrientCalculator(baseCalories);
+        baseCalories = (int) (generatorMeal.getBaseCalories());
+        macronutrientCalculator = new MacronutrientCalculator(baseCalories);
         int protein = (int) (macronutrientCalculator.getProtein());
         int carbs = (int) (macronutrientCalculator.getCarbs());
         int fat = (int) (macronutrientCalculator.getFat());
 
-        TextView currentProteinText = view.findViewById(R.id.protein_current_text);
-        TextView currentCarbsText = view.findViewById(R.id.carbs_current_text);
-        TextView currentFatText = view.findViewById(R.id.fat_current_text);
+        progressIndicatorProtein = view.findViewById(R.id.progressIndicatorProtein);
+        progressIndicatorCarbs = view.findViewById(R.id.progressIndicatorCarbs);
+        progressIndicatorFat = view.findViewById(R.id.progressIndicatorFat);
 
-        TextView goalProteinText = view.findViewById(R.id.protein_goal_text);
-        TextView goalCarbsText = view.findViewById(R.id.carbs_goal_text);
-        TextView goalFatText = view.findViewById(R.id.fat_goal_text);
+        currentProteinText = view.findViewById(R.id.protein_current_text);
+        currentCarbsText = view.findViewById(R.id.carbs_current_text);
+        currentFatText = view.findViewById(R.id.fat_current_text);
+        currentCaloriesText = view.findViewById(R.id.current_calories);
+
+        goalProteinText = view.findViewById(R.id.protein_goal_text);
+        goalCarbsText = view.findViewById(R.id.carbs_goal_text);
+        goalFatText = view.findViewById(R.id.fat_goal_text);
+        goalCaloriesText = view.findViewById(R.id.goal_calories);
 
         String proteinText = protein + "";
         String carbsText = carbs + "";
@@ -74,111 +88,58 @@ public class FragmentPlan extends Fragment {
         goalProteinText.setText(proteinText);
         goalCarbsText.setText(carbsText);
         goalFatText.setText(fatText);
-
-        System.out.println(protein);
-        System.out.println(carbs);
-        System.out.println(fat);
-
+        goalCaloriesText.setText(baseCalories + "");
 
         // Circular progress bar
         CircularProgressIndicator circularProgressIndicator = view.findViewById(R.id.progress_circular);
-        double completedCalories = 250;
 
-        int progress = (int) ((completedCalories * 100) / baseCalories); // Convert to percentage
-        circularProgressIndicator.setProgressCompat(progress, true);
+        // Observe LiveData
+        mealViewModel.getKcal().observe(getViewLifecycleOwner(), kcalR -> {
+            currentCaloriesText.setText(kcalR + "");
+            int progress = (int) ((kcalR * 100) / baseCalories); // Convert to percentage
+            circularProgressIndicator.setProgressCompat(progress, true);
+        });
 
-        TextView currentCaloriesText = view.findViewById(R.id.current_calories);
-        TextView goalCaloriesText = view.findViewById(R.id.goal_calories);
-        goalCaloriesText.setText(baseCalories + "");
-        System.out.println("BASE: " + baseCalories);
+        mealViewModel.getProtein().observe(getViewLifecycleOwner(), proteinR -> {
+            currentProteinText.setText(proteinR + "");
+            int progress = (int) ((proteinR * 100) / protein);
+            progressIndicatorProtein.setProgressCompat(progress, true);
+        });
 
+        mealViewModel.getCarbs().observe(getViewLifecycleOwner(), carbsR -> {
+            currentCarbsText.setText(carbsR + "");
+            int progress = (int) ((carbsR * 100) / carbs);
+            progressIndicatorCarbs.setProgressCompat(progress, true);
+        });
 
+        mealViewModel.getFat().observe(getViewLifecycleOwner(), fatR -> {
+            currentFatText.setText(fatR + "");
+            int progress = (int) ((fatR * 100) / fat);
+            progressIndicatorFat.setProgressCompat(progress, true);
+        });
 
+        setAdapters(view);
+    }
+
+    private void setAdapters(View view) {
         // Breakfast
         recyclerViewBreakfastMeals = view.findViewById(R.id.recyclerViewBreakfastMeals);
         recyclerViewBreakfastMeals.setLayoutManager(new LinearLayoutManager(getContext()));
-
-
-        breakfastMealsAdapter = new MealAdapter(breakfastMeals);
+        breakfastMealsAdapter = new MealAdapter(breakfastMeals, mealViewModel, this);
         recyclerViewBreakfastMeals.setAdapter(breakfastMealsAdapter);
 
         // Lunch
         recyclerViewLunchMeals = view.findViewById(R.id.recyclerViewLunchMeals);
         recyclerViewLunchMeals.setLayoutManager(new LinearLayoutManager(getContext()));
-
-
-        lunchMealsAdapter = new MealAdapter(lunchMeals);
+        lunchMealsAdapter = new MealAdapter(lunchMeals, mealViewModel, this);
         recyclerViewLunchMeals.setAdapter(lunchMealsAdapter);
 
         // Dinner
         recyclerViewDinnerMeals = view.findViewById(R.id.recyclerViewDinnerMeals);
         recyclerViewDinnerMeals.setLayoutManager(new LinearLayoutManager(getContext()));
-
-
-        dinnerMealsAdapter = new MealAdapter(dinnerMeals);
+        dinnerMealsAdapter = new MealAdapter(dinnerMeals, mealViewModel, this);
         recyclerViewDinnerMeals.setAdapter(dinnerMealsAdapter);
-
-
-        double breakfastTotalCal = 0;
-
-        for(Meal meal : meals[0]){
-            breakfastTotalCal += meal.getCalories();
-        }
-
-        double lunchTotalCal = 0;
-
-        for(Meal meal : meals[1]){
-            lunchTotalCal += meal.getCalories();
-        }
-
-        double dinnerTotalCal = 0;
-
-        for(Meal meal : meals[2]){
-            dinnerTotalCal += meal.getCalories();
-        }
-
-        System.out.println("Breakfast: "+ breakfastTotalCal + " Calories :" + meals[0]);
-        System.out.println("Lunch: "+ lunchTotalCal + " Calories :"  + meals[1]);
-        System.out.println("Dinner: "+ dinnerTotalCal + " Calories :"  + meals[2]);
-
-//        System.out.println(meals);
-//
-//
-//
-//        if (meals.size() >= 3) {
-//            // Distribute meals across meal1, meal2, and meal3
-//            int index = 0;
-//
-//            // Assign breakfast meals
-//            StringBuilder breakfastMeals = new StringBuilder("Breakfast:\n");
-//            while (index < meals.size() / 3) {
-//                breakfastMeals.append(meals.get(index).getName()).append("\n");
-//                index++;
-//            }
-//            meal1.setMealName(breakfastMeals.toString());
-//
-//            // Assign lunch meals
-//            StringBuilder lunchMeals = new StringBuilder("Lunch:\n");
-//            while (index < (2 * meals.size()) / 3) {
-//                lunchMeals.append(meals.get(index).getName()).append("\n");
-//                index++;
-//            }
-//            meal2.setMealName(lunchMeals.toString());
-//
-//            // Assign dinner meals
-//            StringBuilder dinnerMeals = new StringBuilder("Dinner:\n");
-//            while (index < meals.size()) {
-//                dinnerMeals.append(meals.get(index).getName()).append("\n");
-//                index++;
-//            }
-//            meal3.setMealName(dinnerMeals.toString());
-//        }
-//        for (Meal meal : meals) {
-//            meal1.setMea(meal.getName());
-//            System.out.println("Meal: " + meal.getName() + ", Calories: " + meal.getCalories());
-//        }
-
-//        System.out.println(meals);
-//        System.out.println("Calories: " + generatorMeal.getBaseCalories());
     }
+
+
 }

@@ -13,8 +13,11 @@ public class Meal {
     private String culture;
     private String region;
     private int servingsGrams;
+    private String mealtime;
 
-    public Meal(String name, double calories, int protein, int carbs, int fats, String dietType, String allergens, int prepTime, String culture, String region, int servingsGrams) {
+    private boolean isSelected;
+
+    public Meal(String name, double calories, int protein, int carbs, int fats, String dietType, String allergens, int prepTime, String culture, String region, int servingsGrams, String mealtime) {
         this.name = name;
         this.calories = calories;
         this.protein = protein;
@@ -26,6 +29,7 @@ public class Meal {
         this.culture = culture;
         this.region = region;
         this.servingsGrams = servingsGrams;
+        this.mealtime = mealtime;
     }
 
     public String getName() { return name; }
@@ -45,11 +49,34 @@ public class Meal {
     public int getServingsGrams() {
         return servingsGrams;
     }
+    public String getMealtime() {
+        return mealtime;
+    }
+
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    public void setSelected(boolean selected) {
+        isSelected = selected;
+    }
+
+//    @Override
+//    public String toString() {
+//        return String.format(
+//                "%s - %.2f kcal | %dg Protein | %dg Carbs | %dg Fats | Diet: %s | Allergens: %s | Prep Time: %d min | Culture: %s | Region: %s | Serving: %dg",
+//                name, calories, protein, carbs, fats, dietType, allergens, prepTime, culture, region, servingsGrams
+//        );
+//    }
 
     @Override
     public String toString() {
-        return name + " - " + calories + " kcal | " + protein + "g Protein | " + carbs + "g Carbs | " + fats + "g Fats | " + "Diet Type " + dietType +  " | Allergens " + allergens;
+        return String.format(
+                "%s - %.2f kcal Serving: %dg ||",
+                name, calories, servingsGrams
+        );
     }
+
 }
 
 

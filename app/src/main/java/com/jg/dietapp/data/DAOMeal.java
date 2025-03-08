@@ -89,7 +89,8 @@ public class DAOMeal {
                     cursor.getInt(8),      // Prep Time\
                     cursor.getString(9),      // Culture
                     cursor.getString(10),  // Region
-                    cursor.getInt(11)       // Servings in Grams
+                    cursor.getInt(11),  // Servings in Grams
+                    cursor.getString(12)   // Mealtime
             ));
         }
         cursor.close();
