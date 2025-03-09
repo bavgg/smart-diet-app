@@ -13,7 +13,7 @@ import androidx.fragment.app.Fragment;
 
 import com.jg.dietapp.R;
 
-public class Fragment1aStart extends Fragment {
+public class FragmentStart extends Fragment {
 
     @Nullable
     @Override
@@ -34,7 +34,7 @@ public class Fragment1aStart extends Fragment {
 
                 increaseProgress();
                 requireActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container, new Fragment1bGoal())
+                        .replace(R.id.fragment_container, new FragmentGoal())
                         .addToBackStack(null) // Optional: Allows back navigation
                         .commit();
             }

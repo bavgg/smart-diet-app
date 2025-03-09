@@ -19,7 +19,7 @@ import com.jg.dietapp.MainActivity;
 import com.jg.dietapp.shared.UserInput;
 import com.jg.dietapp.R;
 
-public class Fragment1bGoal extends Fragment {
+public class FragmentGoal extends Fragment {
     CustomCard fatLossCard, muscleGainCard, weightMaintenanceCard;
     UserInput userInput = MainActivity.userInput;
 
@@ -44,7 +44,7 @@ public class Fragment1bGoal extends Fragment {
             increaseProgress();
             fatLossCard.setCardElevation(10f);
 
-            nextFragment(new Fragment1cAboutYou());
+            nextFragment(new FragmentAboutYou());
         });
 
         muscleGainCard.setOnClickListener(v -> {
@@ -52,7 +52,7 @@ public class Fragment1bGoal extends Fragment {
             increaseProgress();
             muscleGainCard.setCardElevation(10f);
 
-            nextFragment(new Fragment1cAboutYou());
+            nextFragment(new FragmentAboutYou());
         });
 
         weightMaintenanceCard.setOnClickListener(v -> {
@@ -60,7 +60,7 @@ public class Fragment1bGoal extends Fragment {
             increaseProgress();
             weightMaintenanceCard.setCardElevation(10f);
 
-            nextFragment(new Fragment1cAboutYou());
+            nextFragment(new FragmentAboutYou());
         });
 
     }

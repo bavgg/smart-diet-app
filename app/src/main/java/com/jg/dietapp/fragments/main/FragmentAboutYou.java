@@ -30,7 +30,7 @@ import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
-public class Fragment1cAboutYou extends Fragment {
+public class FragmentAboutYou extends Fragment {
     Button continueButton;
     CustomSelect sexSelector, ageSelector, heightSelector, weightSelector;
 
@@ -127,7 +127,7 @@ public class Fragment1cAboutYou extends Fragment {
 
             increaseProgress();
             requireActivity().getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container, new Fragment1dActivityLevel())
+                    .replace(R.id.fragment_container, new FragmentActivityLevel())
                     .addToBackStack(null)
                     .commit();
         });

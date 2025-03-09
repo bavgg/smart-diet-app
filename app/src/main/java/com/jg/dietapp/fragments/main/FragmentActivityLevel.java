@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
@@ -16,62 +15,58 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.jg.dietapp.components.CustomCard;
-import com.jg.dietapp.enums.EnumDietType;
+import com.jg.dietapp.enums.EnumActivityLevel;
 import com.jg.dietapp.R;
 
-public class Fragment1eDietaryPreferences extends Fragment {
-    Button continueButton;
-    CustomCard vegetarianCard, omnivoreCard, halalCard, pescatarianCard;
+public class FragmentActivityLevel extends Fragment {
+    CustomCard sedentaryCard, lightlyActiveCard, moderatelyActiveCard, veryActiveCard, professionalAthleteCard;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_dietary_preferences, container, false);
+        return inflater.inflate(R.layout.fragment_activity_level, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
 
-        vegetarianCard = view.findViewById(R.id.vegetarianCard);
-        omnivoreCard = view.findViewById(R.id.omnivoreCard);
-        halalCard = view.findViewById(R.id.halalCard);
-        pescatarianCard = view.findViewById(R.id.pescatarianCard);
+        sedentaryCard = view.findViewById(R.id.sedentaryCard);
+        lightlyActiveCard = view.findViewById(R.id.lightlyActiveCard);
+        moderatelyActiveCard = view.findViewById(R.id.moderatelyActiveCard);
+        veryActiveCard = view.findViewById(R.id.veryActiveCard);
+        professionalAthleteCard = view.findViewById(R.id.professionalAthleteCard);
 
         setupPressBackListener();
 
-        vegetarianCard.setOnClickListener(v -> {
-
-
-            userInput.setDietType(EnumDietType.Vegetarian);
-            nextFragment(new Fragment1eFoodRestrictions());
+        sedentaryCard.setOnClickListener(v -> {
+            userInput.setActivityLevel(EnumActivityLevel.SEDENTARY);
             increaseProgress();
+            nextFragment(new FragmentDietaryPreferences());
         });
 
-        omnivoreCard.setOnClickListener(v -> {
-
-
-            userInput.setDietType(EnumDietType.Omnivore);
-            nextFragment(new Fragment1eFoodRestrictions());
+        lightlyActiveCard.setOnClickListener(v -> {
+            userInput.setActivityLevel(EnumActivityLevel.LIGHT_ACTIVITY);
             increaseProgress();
+            nextFragment(new FragmentDietaryPreferences());
         });
 
-        halalCard.setOnClickListener(v -> {
-
-
-            userInput.setDietType(EnumDietType.Halal);
-            nextFragment(new Fragment1eFoodRestrictions());
+        moderatelyActiveCard.setOnClickListener(v -> {
+            userInput.setActivityLevel(EnumActivityLevel.MODERATE_ACTIVITY);
             increaseProgress();
+            nextFragment(new FragmentDietaryPreferences());
         });
 
-        pescatarianCard.setOnClickListener(v -> {
-
-
-            userInput.setDietType(EnumDietType.Pescatarian);
-            nextFragment(new Fragment1eFoodRestrictions());
+        veryActiveCard.setOnClickListener(v -> {
+            userInput.setActivityLevel(EnumActivityLevel.HEAVY_ACTIVITY);
             increaseProgress();
+            nextFragment(new FragmentDietaryPreferences());
         });
 
+        professionalAthleteCard.setOnClickListener(v -> {
+            userInput.setActivityLevel(EnumActivityLevel.EXCESSIVE_ACTIVITY);
+            increaseProgress();
+            nextFragment(new FragmentDietaryPreferences());
+        });
     }
 
     private void nextFragment(Fragment nextFragment) {

@@ -20,7 +20,7 @@ import com.jg.dietapp.R;
 
 import java.util.concurrent.atomic.AtomicReference;
 
-public class Fragment1eFoodRestrictions extends Fragment {
+public class FragmentFoodRestrictions extends Fragment {
     CustomCard soyCard, glutenCard, eggCard, fishCard;
     Button continueButton;
 
@@ -115,7 +115,7 @@ public class Fragment1eFoodRestrictions extends Fragment {
             }
 
             userInput.setFoodAllergens(foodAllergens.get());
-            nextFragment(new Fragment1fCustomizeYourGoal());
+            nextFragment(new FragmentCustomizeYourGoal());
             increaseProgress();
         });
     }

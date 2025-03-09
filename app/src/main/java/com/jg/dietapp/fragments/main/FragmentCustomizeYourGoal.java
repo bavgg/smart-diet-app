@@ -22,7 +22,7 @@ import com.jg.dietapp.R;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
 
-public class Fragment1fCustomizeYourGoal extends Fragment {
+public class FragmentCustomizeYourGoal extends Fragment {
     CustomSelect currentWeightSelector, goalWeightSelector;
     Button createMyPlanButton;
 
@@ -74,7 +74,7 @@ public class Fragment1fCustomizeYourGoal extends Fragment {
             userInput.setGoalWeight(goalWeightInfo.get());
 
             increaseProgress();
-            nextFragment(new Fragment1gYouAreAllSet());
+            nextFragment(new FragmentYouAreAllSet());
         });
 
     }

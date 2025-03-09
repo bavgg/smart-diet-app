@@ -9,7 +9,7 @@ import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.progressindicator.LinearProgressIndicator;
-import com.jg.dietapp.fragments.main.Fragment1aStart;
+import com.jg.dietapp.fragments.main.FragmentStart;
 import com.jg.dietapp.data.DatabaseHelper;
 import com.jg.dietapp.shared.UserInput;
 import com.jg.dietapp.shared.SharedDataDialog;
@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Load fragment
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragment_container, new Fragment1aStart())
+                .replace(R.id.fragment_container, new FragmentStart())
                 .commit();
 
     }

@@ -14,14 +14,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.jg.dietapp.generator.GeneratorMeal;
 import com.jg.dietapp.HomeActivity;
-import com.jg.dietapp.models.Meal;
 import com.jg.dietapp.R;
 
-import java.util.List;
-
-public class Fragment1gYouAreAllSet extends Fragment {
+public class FragmentYouAreAllSet extends Fragment {
 
     Button nextButton;
     @Nullable
