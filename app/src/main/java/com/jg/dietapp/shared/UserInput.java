@@ -13,7 +13,7 @@ public class UserInput {
     private int age;
     private int height;
     private double weight;
-    private double goalWeight;
+    private double goalWeight; // to ve remove
     private EnumActivityLevel activityLevel;
     private EnumDietType dietType;
 //    private EnumFoodAllergen[] foodAllergens;

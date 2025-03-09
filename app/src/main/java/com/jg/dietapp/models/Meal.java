@@ -2,6 +2,7 @@ package com.jg.dietapp.models;
 
 
 public class Meal {
+    private int id;
     private String name;
     private double calories;
     private int protein;
@@ -17,7 +18,8 @@ public class Meal {
 
     private boolean isSelected;
 
-    public Meal(String name, double calories, int protein, int carbs, int fats, String dietType, String allergens, int prepTime, String culture, String region, int servingsGrams, String mealtime) {
+    public Meal(int id, String name, double calories, int protein, int carbs, int fats, String dietType, String allergens, int prepTime, String culture, String region, int servingsGrams, String mealtime) {
+        this.id = id;
         this.name = name;
         this.calories = calories;
         this.protein = protein;
@@ -32,6 +34,7 @@ public class Meal {
         this.mealtime = mealtime;
     }
 
+    public int getId() {return id; }
     public String getName() { return name; }
     public double getCalories() { return calories; }
     public int getProtein() { return protein; }

@@ -1,5 +1,8 @@
 package com.jg.dietapp.adapters;
 
+import static com.jg.dietapp.fragments.home.FragmentPlan.selectedMeals;
+
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,17 +13,22 @@ import androidx.lifecycle.LifecycleOwner;
 import androidx.recyclerview.widget.RecyclerView;
 import com.jg.dietapp.R;
 import com.jg.dietapp.models.Meal;
+import com.jg.dietapp.shared.SharedPrefsMeals;
 import com.jg.dietapp.viewmodel.NutritionViewModel;
 
 import java.util.List;
+import java.util.Set;
 
 public class MealAdapter extends RecyclerView.Adapter<MealAdapter.MealViewHolder> {
     private List<Meal> mealList;
-    private NutritionViewModel mealViewModel;
+    private NutritionViewModel nutritionViewModel;
+    private SharedPrefsMeals sharedPrefsMeals;
 
-    public MealAdapter(List<Meal> mealList, NutritionViewModel mealViewModel, LifecycleOwner lifecycleOwner) {
+    public MealAdapter(Context context, List<Meal> mealList, NutritionViewModel nutritionViewModel, LifecycleOwner lifecycleOwner) {
         this.mealList = mealList;
-        this.mealViewModel = mealViewModel;
+        this.nutritionViewModel = nutritionViewModel;
+        this.sharedPrefsMeals = new SharedPrefsMeals(context);
+
     }
 
     @NonNull
@@ -36,22 +44,34 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.MealViewHolder
         holder.mealName.setText(meal.getName());
         holder.mealCalories.setText(meal.getCalories() + " ");
 
-        // Prevent incorrect state reuse
-        holder.checkBox.setOnCheckedChangeListener(null);
-        holder.checkBox.setChecked(meal.isSelected());
+        int mealId = meal.getId(); // Get meal ID instead of using position
+        boolean isSelected = selectedMeals.contains(mealId);
+
+        holder.checkBox.setOnCheckedChangeListener(null); // Prevent unintended triggers
+        holder.checkBox.setChecked(isSelected);
 
         holder.checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            meal.setSelected(isChecked);
-            System.out.println(isChecked);
+            if (isChecked) {
+                System.out.println(mealId);
+                selectedMeals.add(Integer.valueOf(mealId)); // Use mealId instead of position
+            } else {
+                selectedMeals.remove(Integer.valueOf(mealId)); // Remove by mealId
+            }
+
+            sharedPrefsMeals.saveSelectedMeals(selectedMeals);
+
+            System.out.println("Selected Meal IDs: " + selectedMeals); // Debugging
 
             int calories = isChecked ? (int) meal.getCalories() : -(int) meal.getCalories();
             int protein = isChecked ? meal.getProtein() : -meal.getProtein();
             int carbs = isChecked ? meal.getCarbs() : -meal.getCarbs();
             int fats = isChecked ? meal.getFats() : -meal.getFats();
 
-            mealViewModel.updateNutrition(calories, protein, carbs, fats);
+            nutritionViewModel.updateNutrition(calories, protein, carbs, fats);
         });
     }
+
+
 
 
     @Override

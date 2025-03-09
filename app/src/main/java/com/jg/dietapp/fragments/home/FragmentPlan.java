@@ -22,6 +22,7 @@ import com.jg.dietapp.R;
 import com.jg.dietapp.adapters.MealAdapter;
 import com.jg.dietapp.generator.GeneratorMeal;
 import com.jg.dietapp.models.Meal;
+import com.jg.dietapp.shared.SharedPrefsMeals;
 import com.jg.dietapp.shared.UserInput;
 import com.jg.dietapp.utils.MacronutrientCalculator;
 import com.jg.dietapp.viewmodel.NutritionViewModel;
@@ -38,10 +39,12 @@ public class FragmentPlan extends Fragment {
 
     private List<Meal>[] meals;
     private GeneratorMeal generatorMeal;
-    private NutritionViewModel mealViewModel;
+    private NutritionViewModel nutritionViewModel;
     private List<Meal> breakfastMeals, lunchMeals, dinnerMeals;
     private int baseCalories;
     private MacronutrientCalculator macronutrientCalculator;
+    public static List<Integer> selectedMeals;
+    private SharedPrefsMeals sharedPrefsMeals;
 
     @Nullable
     @Override
@@ -51,11 +54,14 @@ public class FragmentPlan extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        this.sharedPrefsMeals = new SharedPrefsMeals(getContext());
+        selectedMeals = sharedPrefsMeals.getSelectedMeals();
+
         super.onViewCreated(view, savedInstanceState);
         userInput = sharedPrefsHelper.getUser(getContext());
         generatorMeal = new GeneratorMeal(userInput);
         meals = generatorMeal.generateMealPlan(getContext());
-        mealViewModel = new ViewModelProvider(this).get(NutritionViewModel.class);
+        nutritionViewModel = new ViewModelProvider(this).get(NutritionViewModel.class);
 
         breakfastMeals = meals[0];
         lunchMeals = meals[1];
@@ -94,25 +100,25 @@ public class FragmentPlan extends Fragment {
         CircularProgressIndicator circularProgressIndicator = view.findViewById(R.id.progress_circular);
 
         // Observe LiveData
-        mealViewModel.getKcal().observe(getViewLifecycleOwner(), kcalR -> {
+        nutritionViewModel.getKcal().observe(getViewLifecycleOwner(), kcalR -> {
             currentCaloriesText.setText(kcalR + "");
             int progress = (int) ((kcalR * 100) / baseCalories); // Convert to percentage
             circularProgressIndicator.setProgressCompat(progress, true);
         });
 
-        mealViewModel.getProtein().observe(getViewLifecycleOwner(), proteinR -> {
+        nutritionViewModel.getProtein().observe(getViewLifecycleOwner(), proteinR -> {
             currentProteinText.setText(proteinR + "");
             int progress = (int) ((proteinR * 100) / protein);
             progressIndicatorProtein.setProgressCompat(progress, true);
         });
 
-        mealViewModel.getCarbs().observe(getViewLifecycleOwner(), carbsR -> {
+        nutritionViewModel.getCarbs().observe(getViewLifecycleOwner(), carbsR -> {
             currentCarbsText.setText(carbsR + "");
             int progress = (int) ((carbsR * 100) / carbs);
             progressIndicatorCarbs.setProgressCompat(progress, true);
         });
 
-        mealViewModel.getFat().observe(getViewLifecycleOwner(), fatR -> {
+        nutritionViewModel.getFat().observe(getViewLifecycleOwner(), fatR -> {
             currentFatText.setText(fatR + "");
             int progress = (int) ((fatR * 100) / fat);
             progressIndicatorFat.setProgressCompat(progress, true);
@@ -125,19 +131,19 @@ public class FragmentPlan extends Fragment {
         // Breakfast
         recyclerViewBreakfastMeals = view.findViewById(R.id.recyclerViewBreakfastMeals);
         recyclerViewBreakfastMeals.setLayoutManager(new LinearLayoutManager(getContext()));
-        breakfastMealsAdapter = new MealAdapter(breakfastMeals, mealViewModel, this);
+        breakfastMealsAdapter = new MealAdapter(getContext(), breakfastMeals, nutritionViewModel, this);
         recyclerViewBreakfastMeals.setAdapter(breakfastMealsAdapter);
 
         // Lunch
         recyclerViewLunchMeals = view.findViewById(R.id.recyclerViewLunchMeals);
         recyclerViewLunchMeals.setLayoutManager(new LinearLayoutManager(getContext()));
-        lunchMealsAdapter = new MealAdapter(lunchMeals, mealViewModel, this);
+        lunchMealsAdapter = new MealAdapter(getContext(), lunchMeals, nutritionViewModel, this);
         recyclerViewLunchMeals.setAdapter(lunchMealsAdapter);
 
         // Dinner
         recyclerViewDinnerMeals = view.findViewById(R.id.recyclerViewDinnerMeals);
         recyclerViewDinnerMeals.setLayoutManager(new LinearLayoutManager(getContext()));
-        dinnerMealsAdapter = new MealAdapter(dinnerMeals, mealViewModel, this);
+        dinnerMealsAdapter = new MealAdapter(getContext(), dinnerMeals, nutritionViewModel, this);
         recyclerViewDinnerMeals.setAdapter(dinnerMealsAdapter);
     }
 

@@ -10,6 +10,7 @@ import com.jg.dietapp.shared.UserInput;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class GeneratorMeal {
@@ -66,9 +67,9 @@ public class GeneratorMeal {
         double dinnerCalories = baseCalories * 0.3; // 30% for Dinner
 
         // Step 4: Fetch Meals Matching Diet, Allergens, Mealtime, and Calories
-        breakfastMealPlan.addAll(selectMeals(breakfastOptions, breakfastCalories));
-        lunchMealPlan.addAll(selectMeals(lunchDinnerOptions, lunchCalories));
-        dinnerMealPlan.addAll(selectMeals(lunchDinnerOptions, dinnerCalories));
+        breakfastMealPlan.addAll(selectMeals("Breakfast", breakfastOptions, breakfastCalories, 1001));
+        lunchMealPlan.addAll(selectMeals("Lunch", lunchDinnerOptions, lunchCalories, 1002));
+        dinnerMealPlan.addAll(selectMeals("Dinner", lunchDinnerOptions, dinnerCalories, 1003));
 
         System.out.println("Breakfast Plan: " + breakfastMealPlan);
         System.out.println("Lunch Plan: " + lunchMealPlan);
@@ -104,27 +105,31 @@ public class GeneratorMeal {
         }
     }
 
-    private List<Meal> selectMeals(List<Meal> availableMeals, double targetCalories) {
+    private List<Meal> selectMeals(String mealtime, List<Meal> availableMeals, double targetCalories, int riceId) {
         List<Meal> selectedMeals = new ArrayList<>();
         double totalCalories = 0;
 
-        // Always include Rice
-        Meal riceMeal = new Meal(
-                "Rice",
-                200,  // Calories
-                4,    // Protein
-                45,   // Carbs
-                0,    // Fats
-                "Any",
-                "None",
-                10,   // Prep Time
-                "Asian",
-                "Global",
-                150,  // Servings in grams
-                "Any"
-        );
-        selectedMeals.add(riceMeal);
-        totalCalories += riceMeal.getCalories();
+        if(!Objects.equals(mealtime, "Breakfast")) {
+            // Always include Rice
+            Meal riceMeal = new Meal(
+                    riceId,
+                    "Rice",
+                    200,  // Calories
+                    4,    // Protein
+                    45,   // Carbs
+                    0,    // Fats
+                    "Any",
+                    "None",
+                    10,   // Prep Time
+                    "Asian",
+                    "Global",
+                    150,  // Servings in grams
+                    "Any"
+            );
+            selectedMeals.add(riceMeal);
+            totalCalories += riceMeal.getCalories();
+        }
+
 
         // Sort meals by calorie content (descending) for better fit
         availableMeals.sort((a, b) -> Double.compare(b.getCalories(), a.getCalories()));

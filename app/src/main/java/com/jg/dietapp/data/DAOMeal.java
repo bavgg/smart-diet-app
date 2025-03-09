@@ -50,7 +50,6 @@ public class DAOMeal {
 
 
     public List<Meal> getMealsByDietAndAllergens(String dietType, String foodAllergens) {
-
         List<Meal> meals = new ArrayList<>();
         List<String> selectionArgs = new ArrayList<>();
         StringBuilder query = new StringBuilder("SELECT * FROM meals WHERE diet_type = ?");
@@ -73,12 +72,12 @@ public class DAOMeal {
 
         System.out.println("Selection args: " + selectionArgs);
 
-
         // Execute query
         Cursor cursor = db.rawQuery(query.toString(), selectionArgs.toArray(new String[0]));
 
         while (cursor.moveToNext()) {
             meals.add(new Meal(
+                    cursor.getInt(0),  // ✅ ID
                     cursor.getString(1),  // Name
                     cursor.getDouble(2),  // Calories
                     cursor.getInt(3),     // Protein
@@ -86,15 +85,16 @@ public class DAOMeal {
                     cursor.getInt(5),     // Fats
                     cursor.getString(6),  // Diet Type
                     cursor.getString(7),  // Allergens
-                    cursor.getInt(8),      // Prep Time\
-                    cursor.getString(9),      // Culture
-                    cursor.getString(10),  // Region
-                    cursor.getInt(11),  // Servings in Grams
-                    cursor.getString(12)   // Mealtime
+                    cursor.getInt(8),     // Prep Time
+                    cursor.getString(9),  // Culture
+                    cursor.getString(10), // Region
+                    cursor.getInt(11),    // Servings in Grams
+                    cursor.getString(12)  // Mealtime
             ));
         }
         cursor.close();
 
         return meals;
     }
+
 }

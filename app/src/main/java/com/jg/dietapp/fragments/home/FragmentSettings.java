@@ -15,10 +15,14 @@ import com.jg.dietapp.HomeActivity;
 import com.jg.dietapp.MainActivity;
 import com.jg.dietapp.R;
 import com.jg.dietapp.shared.SharedPrefsHelper;
+import com.jg.dietapp.shared.SharedPrefsMeals;
+import com.jg.dietapp.shared.SharedPrefsNutrients;
 
 public class FragmentSettings extends Fragment {
     Button resetButton;
     SharedPrefsHelper sharedPrefsHelper;
+    SharedPrefsMeals sharedPrefsMeals;
+    SharedPrefsNutrients sharedPrefsNutrients;
 
     @Nullable
     @Override
@@ -32,9 +36,14 @@ public class FragmentSettings extends Fragment {
 
         resetButton = view.findViewById(R.id.resetButton);
         sharedPrefsHelper = new SharedPrefsHelper();
+        sharedPrefsMeals = new SharedPrefsMeals(getContext());
+        sharedPrefsNutrients = new SharedPrefsNutrients(getContext());
+
 
         resetButton.setOnClickListener(v -> {
             sharedPrefsHelper.clearUser(getContext());
+            sharedPrefsMeals.clearSelectedMeals();
+            sharedPrefsNutrients.clearSelectedMeals(getContext());
 
             Intent intent = new Intent(getContext(), MainActivity.class);
             startActivity(intent);
