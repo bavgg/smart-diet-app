@@ -17,7 +17,6 @@ import com.jg.dietapp.shared.SharedPrefsMeals;
 import com.jg.dietapp.viewmodel.NutritionViewModel;
 
 import java.util.List;
-import java.util.Set;
 
 public class MealAdapter extends RecyclerView.Adapter<MealAdapter.MealViewHolder> {
     private List<Meal> mealList;
@@ -44,7 +43,7 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.MealViewHolder
         holder.mealName.setText(meal.getName());
         holder.mealCalories.setText(meal.getCalories() + " ");
 
-        int mealId = meal.getId(); // Get meal ID instead of using position
+        int mealId = meal.getId();
         boolean isSelected = selectedMeals.contains(mealId);
 
         holder.checkBox.setOnCheckedChangeListener(null); // Prevent unintended triggers
@@ -53,14 +52,12 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.MealViewHolder
         holder.checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
                 System.out.println(mealId);
-                selectedMeals.add(Integer.valueOf(mealId)); // Use mealId instead of position
+                selectedMeals.add(Integer.valueOf(mealId));
             } else {
-                selectedMeals.remove(Integer.valueOf(mealId)); // Remove by mealId
+                selectedMeals.remove(Integer.valueOf(mealId));
             }
 
             sharedPrefsMeals.saveSelectedMeals(selectedMeals);
-
-            System.out.println("Selected Meal IDs: " + selectedMeals); // Debugging
 
             int calories = isChecked ? (int) meal.getCalories() : -(int) meal.getCalories();
             int protein = isChecked ? meal.getProtein() : -meal.getProtein();
@@ -70,9 +67,6 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.MealViewHolder
             nutritionViewModel.updateNutrition(calories, protein, carbs, fats);
         });
     }
-
-
-
 
     @Override
     public int getItemCount() {
@@ -88,7 +82,6 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.MealViewHolder
             mealName = itemView.findViewById(R.id.meal_name_text);
             mealCalories = itemView.findViewById(R.id.calorie_count_text);
             checkBox = itemView.findViewById(R.id.checkbox);
-//            mealDietType = itemView.findViewById(R.id.textMealDietType);
         }
     }
 }

@@ -49,8 +49,6 @@ public class LoginActivity extends AppCompatActivity {
         loginButton = findViewById(R.id.loginButton);
         registerLink = findViewById(R.id.registerLink);
 
-
-
         mAuth = FirebaseAuth.getInstance();
 
         registerLink.setOnClickListener(v -> {

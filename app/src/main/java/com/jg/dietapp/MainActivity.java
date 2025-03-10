@@ -50,9 +50,6 @@ public class MainActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
-
-
-
         // Initialize progress indicator component
         progressIndicator = findViewById(R.id.progressIndicator);
 
