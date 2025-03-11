@@ -115,7 +115,7 @@ public class FragmentFoodRestrictions extends Fragment {
             }
 
             userInput.setFoodAllergens(foodAllergens.get());
-            nextFragment(new FragmentCustomizeYourGoal());
+            nextFragment(new FragmentYouAreAllSet());
             increaseProgress();
         });
     }

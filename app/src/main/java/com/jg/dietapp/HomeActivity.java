@@ -26,9 +26,10 @@ public class HomeActivity extends AppCompatActivity {
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
 
-        // Load fragment
+        // Load fragment plan
         loadFragment(new FragmentPlan());
 
+        // Handle bottom navigation
         bottomNavigationView.setOnItemSelectedListener(item -> {
             Fragment selectedFragment = null;
 

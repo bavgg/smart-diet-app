@@ -46,7 +46,7 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.MealViewHolder
         int mealId = meal.getId();
         boolean isSelected = selectedMeals.contains(mealId);
 
-        holder.checkBox.setOnCheckedChangeListener(null); // Prevent unintended triggers
+        holder.checkBox.setOnCheckedChangeListener(null);
         holder.checkBox.setChecked(isSelected);
 
         holder.checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
