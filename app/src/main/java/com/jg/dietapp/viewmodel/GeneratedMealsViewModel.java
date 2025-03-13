@@ -7,27 +7,37 @@ import java.util.List;
 
 public class GeneratedMealsViewModel extends ViewModel {
 
-    private List<Meal>[] selectedMeals;
+    private List<Meal>[] generatedMeals;
+    private int baseCalories;
 
-    public void setMeals(List<Meal>[] meals) {
-        this.selectedMeals = meals;
+    public void setGeneratedMeals(List<Meal>[] meals) {
+        this.generatedMeals = meals;
     }
 
-    public List<Meal>[] getSelectedMeals() {
-        return selectedMeals;
+    public List<Meal>[] getGeneratedMeals() {
+        return generatedMeals;
     }
 
     public boolean isEmpty() {
-        if (selectedMeals == null || selectedMeals.length == 0) {
+        if (generatedMeals == null || generatedMeals.length == 0) {
             return true; // The array is null or empty
         }
 
-        for (List<Meal> mealList : selectedMeals) {
+        for (List<Meal> mealList : generatedMeals) {
             if (mealList != null && !mealList.isEmpty()) {
                 return false; // At least one list has meals
             }
         }
 
         return true; // All lists are empty or null
+    }
+
+    public void setBaseCalories(int baseCalories) {
+        this.baseCalories = baseCalories;
+
+    }
+
+    public int getBaseCalories() {
+        return baseCalories;
     }
 }

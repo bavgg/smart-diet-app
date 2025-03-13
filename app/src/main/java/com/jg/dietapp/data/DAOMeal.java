@@ -1,5 +1,7 @@
 package com.jg.dietapp.data;
 
+import static com.jg.dietapp.MainActivity.userInput;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -7,6 +9,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.jg.dietapp.models.Meal;
+import com.jg.dietapp.shared.UserInput;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,8 +18,7 @@ public class DAOMeal {
     private static final String TAG = "DAOMeal";
     private final SQLiteDatabase db;
 
-    public DAOMeal(Context context) {
-        DatabaseHelper dbHelper = new DatabaseHelper(context);
+    public DAOMeal(DatabaseHelper dbHelper) {
         db = dbHelper.getWritableDatabase();
     }
 
@@ -43,7 +45,11 @@ public class DAOMeal {
         }
     }
 
-    public List<Meal> getMealsByDietAndAllergens(String dietType, String foodAllergens) {
+    public List<Meal> getMealsByDietAndAllergens(UserInput userInput) {
+
+        String dietType = userInput.getDietType().toString();
+        String foodAllergens = userInput.getFoodAllergens();
+
         List<Meal> meals = new ArrayList<>();
         List<String> selectionArgs = new ArrayList<>();
         StringBuilder query = new StringBuilder("SELECT * FROM meals WHERE diet_type = ?");
@@ -86,4 +92,34 @@ public class DAOMeal {
 
         return meals;
     }
+
+    public List<Meal> getAllMeals() {
+        List<Meal> meals = new ArrayList<>();
+        String query = "SELECT * FROM meals";
+
+        try (Cursor cursor = db.rawQuery(query, null)) {
+            while (cursor.moveToNext()) {
+                meals.add(new Meal(
+                        cursor.getInt(0),  // ID
+                        cursor.getString(1),  // Name
+                        cursor.getDouble(2),  // Calories
+                        cursor.getInt(3),  // Protein
+                        cursor.getInt(4),  // Carbs
+                        cursor.getInt(5),  // Fats
+                        cursor.getString(6),  // Diet Type
+                        cursor.getString(7),  // Allergens
+                        cursor.getInt(8),  // Prep Time
+                        cursor.getString(9),  // Culture
+                        cursor.getString(10),  // Region
+                        cursor.getInt(11),  // Servings in Grams
+                        cursor.getString(12)   // Mealtime
+                ));
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "Error fetching all meals", e);
+        }
+
+        return meals;
+    }
+
 }

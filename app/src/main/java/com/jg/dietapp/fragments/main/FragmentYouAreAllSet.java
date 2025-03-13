@@ -1,6 +1,6 @@
 package com.jg.dietapp.fragments.main;
 
-import static com.jg.dietapp.MainActivity.sharedPrefsHelper;
+import static com.jg.dietapp.MainActivity.sharedUserPrefs;
 import static com.jg.dietapp.MainActivity.userInput;
 
 import android.content.Intent;
@@ -35,9 +35,7 @@ public class FragmentYouAreAllSet extends Fragment {
 
         userInput.setUserSubmitted(true);
 
-        sharedPrefsHelper.saveUser(getContext(), userInput);
-
-
+        sharedUserPrefs.saveUser(userInput);
 
 
 //        for (ModelMeal meal : meals) {

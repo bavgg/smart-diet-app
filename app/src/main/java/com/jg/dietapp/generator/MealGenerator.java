@@ -1,8 +1,6 @@
 package com.jg.dietapp.generator;
 
-import android.content.Context;
 import com.jg.dietapp.utils.Utils;
-import com.jg.dietapp.data.DAOMeal;
 import com.jg.dietapp.enums.EnumGoal;
 import com.jg.dietapp.enums.EnumSex;
 import com.jg.dietapp.models.Meal;
@@ -13,18 +11,18 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-public class GeneratorMeal {
+public class MealGenerator {
     private final UserInput userInput;
     private double baseCalories;
     private List<Meal> mealOptions;
 
-    public GeneratorMeal(UserInput userInput) {
+    public MealGenerator(UserInput userInput, List<Meal> mealOptions) {
         this.userInput = userInput;
+        this.mealOptions = mealOptions;
     }
 
-    public List<Meal>[] generateMealPlan(Context context) {
-        DAOMeal mealDAO = new DAOMeal(context);
-        initializeMealOptions(mealDAO);
+    public List<Meal>[] generateMealPlan() {
+
 
         double tdee = calculateTDEE();
         baseCalories = adjustCaloriesForGoal(tdee);
@@ -33,10 +31,16 @@ public class GeneratorMeal {
         double lunchCalories = baseCalories * 0.4;
         double dinnerCalories = baseCalories * 0.3;
 
+        List<Meal> breakfastMeals = getMealsByMealtime("Breakfast");
+        List<Meal> lunchDinnerMeals = getMealsByMealtime("Lunch/Dinner");
+        int mid = lunchDinnerMeals.size() / 2;
+        List<Meal> lunchMeals = new ArrayList<>(lunchDinnerMeals.subList(0, mid));   // First half
+        List<Meal> dinnerMeals = new ArrayList<>(lunchDinnerMeals.subList(mid, lunchDinnerMeals.size()));
+
         return new List[]{
-                selectMeals("Breakfast", getMealsByMealtime("Breakfast"), breakfastCalories, 1001),
-                selectMeals("Lunch", getMealsByMealtime("Lunch/Dinner"), lunchCalories, 1002),
-                selectMeals("Dinner", getMealsByMealtime("Lunch/Dinner"), dinnerCalories, 1003)
+                selectMeals("Breakfast", breakfastMeals, breakfastCalories, 1001),
+                selectMeals("Lunch", lunchMeals, lunchCalories, 1002),
+                selectMeals("Dinner", dinnerMeals, dinnerCalories, 1003)
         };
     }
 
@@ -44,13 +48,6 @@ public class GeneratorMeal {
         return baseCalories;
     }
 
-    private void initializeMealOptions(DAOMeal mealDAO) {
-        mealOptions = mealDAO.getMealsByDietAndAllergens(
-                userInput.getDietType().toString(),
-                userInput.getFoodAllergens()
-        );
-        System.out.println("Meal Options: " + mealOptions);
-    }
 
     private List<Meal> getMealsByMealtime(String mealtime) {
         return mealOptions.stream()

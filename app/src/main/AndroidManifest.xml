@@ -21,6 +21,8 @@
         <activity
             android:name=".RegisterActivity"
             android:exported="false" />
+
+<!--        login activity is the default-->
         <activity
             android:name=".LoginActivity"
             android:exported="true">

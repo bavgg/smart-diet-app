@@ -8,28 +8,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SelectedMealsViewModel extends ViewModel {
-    private boolean isGenerated = false;
+//    private boolean isGenerated = false;
 
-    private final List<Meal> selectedMeals = new ArrayList<>();
+    private final List<Integer> selectedMeals = new ArrayList<>();
 
-    public void setMeals(List<Meal> meals) {
-        selectedMeals.clear();
-        selectedMeals.addAll(meals);
+    public void setSelectedMeals(List<Integer> meals) {
+
     }
 
-    public void setIsGenerated(boolean isGenerated) {
-        this.isGenerated = isGenerated;
-    }
 
-    public boolean getIsGenerated() {
-        return isGenerated;
-    }
 
-    public List<Meal> getSelectedMeals() {
+    public List<Integer> getSelectedMeals() {
         return selectedMeals;
     }
 
-    public void clearMeals() {
-        selectedMeals.clear();
-    }
+
 }

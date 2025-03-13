@@ -16,4 +16,10 @@
         <attr name="mealName" format="string"/>
         <attr name="calorie" format="string"/>
     </declare-styleable>
+
+    <declare-styleable name="CustomExerciseList">
+        <attr name="exerciseImage" format="reference"/>
+        <attr name="exerciseName" format="string"/>
+        <attr name="caloriesBurned" format="string"/>
+    </declare-styleable>
 </resources>

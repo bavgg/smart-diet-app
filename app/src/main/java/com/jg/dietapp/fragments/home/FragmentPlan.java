@@ -1,6 +1,5 @@
 package com.jg.dietapp.fragments.home;
 
-import static com.jg.dietapp.MainActivity.sharedPrefsHelper;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -19,7 +18,9 @@ import com.google.android.material.progressindicator.CircularProgressIndicator;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.jg.dietapp.R;
 import com.jg.dietapp.adapters.MealAdapter;
-import com.jg.dietapp.generator.GeneratorMeal;
+import com.jg.dietapp.data.DAOMeal;
+import com.jg.dietapp.data.DatabaseHelper;
+import com.jg.dietapp.generator.MealGenerator;
 import com.jg.dietapp.models.Meal;
 import com.jg.dietapp.shared.SharedPrefsMeals;
 import com.jg.dietapp.shared.UserInput;
@@ -40,22 +41,33 @@ public class FragmentPlan extends Fragment {
     private CircularProgressIndicator progressCircular;
 
     private NutritionViewModel nutritionViewModel;
-    private GeneratedMealsViewModel generatedMealsViewModel;
-    private GeneratorMeal generatorMeal;
     private SharedPrefsMeals sharedPrefsMeals;
 
     private int baseCalories, goalProtein, goalCarbs, goalFat;
     public static List<Integer> selectedMeals;
 
+    private List<Meal> mealOptions;
+    List<Meal>[] mealsGenerated;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        System.out.println("FragmentPlan onCreateView Executed");
         return inflater.inflate(R.layout.fragment_plan, container, false);
+
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        System.out.println("FragmentPlan onViewCreated Executed");
         super.onViewCreated(view, savedInstanceState);
+
+        // Initialize mealsGenerated
+        GeneratedMealsViewModel generatedMealsViewModel = new ViewModelProvider(requireActivity()).get(GeneratedMealsViewModel.class);
+        mealsGenerated = generatedMealsViewModel.getGeneratedMeals();
+
+        // Initialize baseCalories
+        baseCalories = generatedMealsViewModel.getBaseCalories();
 
         // Initialize Shared Preferences
         sharedPrefsMeals = new SharedPrefsMeals(getContext());
@@ -63,7 +75,6 @@ public class FragmentPlan extends Fragment {
 
         // Initialize ViewModel
         nutritionViewModel = new ViewModelProvider(requireActivity()).get(NutritionViewModel.class);
-        generatedMealsViewModel = new ViewModelProvider(requireActivity()).get(GeneratedMealsViewModel.class);
 
         // Initialize UI Components
         initializeUI(view);
@@ -99,30 +110,19 @@ public class FragmentPlan extends Fragment {
     }
 
     private void generateMealPlan() {
-        UserInput userInput = sharedPrefsHelper.getUser(getContext());
-        generatorMeal = new GeneratorMeal(userInput);
-
-        // Get generated meals
-        List<Meal>[] meals;
-        if(!generatedMealsViewModel.isEmpty())  {
-            meals = generatedMealsViewModel.getSelectedMeals();
-            System.out.println(Arrays.toString(meals));
-        } else {
-            meals = generatorMeal.generateMealPlan(getContext());;
-            generatedMealsViewModel.setMeals(meals);
-        }
 
         // Assign Meals to Lists
-        List<Meal> breakfastMeals = meals[0];
-        List<Meal> lunchMeals = meals[1];
-        List<Meal> dinnerMeals = meals[2];
+        List<Meal> breakfastMeals = mealsGenerated[0];
+        List<Meal> lunchMeals = mealsGenerated[1];
+        List<Meal> dinnerMeals = mealsGenerated[2];
 
         // Calculate Macronutrient Goals
-        baseCalories = (int) generatorMeal.getBaseCalories();
         MacronutrientCalculator macronutrientCalculator = new MacronutrientCalculator(baseCalories);
         goalProtein = (int) macronutrientCalculator.getProtein();
         goalCarbs = (int) macronutrientCalculator.getCarbs();
         goalFat = (int) macronutrientCalculator.getFat();
+
+        System.out.println(baseCalories);
 
         // Update UI with Goal Values
         goalProteinText.setText(String.valueOf(goalProtein));

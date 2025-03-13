@@ -13,13 +13,13 @@ import com.jg.dietapp.fragments.main.FragmentStart;
 import com.jg.dietapp.data.DatabaseHelper;
 import com.jg.dietapp.shared.UserInput;
 import com.jg.dietapp.shared.SharedDataDialog;
-import com.jg.dietapp.shared.SharedPrefsHelper;
+import com.jg.dietapp.shared.SharedUserPrefs;
 
 public class MainActivity extends AppCompatActivity {
 
     private static int progress = 0;
     public static SharedDataDialog sharedDataDialog = new SharedDataDialog();
-    public static SharedPrefsHelper sharedPrefsHelper = new SharedPrefsHelper();
+    public static SharedUserPrefs sharedUserPrefs;
     public static UserInput userInput = new UserInput();
     static LinearProgressIndicator progressIndicator;
 
@@ -27,12 +27,14 @@ public class MainActivity extends AppCompatActivity {
     public void onStart(){
         super.onStart();
 
+        sharedUserPrefs = new SharedUserPrefs(this);
+
         // Initialize database
         DatabaseHelper databaseHelper = new DatabaseHelper(this);
         SQLiteDatabase db = databaseHelper.getWritableDatabase();
         databaseHelper.seedDatabase(db);
 
-        UserInput user = sharedPrefsHelper.getUser(this);
+        UserInput user = sharedUserPrefs.getUser();
 
         if(user.getUserSubmitted()) {
             Intent intent = new Intent(MainActivity.this, HomeActivity.class);

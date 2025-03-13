@@ -5,30 +5,8 @@
     android:padding="16dp"
     android:background="@android:color/white">
 
-    <TextView
-        android:id="@+id/textMealName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Meal Name"
-        android:textSize="18sp"
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/textMealCalories"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="200 kcal"
-        android:textSize="16sp" />
-
-    <TextView
-        android:id="@+id/textMealDietType"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Diet Type"
-        android:textSize="14sp"
-        android:textColor="@android:color/darker_gray" />
-
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+   <ImageView
+       android:id="@+id/test_image"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"/>
 </LinearLayout>

@@ -4,11 +4,16 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import com.google.gson.Gson;
 
-public class SharedPrefsHelper {
+public class SharedUserPrefs {
     private static final String PREFS_NAME = "UserPrefs";
     private static final String KEY_USER = "user_data";
+    Context context;
 
-    public void saveUser(Context context, UserInput user) {
+    public SharedUserPrefs(Context context) {
+        this.context = context;
+    }
+
+    public void saveUser( UserInput user) {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
 
@@ -20,7 +25,7 @@ public class SharedPrefsHelper {
         editor.apply(); // Save changes asynchronously
     }
 
-    public UserInput getUser(Context context) {
+    public UserInput getUser() {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
         Gson gson = new Gson();
 
@@ -31,7 +36,7 @@ public class SharedPrefsHelper {
         return new UserInput(); // Return a default instance if no data exists
     }
 
-    public void clearUser(Context context) {
+    public void clearUser() {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
         prefs.edit().remove(KEY_USER).apply(); // Remove user data
     }
