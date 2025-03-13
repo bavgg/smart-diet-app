@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
         // Initialize database
         DatabaseHelper databaseHelper = new DatabaseHelper(this);
         SQLiteDatabase db = databaseHelper.getWritableDatabase();
-        databaseHelper.seedDatabase(db);
+//        databaseHelper.seedDatabase(db);
 
         UserInput user = sharedUserPrefs.getUser();
 

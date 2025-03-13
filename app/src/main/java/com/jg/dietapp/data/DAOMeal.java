@@ -112,7 +112,9 @@ public class DAOMeal {
                         cursor.getString(9),  // Culture
                         cursor.getString(10),  // Region
                         cursor.getInt(11),  // Servings in Grams
-                        cursor.getString(12)   // Mealtime
+                        cursor.getString(12),   // Mealtime
+                        cursor.getString(13)   // Image name
+
                 ));
             }
         } catch (Exception e) {

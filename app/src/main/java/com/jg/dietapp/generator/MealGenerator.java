@@ -33,9 +33,23 @@ public class MealGenerator {
 
         List<Meal> breakfastMeals = getMealsByMealtime("Breakfast");
         List<Meal> lunchDinnerMeals = getMealsByMealtime("Lunch/Dinner");
+        List<Meal> allMeals = getMealsByMealtime("All Meals");
+
         int mid = lunchDinnerMeals.size() / 2;
         List<Meal> lunchMeals = new ArrayList<>(lunchDinnerMeals.subList(0, mid));   // First half
         List<Meal> dinnerMeals = new ArrayList<>(lunchDinnerMeals.subList(mid, lunchDinnerMeals.size()));
+
+
+        int size = allMeals.size();
+        int partSize = size / 3; // 🔹 Divide into 3 parts
+
+        List<Meal> firstPartAllMeals = new ArrayList<>(allMeals.subList(0, partSize));  // First 1/3
+        List<Meal> secondPartAllMeals = new ArrayList<>(allMeals.subList(partSize, partSize * 2));  // Second 1/3
+        List<Meal> thirdPartAllMeals = new ArrayList<>(allMeals.subList(partSize * 2, size));
+
+        breakfastMeals.addAll(firstPartAllMeals);
+        lunchMeals.addAll(secondPartAllMeals);
+        dinnerMeals.addAll(thirdPartAllMeals);
 
         return new List[]{
                 selectMeals("Breakfast", breakfastMeals, breakfastCalories, 1001),

@@ -42,7 +42,7 @@ public class Utils {
 //    imageView.setImageBitmap(loadImageFromAssets("meal1.jpg"));
 
 
-    private void copyAssetToInternalStorage(Context context, String folderName, String assetFileName) {
+    public static void copyAssetToInternalStorage(Context context, String folderName, String assetFileName) {
         // Create a directory inside internal storage
         File directory = new File(context.getFilesDir(), folderName);
         if (!directory.exists()) {
@@ -67,6 +67,17 @@ public class Utils {
             }
         }
     }
+
+    public static Bitmap loadImageFromInternalStorage(Context context, String imageFolder, String filename) {
+        String imagePath = new File(context.getFilesDir(), imageFolder + "/" + filename).getAbsolutePath();
+        return BitmapFactory.decodeFile(imagePath);
+    }
+
+
+//    String imagePath = new File(context.getFilesDir(), "images/meal1.jpg").getAbsolutePath();
+//    Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
+//    imageView.setImageBitmap(bitmap);
+
 
 
 
