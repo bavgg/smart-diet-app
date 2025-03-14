@@ -35,6 +35,7 @@ public class FragmentSettings extends Fragment {
         System.out.println("FragmentSettings onViewCreated Executed");
         super.onViewCreated(view, savedInstanceState);
 
+        System.out.println("Fragment settings exec");
         resetButton = view.findViewById(R.id.resetButton);
         sharedUserPrefs = new SharedUserPrefs(getContext());
         sharedPrefsMeals = new SharedPrefsMeals(getContext());

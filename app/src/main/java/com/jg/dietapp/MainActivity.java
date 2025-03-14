@@ -32,10 +32,11 @@ public class MainActivity extends AppCompatActivity {
         // Initialize database
         DatabaseHelper databaseHelper = new DatabaseHelper(this);
         SQLiteDatabase db = databaseHelper.getWritableDatabase();
-//        databaseHelper.seedDatabase(db);
 
+        // Load userPrefs
         UserInput user = sharedUserPrefs.getUser();
 
+        // Check user inputs
         if(user.getUserSubmitted()) {
             Intent intent = new Intent(MainActivity.this, HomeActivity.class);
             startActivity(intent);

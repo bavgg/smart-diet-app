@@ -38,7 +38,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "duration INTEGER, " +
                 "calories_burned INTEGER)");
 
-//        seedDatabase(db); // ✅ Seeding the database
+        seedDatabase(db); // ✅ Seeding the database
     }
 
     public void seedDatabase(SQLiteDatabase db) {

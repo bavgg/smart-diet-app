@@ -62,6 +62,8 @@ public class FragmentPlan extends Fragment {
         System.out.println("FragmentPlan onViewCreated Executed");
         super.onViewCreated(view, savedInstanceState);
 
+        System.out.println("Fragment Plan exec");
+
         // Initialize mealsGenerated
         GeneratedMealsViewModel generatedMealsViewModel = new ViewModelProvider(requireActivity()).get(GeneratedMealsViewModel.class);
         mealsGenerated = generatedMealsViewModel.getGeneratedMeals();

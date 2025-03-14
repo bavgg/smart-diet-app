@@ -1,5 +1,8 @@
 package com.jg.dietapp;
 
+import static com.jg.dietapp.utils.Utils.loadImagesFromAssetToInternalStorage;
+
+import android.graphics.Bitmap;
 import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
@@ -18,9 +21,12 @@ import com.jg.dietapp.generator.MealGenerator;
 import com.jg.dietapp.models.Meal;
 import com.jg.dietapp.shared.SharedUserPrefs;
 import com.jg.dietapp.shared.UserInput;
+import com.jg.dietapp.utils.Utils;
 import com.jg.dietapp.viewmodel.AllMealsViewModel;
 import com.jg.dietapp.viewmodel.GeneratedMealsViewModel;
+import com.jg.dietapp.viewmodel.ImageBitmapsViewModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
@@ -44,6 +50,8 @@ public class HomeActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_home);
 
+        // Load images from assets to internal storage
+        loadImagesFromAssetToInternalStorage(this);
 
         // Initialize ViewModel first
         GeneratedMealsViewModel generatedMealsViewModel = new ViewModelProvider(this).get(GeneratedMealsViewModel.class);
@@ -61,6 +69,16 @@ public class HomeActivity extends AppCompatActivity {
         List<Meal> allMeals = mealDAO.getAllMeals();
         AllMealsViewModel allMealsViewModel = new ViewModelProvider(this).get(AllMealsViewModel.class);
         allMealsViewModel.setMeals(allMeals);
+
+        // Get all image bitmaps
+        List<Bitmap> imageBitmaps = new ArrayList<>();
+        for (Meal meal : allMeals) {
+            String imageFileName = meal.getImageName();
+            Bitmap image = Utils.loadImageFromInternalStorage(this, "pre-images", imageFileName);
+            imageBitmaps.add(image);
+        }
+        ImageBitmapsViewModel imageBitmapsViewModel = new ViewModelProvider(this).get(ImageBitmapsViewModel.class);
+        imageBitmapsViewModel.setImageBitmaps(imageBitmaps);
 
         // Generate meal plan
         MealGenerator mealGenerator = new MealGenerator(userInputs, filteredMeals);
@@ -87,7 +105,7 @@ public class HomeActivity extends AppCompatActivity {
                 .add(R.id.fragment_container_view, fragmentSettings, "SETTINGS")
                 .hide(fragmentSettings)
                 .add(R.id.fragment_container_view, fragmentMeals, "MEALS")
-                .hide(fragmentSettings)
+                .hide(fragmentMeals)
                 .commit();
 
         // Handle bottom navigation

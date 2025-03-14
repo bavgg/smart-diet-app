@@ -73,6 +73,22 @@ public class Utils {
         return BitmapFactory.decodeFile(imagePath);
     }
 
+    public static void loadImagesFromAssetToInternalStorage(Context context) {
+        try {
+            String[] assetFiles = context.getAssets().list(""); // Root of assets folder
+            if (assetFiles != null) {
+                for (String file : assetFiles) {
+                    if (file.toLowerCase().endsWith(".jpg")) { // Filter only .jpg files
+                        System.out.println("JPG File: " + file);
+                        copyAssetToInternalStorage(context, "pre-images", file);
+                    }
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
 //    String imagePath = new File(context.getFilesDir(), "images/meal1.jpg").getAbsolutePath();
 //    Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
