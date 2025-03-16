@@ -8,5 +8,7 @@
     <color name="lightWhite">#FEF7FF</color>
     <color name="primary">#6750A4</color>
     <color name="primaryTint">#e1dced</color>
-    e1dced
+    <color name="customGray">#E3DCE4</color>
+
+
 </resources>

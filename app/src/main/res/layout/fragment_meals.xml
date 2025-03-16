@@ -18,13 +18,22 @@
             android:text="Meals"
             />
         <Button
+            android:id="@+id/addMealButton"
             android:layout_gravity="end"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Add Meal"/>
 
 
+        <TextView
+            android:layout_marginTop="26dp"
+            android:textSize="24dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Recently Added:"
+            />
         <androidx.recyclerview.widget.RecyclerView
+            android:layout_marginTop="8dp"
             android:id="@+id/recyclerViewMeals"
             android:layout_width="match_parent"
             android:nestedScrollingEnabled="true"

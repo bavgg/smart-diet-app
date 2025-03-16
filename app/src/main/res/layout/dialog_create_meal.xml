@@ -1,6 +1,516 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="26dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <androidx.core.widget.NestedScrollView
+        android:layout_weight="1"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintTop_toTopOf="parent">
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+            android:layout_width="match_parent"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:orientation="vertical"
+
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_marginBottom="12dp"
+                android:textSize="28dp"
+                android:textStyle="bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Create Meal"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/uploadButton"
+                android:backgroundTint="@color/primary"
+                android:textColor="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Upload a photo"
+                android:textSize="16sp"
+                app:icon="@drawable/baseline_camera_alt_24"
+                app:iconGravity="textStart"
+                app:iconPadding="8dp"
+                app:iconTint="@color/white"
+                android:layout_marginBottom="12dp"/>
+
+
+            <TextView
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Meal Name"/>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:endIconMode="clear_text"
+                android:hint="Meal name">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:id="@+id/mealNameText"
+                    android:layout_marginBottom="12dp"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <!--    Nutrition facts-->
+            <TextView
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nutrition Facts"/>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:endIconMode="clear_text"
+                android:hint="Calories (grams)">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:id="@+id/caloriesText"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:endIconMode="clear_text"
+                android:hint="Protein (grams)">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:id="@+id/proteinText"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:endIconMode="clear_text"
+                android:hint="Carbs (grams)">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:id="@+id/carbsText"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:endIconMode="clear_text"
+                android:hint="Fats (grams)">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:id="@+id/fatsText"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_marginBottom="12dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:endIconMode="clear_text"
+                android:hint="Serving weight (grams)">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:id="@+id/servingsText"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+
+            <TextView
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Prep Time"/>
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_marginBottom="12dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:endIconMode="clear_text"
+                android:hint="Prep time (minutes)">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:id="@+id/prepTimeText"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <GridLayout
+
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:columnCount="2"
+                android:rowCount="1">
+
+                <LinearLayout
+                    android:layout_columnWeight="1"
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <!--        Diet type-->
+                    <LinearLayout
+                        android:layout_marginBottom="16dp"
+                        android:orientation="vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:textSize="20dp"
+                            android:textStyle="bold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Diet Type"/>
+                        <RadioGroup
+                            android:id="@+id/dietRadioGroup"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+                            <RadioButton
+                                android:id="@+id/omnivoreRadioButton"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:checked="true"
+                                android:enabled="true"
+                                android:text="Omnivore"/>
+                            <RadioButton
+                                android:id="@+id/halalRadioButton"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:checked="false"
+                                android:enabled="true"
+                                android:text="Halal"/>
+                            <RadioButton
+                                android:id="@+id/pescatarianRadioButton"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:checked="false"
+                                android:enabled="true"
+                                android:text="Pescatarian"/>
+                            <RadioButton
+                                android:id="@+id/vegetarianRadioButton"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:checked="false"
+                                android:enabled="true"
+                                android:text="Vegetarian"/>
+                        </RadioGroup>
+                    </LinearLayout>
+
+
+                    <!--        Allergens-->
+                    <LinearLayout
+                        android:layout_marginBottom="16dp"
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:textSize="20dp"
+                            android:textStyle="bold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Allergens"/>
+                        <CheckBox
+                            android:id="@+id/checkbox_coconut"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Coconut"/>
+
+                        <CheckBox
+                            android:id="@+id/checkbox_shellfish"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Shellfish"/>
+
+                        <CheckBox
+                            android:id="@+id/checkbox_nuts"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Nuts"/>
+
+                        <CheckBox
+                            android:id="@+id/checkbox_dairy"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Dairy"/>
+
+                        <CheckBox
+                            android:id="@+id/checkbox_gluten"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Gluten"/>
+
+                        <CheckBox
+                            android:id="@+id/checkbox_peanuts"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Peanuts"/>
+
+                        <CheckBox
+                            android:id="@+id/checkbox_soy"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Soy"/>
+
+                        <CheckBox
+                            android:id="@+id/checkbox_egg"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Egg"/>
+
+                        <CheckBox
+                            android:id="@+id/checkbox_fish"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Fish"/>
+                    </LinearLayout>
+
+
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_columnWeight="1"
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <!--        Culture-->
+                    <LinearLayout
+                        android:layout_marginBottom="16dp"
+                        android:orientation="vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:textSize="20dp"
+                            android:textStyle="bold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Culture"/>
+                        <RadioGroup
+                            android:id="@+id/cultureRadioGroup"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+                            <RadioButton
+                                android:id="@+id/tagalogRadioButton"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:checked="true"
+                                android:enabled="true"
+                                android:text="Tagalog"/>
+                            <RadioButton
+                                android:id="@+id/ilocanoRadioButton"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:checked="false"
+                                android:enabled="true"
+                                android:text="Ilocano"/>
+                            <RadioButton
+                                android:id="@+id/kapampanganRadioButton"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:checked="false"
+                                android:enabled="true"
+                                android:text="Kapampangan"/>
+                            <RadioButton
+                                android:id="@+id/bicolanoRadioButton"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:enabled="true"
+                                android:text="Bicolano"/>
+                            <RadioButton
+                                android:id="@+id/cebuanoRadioButton"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:checked="false"
+                                android:enabled="true"
+                                android:text="Cebuano"/>
+                            <RadioButton
+                                android:id="@+id/muslimFilipinoRadioButton"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:checked="false"
+                                android:enabled="true"
+                                android:text="Muslim-Filipino"/>
+                            <RadioButton
+                                android:id="@+id/cordilleranRadioButton"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:checked="false"
+                                android:enabled="true"
+                                android:text="Cordilleran"/>
+                            <RadioButton
+                                android:id="@+id/chavacanoRadioButton"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:checked="false"
+                                android:enabled="true"
+                                android:text="Chavacano"/>
+                        </RadioGroup>
+                    </LinearLayout>
+
+
+                    <!--        Region-->
+                    <LinearLayout
+                        android:layout_marginBottom="16dp"
+                        android:orientation="vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:textSize="20dp"
+                            android:textStyle="bold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Region"/>
+                        <RadioGroup
+                            android:id="@+id/regionRadioGroup"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+                            <RadioButton
+                                android:id="@+id/luzonRadioButton"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:checked="true"
+                                android:enabled="true"
+                                android:text="Luzon"/>
+                            <RadioButton
+                                android:id="@+id/vizayasRadioButton"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:checked="false"
+                                android:enabled="true"
+                                android:text="Vizayas"/>
+                            <RadioButton
+                                android:id="@+id/mindanaoRadioButton"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:checked="false"
+                                android:enabled="true"
+                                android:text="Mindanao"/>
+                        </RadioGroup>
+                    </LinearLayout>
+
+                    <!--        Meal time-->
+                    <LinearLayout
+                        android:layout_marginBottom="16dp"
+                        android:orientation="vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:textSize="20dp"
+                            android:textStyle="bold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Meal Time"/>
+                        <RadioGroup
+                            android:id="@+id/mealTimeRadioGroup"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+                            <RadioButton
+                                android:id="@+id/allMealsRadioButton"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:checked="true"
+                                android:enabled="true"
+                                android:text="All Meals"/>
+                            <RadioButton
+                                android:id="@+id/lunchDinnerRadioButton"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:checked="false"
+                                android:enabled="true"
+                                android:text="Lunch/Dinner"/>
+                            <RadioButton
+                                android:id="@+id/breakfastRadioButton"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:checked="false"
+                                android:enabled="true"
+                                android:text="Breakfast"/>
+                        </RadioGroup>
+                    </LinearLayout>
+
+
+
+                </LinearLayout>
+
+            </GridLayout>
+
+
+
+
+
+
+
+
+
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+    <Button
+        android:layout_marginTop="6dp"
+        android:id="@+id/createMealButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/customGray"
+        android:enabled="false"
+        android:text="Create My Plan"
+        />
+<!--    <Button-->
+<!--        android:id="@+id/createMealButton"-->
+<!--        android:backgroundTint="@color/primary"-->
+<!--        android:textColor="@color/white"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="Create Meal"-->
+<!--        android:enabled="false"-->
+<!--        android:textSize="16sp"-->
+<!--        />-->
+</LinearLayout>
+
+
