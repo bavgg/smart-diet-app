@@ -28,21 +28,21 @@ public class TestActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.test);
+        setContentView(R.layout.dialog_create_meal);
 
-        try {
-            String[] assetFiles = this.getAssets().list(""); // Root of assets folder
-            if (assetFiles != null) {
-                for (String file : assetFiles) {
-                    if (file.toLowerCase().endsWith(".jpg")) { // Filter only .jpg files
-                        System.out.println("JPG File: " + file);
-                        copyAssetToInternalStorage(this, "pre-images", file);
-                    }
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            String[] assetFiles = this.getAssets().list(""); // Root of assets folder
+//            if (assetFiles != null) {
+//                for (String file : assetFiles) {
+//                    if (file.toLowerCase().endsWith(".jpg")) { // Filter only .jpg files
+//                        System.out.println("JPG File: " + file);
+//                        copyAssetToInternalStorage(this, "pre-images", file);
+//                    }
+//                }
+//            }
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
 
 
 

@@ -7,13 +7,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.jg.dietapp.R;
 import com.jg.dietapp.models.Meal;
 import com.jg.dietapp.shared.SharedPrefsMeals;
+import com.jg.dietapp.utils.Utils;
 import com.jg.dietapp.viewmodel.NutritionViewModel;
 
 import java.util.List;
@@ -49,6 +54,12 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.MealViewHolder
         holder.checkBox.setOnCheckedChangeListener(null);
         holder.checkBox.setChecked(isSelected);
 
+        // Use Glide for lazy loading of images
+        Glide.with(holder.itemView.getContext())
+                .load(Utils.getImageFile(holder.itemView.getContext(), "pre-images", meal.getImageName())) // Get image file path
+                .diskCacheStrategy(DiskCacheStrategy.ALL) // Cache for better performance
+                .into(holder.mealImage);
+
         holder.checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
                 System.out.println(mealId);
@@ -76,12 +87,14 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.MealViewHolder
     public static class MealViewHolder extends RecyclerView.ViewHolder {
         TextView mealName, mealCalories;
         CheckBox checkBox;
+        ImageView mealImage;
 
         public MealViewHolder(@NonNull View itemView) {
             super(itemView);
             mealName = itemView.findViewById(R.id.meal_name_text);
             mealCalories = itemView.findViewById(R.id.calorie_count_text);
             checkBox = itemView.findViewById(R.id.checkbox);
+            mealImage = itemView.findViewById(R.id.meal_image);
         }
     }
 }

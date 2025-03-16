@@ -1,5 +1,7 @@
 package com.jg.dietapp;
 
+import static com.jg.dietapp.utils.Utils.loadImagesFromAssetToInternalStorage;
+
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -11,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.jg.dietapp.fragments.main.FragmentStart;
 import com.jg.dietapp.data.DatabaseHelper;
+import com.jg.dietapp.shared.SharedAssetPrefs;
 import com.jg.dietapp.shared.UserInput;
 import com.jg.dietapp.shared.SharedDataDialog;
 import com.jg.dietapp.shared.SharedUserPrefs;
@@ -52,6 +55,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
+
+        // ASYNCHRONOUS
+        // Load images from assets to internal storage
+        SharedAssetPrefs sharedAssetPrefs = new SharedAssetPrefs(this);
+        if(!sharedAssetPrefs.isAssetLoaded()) {
+            System.out.println("EEEXE");
+            loadImagesFromAssetToInternalStorage(this);
+            sharedAssetPrefs.setAssetLoaded(true);
+        }
 
         // Initialize progress indicator component
         progressIndicator = findViewById(R.id.progressIndicator);

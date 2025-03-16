@@ -124,4 +124,39 @@ public class DAOMeal {
         return meals;
     }
 
+    public List<Meal> getRecentMeals() {
+        List<Meal> meals = new ArrayList<>();
+        String query = "SELECT * FROM meals ORDER BY created_at DESC LIMIT 10"; // ✅ Fetch last 10 meals based on timestamp
+
+        try (Cursor cursor = db.rawQuery(query, null)) {
+            if (cursor.moveToFirst()) { // ✅ Ensure cursor has data
+                do {
+                    meals.add(new Meal(
+                            cursor.getInt(0),  // ID
+                            cursor.getString(1),  // Name
+                            cursor.getDouble(2),  // Calories
+                            cursor.getInt(3),  // Protein
+                            cursor.getInt(4),  // Carbs
+                            cursor.getInt(5),  // Fats
+                            cursor.getString(6),  // Diet Type
+                            cursor.getString(7),  // Allergens
+                            cursor.getInt(8),  // Prep Time
+                            cursor.getString(9),  // Culture
+                            cursor.getString(10),  // Region
+                            cursor.getInt(11),  // Servings in Grams
+                            cursor.getString(12),   // Mealtime
+                            cursor.getString(13)   // Image name
+                    ));
+                } while (cursor.moveToNext());
+            } else {
+                Log.d(TAG, "No recent meals found."); // ✅ Debugging log
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "Error fetching recent meals", e);
+        }
+
+        return meals;
+    }
+
+
 }

@@ -28,7 +28,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "region TEXT, " +
                 "servings_grams INTEGER, " +
                 "mealtime TEXT," +
-                "image_name TEXT)"
+                "image_name TEXT, " +
+                "created_at DATETIME DEFAULT CURRENT_TIMESTAMP)"
         );
 
         db.execSQL("CREATE TABLE exercises (" +
@@ -36,10 +37,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "name TEXT, " +
                 "category TEXT, " +
                 "duration INTEGER, " +
-                "calories_burned INTEGER)");
+                "calories_burned INTEGER, " +
+                "created_at DATETIME DEFAULT CURRENT_TIMESTAMP)");
 
         seedDatabase(db); // ✅ Seeding the database
     }
+
+
+    @Override
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        db.execSQL("DROP TABLE IF EXISTS meals");
+        db.execSQL("DROP TABLE IF EXISTS exercises");
+        onCreate(db);
+    }
+
 
     public void seedDatabase(SQLiteDatabase db) {
         db.beginTransaction(); // ✅ Begin transaction for performance
@@ -190,7 +201,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     "('Maja Blanca', 200, 5, 30, 8, 'Vegetarian', 'Coconut', 30, 'Chavacano', 'Mindanao', 150, 'Breakfast', 'Maja Blanca.jpg')");
 
 
-                    // Manually inserting exercises
+            // Manually inserting exercises
             db.execSQL("INSERT INTO exercises (name, category, duration, calories_burned) VALUES " +
                     "('Running', 'CARDIO', 30, 300), " +
                     "('Push-ups', 'STRENGTH', 15, 150), " +
@@ -207,10 +218,4 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS meals");
-        db.execSQL("DROP TABLE IF EXISTS exercises");
-        onCreate(db);
-    }
 }

@@ -1,8 +1,5 @@
 package com.jg.dietapp;
 
-import static com.jg.dietapp.utils.Utils.loadImagesFromAssetToInternalStorage;
-
-import android.graphics.Bitmap;
 import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
@@ -21,12 +18,9 @@ import com.jg.dietapp.generator.MealGenerator;
 import com.jg.dietapp.models.Meal;
 import com.jg.dietapp.shared.SharedUserPrefs;
 import com.jg.dietapp.shared.UserInput;
-import com.jg.dietapp.utils.Utils;
-import com.jg.dietapp.viewmodel.AllMealsViewModel;
+import com.jg.dietapp.viewmodel.RecentMealsViewModel;
 import com.jg.dietapp.viewmodel.GeneratedMealsViewModel;
-import com.jg.dietapp.viewmodel.ImageBitmapsViewModel;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
@@ -50,48 +44,23 @@ public class HomeActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_home);
 
-        // Load images from assets to internal storage
-        loadImagesFromAssetToInternalStorage(this);
-
-        // Initialize ViewModel first
-        GeneratedMealsViewModel generatedMealsViewModel = new ViewModelProvider(this).get(GeneratedMealsViewModel.class);
-
-        // Fetch user input
+        // Fetch user input and filtered meals
         SharedUserPrefs sharedPrefsHelper = new SharedUserPrefs(this);
         UserInput userInputs = sharedPrefsHelper.getUser();
-
-        // Fetch filtered meals
         DatabaseHelper dbHelper = new DatabaseHelper(this);
         DAOMeal mealDAO = new DAOMeal(dbHelper);
         List<Meal> filteredMeals = mealDAO.getMealsByDietAndAllergens(userInputs);
 
-        // Fetch All meals
-        List<Meal> allMeals = mealDAO.getAllMeals();
-        AllMealsViewModel allMealsViewModel = new ViewModelProvider(this).get(AllMealsViewModel.class);
-        allMealsViewModel.setMeals(allMeals);
+        // Fetch recent meals
+        List<Meal> allMeals = mealDAO.getRecentMeals();
+        RecentMealsViewModel recentMealsViewModel = new ViewModelProvider(this).get(RecentMealsViewModel.class);
+        recentMealsViewModel.setMeals(allMeals);
 
-        // Get all image bitmaps
-        List<Bitmap> imageBitmaps = new ArrayList<>();
-        for (Meal meal : allMeals) {
-            String imageFileName = meal.getImageName();
-            Bitmap image = Utils.loadImageFromInternalStorage(this, "pre-images", imageFileName);
-            imageBitmaps.add(image);
-        }
-        ImageBitmapsViewModel imageBitmapsViewModel = new ViewModelProvider(this).get(ImageBitmapsViewModel.class);
-        imageBitmapsViewModel.setImageBitmaps(imageBitmaps);
-
-        // Generate meal plan
+        // Fetch generated meals
         MealGenerator mealGenerator = new MealGenerator(userInputs, filteredMeals);
         List<Meal>[] mealsGenerated = mealGenerator.generateMealPlan();
-
-        System.out.println("Breakfast Meals: " + mealsGenerated[0]);
-        System.out.println("Dinner Meals: " + mealsGenerated[1]);
-        System.out.println("Lunch Meals: " + mealsGenerated[2]);
-
-        // Set meals in ViewModel BEFORE fragments are created
+        GeneratedMealsViewModel generatedMealsViewModel = new ViewModelProvider(this).get(GeneratedMealsViewModel.class);
         generatedMealsViewModel.setGeneratedMeals(mealsGenerated);
-
-        // Set baseCalories
         generatedMealsViewModel.setBaseCalories((int) mealGenerator.getBaseCalories());
 
 
