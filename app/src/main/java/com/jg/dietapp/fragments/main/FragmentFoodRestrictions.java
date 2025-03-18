@@ -1,8 +1,8 @@
 package com.jg.dietapp.fragments.main;
 
-import static com.jg.dietapp.MainActivity.decreaseProgress;
-import static com.jg.dietapp.MainActivity.increaseProgress;
-import static com.jg.dietapp.MainActivity.userInput;
+import static com.jg.dietapp.UserInputActivity.decreaseProgress;
+import static com.jg.dietapp.UserInputActivity.increaseProgress;
+import static com.jg.dietapp.UserInputActivity.userInput;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

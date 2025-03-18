@@ -1,6 +1,6 @@
 package com.jg.dietapp.dialogs;
 
-import static com.jg.dietapp.MainActivity.sharedDataDialog;
+import static com.jg.dietapp.UserInputActivity.dialogViewModel;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -73,7 +73,7 @@ public class DialogHeight extends com.google.android.material.bottomsheet.Bottom
 
         okButton.setOnClickListener(v -> {
 
-            int cValue = sharedDataDialog.getCmValue();
+            int cValue = dialogViewModel.getCmValue();
             if(Objects.equals(cmFeet.get(), "cm")){
 //                String cmText = cValue + " cm";
                 okClickListener.onOkClick(cValue, "cm");

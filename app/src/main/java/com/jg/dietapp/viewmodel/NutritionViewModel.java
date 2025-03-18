@@ -6,9 +6,8 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
-import com.jg.dietapp.shared.SharedPrefsNutrients;
+import com.jg.dietapp.prefs.GoalNutrientsPrefs;
 
 public class NutritionViewModel extends AndroidViewModel {
     private final MutableLiveData<Integer> kcal = new MutableLiveData<>(0);
@@ -16,11 +15,11 @@ public class NutritionViewModel extends AndroidViewModel {
     private final MutableLiveData<Integer> carbs = new MutableLiveData<>(0);
     private final MutableLiveData<Integer> fat = new MutableLiveData<>(0);
 
-    private final SharedPrefsNutrients sharedPrefsNutrients;
+    private final GoalNutrientsPrefs sharedPrefsNutrients;
 
     public NutritionViewModel(@NonNull Application application) {
         super(application);
-        sharedPrefsNutrients = new SharedPrefsNutrients(application);
+        sharedPrefsNutrients = new GoalNutrientsPrefs(application);
         loadNutritionData();
     }
 

@@ -1,89 +1,102 @@
 package com.jg.dietapp;
 
-import static com.jg.dietapp.utils.Utils.loadImagesFromAssetToInternalStorage;
-
-import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.util.Log;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.ViewModelProvider;
 
-import com.google.android.material.progressindicator.LinearProgressIndicator;
-import com.jg.dietapp.fragments.main.FragmentStart;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.jg.dietapp.data.DAOMeal;
 import com.jg.dietapp.data.DatabaseHelper;
-import com.jg.dietapp.shared.SharedAssetPrefs;
-import com.jg.dietapp.shared.UserInput;
-import com.jg.dietapp.shared.SharedDataDialog;
-import com.jg.dietapp.shared.SharedUserPrefs;
+import com.jg.dietapp.fragments.home.FragmentMeals;
+import com.jg.dietapp.fragments.home.FragmentPlan;
+import com.jg.dietapp.fragments.home.FragmentSettings;
+import com.jg.dietapp.generator.MealGenerator;
+import com.jg.dietapp.models.Meal;
+import com.jg.dietapp.prefs.UserInputsPrefs;
+import com.jg.dietapp.models.UserInput;
+import com.jg.dietapp.viewmodel.RecentMealsViewModel;
+import com.jg.dietapp.viewmodel.GeneratedMealsViewModel;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static int progress = 0;
-    public static SharedDataDialog sharedDataDialog = new SharedDataDialog();
-    public static SharedUserPrefs sharedUserPrefs;
-    public static UserInput userInput = new UserInput();
-    static LinearProgressIndicator progressIndicator;
+    private FragmentPlan fragmentPlan = new FragmentPlan();
+    private FragmentSettings fragmentSettings = new FragmentSettings();
+    private FragmentMeals fragmentMeals = new FragmentMeals();
+    private Fragment activeFragment = fragmentPlan;  // Track active fragment
 
     @Override
     public void onStart(){
         super.onStart();
 
-        sharedUserPrefs = new SharedUserPrefs(this);
 
-        // Initialize database
-        DatabaseHelper databaseHelper = new DatabaseHelper(this);
-        SQLiteDatabase db = databaseHelper.getWritableDatabase();
 
-        // Load userPrefs
-        UserInput user = sharedUserPrefs.getUser();
-
-        // Check user inputs
-        if(user.getUserSubmitted()) {
-            Intent intent = new Intent(MainActivity.this, HomeActivity.class);
-            startActivity(intent);
-            finish();
-        }
-
-        Log.d("MainActivity", "User input: " + user);
     }
 
-    // Entry point
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_home);
 
-        // ASYNCHRONOUS
-        // Load images from assets to internal storage
-        SharedAssetPrefs sharedAssetPrefs = new SharedAssetPrefs(this);
-        if(!sharedAssetPrefs.isAssetLoaded()) {
-            System.out.println("EEEXE");
-            loadImagesFromAssetToInternalStorage(this);
-            sharedAssetPrefs.setAssetLoaded(true);
-        }
+        // Fetch user input and filtered meals
+        UserInputsPrefs sharedPrefsHelper = new UserInputsPrefs(this);
+        UserInput userInputs = sharedPrefsHelper.getUser();
+        DatabaseHelper dbHelper = new DatabaseHelper(this);
+        DAOMeal mealDAO = new DAOMeal(dbHelper);
+        List<Meal> filteredMeals = mealDAO.getMealsByDietAndAllergens(userInputs);
 
-        // Initialize progress indicator component
-        progressIndicator = findViewById(R.id.progressIndicator);
+        // Fetch recent meals
+        List<Meal> recentMeals = mealDAO.getRecentMeals();
+        RecentMealsViewModel recentMealsViewModel = new ViewModelProvider(this).get(RecentMealsViewModel.class);
+        recentMealsViewModel.setMeals(recentMeals);
 
-        // Load fragment
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragment_container, new FragmentStart())
+        // Fetch generated meals
+        MealGenerator mealGenerator = new MealGenerator(userInputs, filteredMeals);
+        List<Meal>[] mealsGenerated = mealGenerator.generateMealPlan();
+        GeneratedMealsViewModel generatedMealsViewModel = new ViewModelProvider(this).get(GeneratedMealsViewModel.class);
+        generatedMealsViewModel.setGeneratedMeals(mealsGenerated);
+        generatedMealsViewModel.setBaseCalories((int) mealGenerator.getBaseCalories());
+
+
+        // Initialize bottom navigation
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        FragmentManager fragmentManager = getSupportFragmentManager();
+
+        // Add fragments initially but hide settings fragment
+        fragmentManager.beginTransaction()
+                .add(R.id.fragment_container_view, fragmentPlan, "PLAN")
+                .add(R.id.fragment_container_view, fragmentSettings, "SETTINGS")
+                .hide(fragmentSettings)
+                .add(R.id.fragment_container_view, fragmentMeals, "MEALS")
+                .hide(fragmentMeals)
                 .commit();
 
+        // Handle bottom navigation
+        bottomNavigationView.setOnItemSelectedListener(item -> {
+            if (item.getItemId() == R.id.nav_home) {
+                switchFragment(fragmentPlan);
+            } else if (item.getItemId() == R.id.nav_settings) {
+                switchFragment(fragmentSettings);
+            } else if (item.getItemId() == R.id.nav_meals) {
+                switchFragment(fragmentMeals);
+            }
+            return true;
+        });
     }
 
-    public static void increaseProgress() {
-        progress += 1;
-        progressIndicator.setProgress(progress);
+    private void switchFragment(Fragment targetFragment) {
+        if (targetFragment != activeFragment) {
+            getSupportFragmentManager().beginTransaction()
+                    .hide(activeFragment) // Hide current fragment
+                    .show(targetFragment) // Show target fragment
+                    .commit();
+            activeFragment = targetFragment; // Update active fragment
+        }
     }
-
-    public static void decreaseProgress() {
-        progress -= 1;
-        progressIndicator.setProgress(progress);
-    }
-
-
 }

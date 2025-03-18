@@ -1,6 +1,6 @@
 package com.jg.dietapp.dialogs;
 
-import static com.jg.dietapp.MainActivity.sharedDataDialog;
+import static com.jg.dietapp.UserInputActivity.dialogViewModel;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -34,17 +34,17 @@ public class DialogHeightFragmentB extends Fragment {
             int inches = inPicker.getValue();
             int cm = (int) Math.round((feet * 30.48) + (inches * 2.54));
             System.out.println(cm);
-            sharedDataDialog.setCmValue(cm);
+            dialogViewModel.setCmValue(cm);
         });
 
         inPicker.setOnValueChangedListener((picker, oldVal, inches) -> {
             int feet = ftPicker.getValue();
             int cm = (int) Math.round((feet * 30.48) + (inches * 2.54));
             System.out.println(cm);
-            sharedDataDialog.setCmValue(cm);
+            dialogViewModel.setCmValue(cm);
         });
 
-        int cValue = sharedDataDialog.getCmValue();
+        int cValue = dialogViewModel.getCmValue();
         System.out.println(cValue);
 
         int feet = (int) (cValue / 30.48); // Convert cm to feet

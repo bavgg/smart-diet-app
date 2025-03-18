@@ -1,15 +1,14 @@
 package com.jg.dietapp.data;
 
-import static com.jg.dietapp.MainActivity.userInput;
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.jg.dietapp.models.Meal;
-import com.jg.dietapp.shared.UserInput;
+import com.jg.dietapp.models.UserInput;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +21,13 @@ public class DAOMeal {
         db = dbHelper.getWritableDatabase();
     }
 
-    public void insertMeal(Meal meal) {
+    public Meal insertMeal(Context context, Meal meal) {
+        if (db == null || !db.isOpen()) {
+            Log.e(TAG, "Database is not available for writing.");
+            Toast.makeText(context, "Database is not available", Toast.LENGTH_SHORT).show();
+            return null;
+        }
+
         ContentValues values = new ContentValues();
         values.put("name", meal.getName());
         values.put("calories", meal.getCalories());
@@ -35,15 +40,54 @@ public class DAOMeal {
         values.put("culture", meal.getCulture());
         values.put("region", meal.getRegion());
         values.put("servings_grams", meal.getServingsGrams());
+        values.put("mealtime", meal.getMealtime());
+        values.put("image_name", meal.getImageName());
 
-        long result = db.insert("meals", null, values);
+        Meal insertedMeal = null;
 
-        if (result == -1) {
-            Log.e(TAG, "Failed to insert meal");
-        } else {
-            Log.d(TAG, "Meal inserted successfully, ID: " + result);
+        try {
+            long result = db.insert("meals", null, values);
+            if (result == -1) {
+                Log.e(TAG, "Failed to insert meal");
+                Toast.makeText(context, "Failed to insert meal", Toast.LENGTH_SHORT).show();
+            } else {
+                Log.d(TAG, "Meal inserted successfully, ID: " + result);
+                Toast.makeText(context, "Meal inserted successfully!", Toast.LENGTH_SHORT).show();
+
+                // Retrieve the inserted meal from the database
+                Cursor cursor = db.rawQuery("SELECT * FROM meals WHERE rowid = ?", new String[]{String.valueOf(result)});
+                if (cursor != null && cursor.moveToFirst()) {
+                    insertedMeal = new Meal(
+                            cursor.getInt(cursor.getColumnIndexOrThrow("id")),
+                            cursor.getString(cursor.getColumnIndexOrThrow("name")),
+                            cursor.getInt(cursor.getColumnIndexOrThrow("calories")),
+                            cursor.getInt(cursor.getColumnIndexOrThrow("protein")),
+                            cursor.getInt(cursor.getColumnIndexOrThrow("carbs")),
+                            cursor.getInt(cursor.getColumnIndexOrThrow("fats")),
+                            cursor.getString(cursor.getColumnIndexOrThrow("diet_type")),
+                            cursor.getString(cursor.getColumnIndexOrThrow("allergens")),
+                            cursor.getInt(cursor.getColumnIndexOrThrow("prep_time")),
+                            cursor.getString(cursor.getColumnIndexOrThrow("culture")),
+                            cursor.getString(cursor.getColumnIndexOrThrow("region")),
+                            cursor.getInt(cursor.getColumnIndexOrThrow("servings_grams")),
+                            cursor.getString(cursor.getColumnIndexOrThrow("mealtime")),
+                            cursor.getString(cursor.getColumnIndexOrThrow("image_name"))
+                    );
+                    cursor.close();
+                }
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "Error inserting meal: " + e.getMessage());
+            Toast.makeText(context, "Error inserting meal: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+        } finally {
+            db.close();
         }
+
+        return insertedMeal;
     }
+
+
+
 
     public List<Meal> getMealsByDietAndAllergens(UserInput userInput) {
 

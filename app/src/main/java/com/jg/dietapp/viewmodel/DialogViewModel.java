@@ -1,9 +1,9 @@
-package com.jg.dietapp.shared;
+package com.jg.dietapp.viewmodel;
 
-public class SharedDataDialog {
+import androidx.lifecycle.ViewModel;
+
+public class DialogViewModel extends ViewModel {
     private int cmValue = 165;
-
-
 
     public void setCmValue(int cm) {
         cmValue = cm;

@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -15,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.jg.dietapp.R;
 import com.jg.dietapp.models.Meal;
-import com.jg.dietapp.shared.SharedPrefsMeals;
+import com.jg.dietapp.prefs.SelectedMealsPrefs;
 import com.jg.dietapp.viewmodel.NutritionViewModel;
 
 import java.util.List;
@@ -25,12 +24,12 @@ import java.util.List;
 public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.ExerciseViewHolder> {
     private List<Meal> mealList;
     private NutritionViewModel nutritionViewModel;
-    private SharedPrefsMeals sharedPrefsMeals;
+    private SelectedMealsPrefs selectedMealsPrefs;
 
     public ExerciseAdapter(Context context, List<Meal> mealList, NutritionViewModel nutritionViewModel, LifecycleOwner lifecycleOwner) {
         this.mealList = mealList;
         this.nutritionViewModel = nutritionViewModel;
-        this.sharedPrefsMeals = new SharedPrefsMeals(context);
+        this.selectedMealsPrefs = new SelectedMealsPrefs(context);
 
     }
 

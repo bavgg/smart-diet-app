@@ -1,4 +1,4 @@
-package com.jg.dietapp.shared;
+package com.jg.dietapp.models;
 
 import androidx.annotation.NonNull;
 

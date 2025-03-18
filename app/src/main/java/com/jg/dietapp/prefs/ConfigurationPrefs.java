@@ -1,14 +1,14 @@
-package com.jg.dietapp.shared;
+package com.jg.dietapp.prefs;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 
-public class SharedAssetPrefs {
+public class ConfigurationPrefs {
     private static final String KEY_ASSET_LOADED = "asset_loaded"; // New key for assetLoaded
     private static final String PREFS_NAME = "AssetPrefs";
     private final SharedPreferences prefs;
 
-    public SharedAssetPrefs(Context context) {
+    public ConfigurationPrefs(Context context) {
         this.prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
     }
 

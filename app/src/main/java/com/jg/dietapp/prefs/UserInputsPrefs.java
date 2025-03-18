@@ -1,15 +1,16 @@
-package com.jg.dietapp.shared;
+package com.jg.dietapp.prefs;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import com.google.gson.Gson;
+import com.jg.dietapp.models.UserInput;
 
-public class SharedUserPrefs {
+public class UserInputsPrefs {
     private static final String PREFS_NAME = "UserPrefs";
     private static final String KEY_USER = "user_data";
     Context context;
 
-    public SharedUserPrefs(Context context) {
+    public UserInputsPrefs(Context context) {
         this.context = context;
     }
 

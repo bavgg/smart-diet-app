@@ -18,17 +18,12 @@ import com.google.android.material.progressindicator.CircularProgressIndicator;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.jg.dietapp.R;
 import com.jg.dietapp.adapters.MealAdapter;
-import com.jg.dietapp.data.DAOMeal;
-import com.jg.dietapp.data.DatabaseHelper;
-import com.jg.dietapp.generator.MealGenerator;
 import com.jg.dietapp.models.Meal;
-import com.jg.dietapp.shared.SharedPrefsMeals;
-import com.jg.dietapp.shared.UserInput;
+import com.jg.dietapp.prefs.SelectedMealsPrefs;
 import com.jg.dietapp.utils.MacronutrientCalculator;
 import com.jg.dietapp.viewmodel.GeneratedMealsViewModel;
 import com.jg.dietapp.viewmodel.NutritionViewModel;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class FragmentPlan extends Fragment {
@@ -41,7 +36,7 @@ public class FragmentPlan extends Fragment {
     private CircularProgressIndicator progressCircular;
 
     private NutritionViewModel nutritionViewModel;
-    private SharedPrefsMeals sharedPrefsMeals;
+    private SelectedMealsPrefs selectedMealsPrefs;
 
     private int baseCalories, goalProtein, goalCarbs, goalFat;
     public static List<Integer> selectedMeals;
@@ -62,9 +57,8 @@ public class FragmentPlan extends Fragment {
         System.out.println("FragmentPlan onViewCreated Executed");
         super.onViewCreated(view, savedInstanceState);
 
-        System.out.println("Fragment Plan exec");
 
-        // Initialize mealsGenerated
+        // Get generated meals
         GeneratedMealsViewModel generatedMealsViewModel = new ViewModelProvider(requireActivity()).get(GeneratedMealsViewModel.class);
         mealsGenerated = generatedMealsViewModel.getGeneratedMeals();
 
@@ -72,8 +66,8 @@ public class FragmentPlan extends Fragment {
         baseCalories = generatedMealsViewModel.getBaseCalories();
 
         // Initialize Shared Preferences
-        sharedPrefsMeals = new SharedPrefsMeals(getContext());
-        selectedMeals = sharedPrefsMeals.getSelectedMeals();
+        selectedMealsPrefs = new SelectedMealsPrefs(getContext());
+        selectedMeals = selectedMealsPrefs.getSelectedMeals();
 
         // Initialize ViewModel
         nutritionViewModel = new ViewModelProvider(requireActivity()).get(NutritionViewModel.class);

@@ -4,7 +4,7 @@ import com.jg.dietapp.utils.Utils;
 import com.jg.dietapp.enums.EnumGoal;
 import com.jg.dietapp.enums.EnumSex;
 import com.jg.dietapp.models.Meal;
-import com.jg.dietapp.shared.UserInput;
+import com.jg.dietapp.models.UserInput;
 
 import java.util.ArrayList;
 import java.util.List;

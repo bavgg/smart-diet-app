@@ -42,7 +42,17 @@
                 app:iconGravity="textStart"
                 app:iconPadding="8dp"
                 app:iconTint="@color/white"
-                android:layout_marginBottom="12dp"/>
+                android:layout_marginBottom="8dp"/>
+
+            <TextView
+                android:layout_gravity="center"
+                android:id="@+id/fileNameText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="No file selected"
+                android:textSize="16sp"
+                />
+
 
 
             <TextView
@@ -501,16 +511,7 @@
         android:enabled="false"
         android:text="Create My Plan"
         />
-<!--    <Button-->
-<!--        android:id="@+id/createMealButton"-->
-<!--        android:backgroundTint="@color/primary"-->
-<!--        android:textColor="@color/white"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:text="Create Meal"-->
-<!--        android:enabled="false"-->
-<!--        android:textSize="16sp"-->
-<!--        />-->
+
 </LinearLayout>
 
 

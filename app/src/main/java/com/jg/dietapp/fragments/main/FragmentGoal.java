@@ -1,7 +1,7 @@
 package com.jg.dietapp.fragments.main;
 
-import static com.jg.dietapp.MainActivity.decreaseProgress;
-import static com.jg.dietapp.MainActivity.increaseProgress;
+import static com.jg.dietapp.UserInputActivity.decreaseProgress;
+import static com.jg.dietapp.UserInputActivity.increaseProgress;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -15,13 +15,13 @@ import androidx.fragment.app.Fragment;
 
 import com.jg.dietapp.components.CustomCard;
 import com.jg.dietapp.enums.EnumGoal;
-import com.jg.dietapp.MainActivity;
-import com.jg.dietapp.shared.UserInput;
+import com.jg.dietapp.UserInputActivity;
+import com.jg.dietapp.models.UserInput;
 import com.jg.dietapp.R;
 
 public class FragmentGoal extends Fragment {
     CustomCard fatLossCard, muscleGainCard, weightMaintenanceCard;
-    UserInput userInput = MainActivity.userInput;
+    UserInput userInput = UserInputActivity.userInput;
 
     @Nullable
     @Override

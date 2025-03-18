@@ -1,6 +1,6 @@
 package com.jg.dietapp.dialogs;
 
-import static com.jg.dietapp.MainActivity.sharedDataDialog;
+import static com.jg.dietapp.UserInputActivity.dialogViewModel;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -30,14 +30,14 @@ public class DialogHeightFragmentA extends Fragment {
 
         cmPicker.setMinValue(122);  // Minimum age
         cmPicker.setMaxValue(302); // Maximum age
-        cmPicker.setValue(sharedDataDialog.getCmValue());
+        cmPicker.setValue(dialogViewModel.getCmValue());
 
         cmPicker.setOnValueChangedListener((picker, oldVal, cm) -> {
             int feet = (int) (cm / 30.48); // Get whole feet
             double remainingCm = cm - (feet * 30.48);
             int inches = (int) Math.round(remainingCm / 2.54);
 
-            sharedDataDialog.setCmValue(cm);
+            dialogViewModel.setCmValue(cm);
         });
 
 

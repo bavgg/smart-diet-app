@@ -1,6 +1,6 @@
 package com.jg.dietapp.dialogs;
 
-import static com.jg.dietapp.MainActivity.sharedDataDialog;
+import static com.jg.dietapp.UserInputActivity.dialogViewModel;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -32,7 +32,7 @@ public class DialogWeightB extends Fragment {
         NumberPicker lbsPickerDecimal = view.findViewById(R.id.lbsPickerDecimal);
 
 
-        double lbs = sharedDataDialog.getLbs();
+        double lbs = dialogViewModel.getLbs();
         int lbsWhole = (int) lbs;
         int lbsDecimal = (int) ((lbs - lbsWhole) * 10);
 
@@ -45,11 +45,11 @@ public class DialogWeightB extends Fragment {
         lbsPickerDecimal.setValue(lbsDecimal);
 
         lbsPicker.setOnValueChangedListener((picker, oldVal, lbsVal) -> {
-            sharedDataDialog.setLbs(lbsVal, lbsPickerDecimal.getValue());
+            dialogViewModel.setLbs(lbsVal, lbsPickerDecimal.getValue());
         });
 
         lbsPickerDecimal.setOnValueChangedListener((picker, oldVal, lbsDecimalVal) -> {
-            sharedDataDialog.setLbs(lbsPicker.getValue(), lbsDecimalVal);
+            dialogViewModel.setLbs(lbsPicker.getValue(), lbsDecimalVal);
         });
 
 

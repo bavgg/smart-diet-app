@@ -1,23 +1,22 @@
-package com.jg.dietapp.shared;
+package com.jg.dietapp.prefs;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import java.lang.reflect.Type;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class SharedPrefsMeals {
+public class SelectedMealsPrefs {
     private static final String PREF_NAME = "MealPrefs";
     private static final String SELECTED_MEALS_KEY = "selected_meals";
 
     private final SharedPreferences sharedPreferences;
     private final Gson gson;
 
-    public SharedPrefsMeals(Context context) {
+    public SelectedMealsPrefs(Context context) {
         this.sharedPreferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
         this.gson = new Gson();
     }

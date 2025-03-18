@@ -3,7 +3,7 @@ package com.jg.dietapp.generator;
 
 
 
-import static com.jg.dietapp.MainActivity.userInput;
+import static com.jg.dietapp.UserInputActivity.userInput;
 
 import com.jg.dietapp.enums.EnumActivityLevel;
 import com.jg.dietapp.enums.EnumGoal;

@@ -17,7 +17,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.jg.dietapp.R;
 import com.jg.dietapp.models.Meal;
-import com.jg.dietapp.shared.SharedPrefsMeals;
+import com.jg.dietapp.prefs.SelectedMealsPrefs;
 import com.jg.dietapp.utils.Utils;
 import com.jg.dietapp.viewmodel.NutritionViewModel;
 
@@ -26,12 +26,12 @@ import java.util.List;
 public class MealAdapter extends RecyclerView.Adapter<MealAdapter.MealViewHolder> {
     private List<Meal> mealList;
     private NutritionViewModel nutritionViewModel;
-    private SharedPrefsMeals sharedPrefsMeals;
+    private SelectedMealsPrefs selectedMealsPrefs;
 
     public MealAdapter(Context context, List<Meal> mealList, NutritionViewModel nutritionViewModel, LifecycleOwner lifecycleOwner) {
         this.mealList = mealList;
         this.nutritionViewModel = nutritionViewModel;
-        this.sharedPrefsMeals = new SharedPrefsMeals(context);
+        this.selectedMealsPrefs = new SelectedMealsPrefs(context);
 
     }
 
@@ -56,7 +56,7 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.MealViewHolder
 
         // Use Glide for lazy loading of images
         Glide.with(holder.itemView.getContext())
-                .load(Utils.getImageFile(holder.itemView.getContext(), "pre-images", meal.getImageName())) // Get image file path
+                .load(Utils.getImageFile(holder.itemView.getContext(), meal.getImageName())) // Get image file path
                 .diskCacheStrategy(DiskCacheStrategy.ALL) // Cache for better performance
                 .into(holder.mealImage);
 
@@ -68,7 +68,7 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.MealViewHolder
                 selectedMeals.remove(Integer.valueOf(mealId));
             }
 
-            sharedPrefsMeals.saveSelectedMeals(selectedMeals);
+            selectedMealsPrefs.saveSelectedMeals(selectedMeals);
 
             int calories = isChecked ? (int) meal.getCalories() : -(int) meal.getCalories();
             int protein = isChecked ? meal.getProtein() : -meal.getProtein();

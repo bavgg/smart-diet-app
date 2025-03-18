@@ -11,17 +11,17 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.jg.dietapp.MainActivity;
+import com.jg.dietapp.UserInputActivity;
 import com.jg.dietapp.R;
-import com.jg.dietapp.shared.SharedUserPrefs;
-import com.jg.dietapp.shared.SharedPrefsMeals;
-import com.jg.dietapp.shared.SharedPrefsNutrients;
+import com.jg.dietapp.prefs.UserInputsPrefs;
+import com.jg.dietapp.prefs.SelectedMealsPrefs;
+import com.jg.dietapp.prefs.GoalNutrientsPrefs;
 
 public class FragmentSettings extends Fragment {
     Button resetButton;
-    SharedUserPrefs sharedUserPrefs;
-    SharedPrefsMeals sharedPrefsMeals;
-    SharedPrefsNutrients sharedPrefsNutrients;
+    UserInputsPrefs sharedUserPrefs;
+    SelectedMealsPrefs selectedMealsPrefs;
+    GoalNutrientsPrefs sharedPrefsNutrients;
 
     @Nullable
     @Override
@@ -37,17 +37,17 @@ public class FragmentSettings extends Fragment {
 
         System.out.println("Fragment settings exec");
         resetButton = view.findViewById(R.id.resetButton);
-        sharedUserPrefs = new SharedUserPrefs(getContext());
-        sharedPrefsMeals = new SharedPrefsMeals(getContext());
-        sharedPrefsNutrients = new SharedPrefsNutrients(getContext());
+        sharedUserPrefs = new UserInputsPrefs(getContext());
+        selectedMealsPrefs = new SelectedMealsPrefs(getContext());
+        sharedPrefsNutrients = new GoalNutrientsPrefs(getContext());
 
 
         resetButton.setOnClickListener(v -> {
             sharedUserPrefs.clearUser();
-            sharedPrefsMeals.clearSelectedMeals();
+            selectedMealsPrefs.clearSelectedMeals();
             sharedPrefsNutrients.clearSelectedMeals(getContext());
 
-            Intent intent = new Intent(getContext(), MainActivity.class);
+            Intent intent = new Intent(getContext(), UserInputActivity.class);
             startActivity(intent);
         });
 

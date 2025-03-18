@@ -61,7 +61,7 @@ public class Utils {
                     for (String file : assetFiles) {
                         if (file.toLowerCase().endsWith(".jpg")) { // Filter only .jpg files
                             System.out.println("JPG File: " + file);
-                            copyAssetToInternalStorage(context, "pre-images", file);
+                            copyAssetToInternalStorage(context, "images", file);
                         }
                     }
                 }
@@ -95,11 +95,39 @@ public class Utils {
         }
     }
 
-    public static String getImageFile(Context context, String folderName, String imageName) {
+    public static String getImageFile(Context context, String imageName) {
+        String folderName = "images";
         File directory = new File(context.getFilesDir(), folderName);
         File imageFile = new File(directory, imageName);
         return imageFile.exists() ? imageFile.getAbsolutePath() : null;
     }
+
+    public static String saveUserImageToInternalStorage(Context context, Bitmap bitmap, String fileName) {
+        try {
+            // Get internal storage directory
+            File directory = new File(context.getFilesDir(), "images");
+
+            // Create the directory if it doesn't exist
+            if (!directory.exists()) {
+                directory.mkdirs();
+            }
+
+            // Create file inside the subfolder
+            File file = new File(directory, fileName);
+
+            // Write bitmap to file
+            FileOutputStream fos = new FileOutputStream(file);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+            fos.close();
+
+            return file.getAbsolutePath(); // Return saved file path
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+
 
 
 //    String imagePath = new File(context.getFilesDir(), "images/meal1.jpg").getAbsolutePath();

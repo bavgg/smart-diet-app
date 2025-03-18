@@ -20,6 +20,7 @@ import com.jg.dietapp.dialogs.DialogCreateMeal;
 import com.jg.dietapp.models.Meal;
 import com.jg.dietapp.viewmodel.RecentMealsViewModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class FragmentMeals extends Fragment {
@@ -44,19 +45,23 @@ public class FragmentMeals extends Fragment {
         System.out.println("Fragment Meals exec");
 
         // Fetch meals from ViewModel
-        RecentMealsViewModel allMealsViewModel = new ViewModelProvider(requireActivity()).get(RecentMealsViewModel.class);
-        List<Meal> allMeals = allMealsViewModel.getMeals();
-        List<Meal> subList = allMeals.subList(0, 10);
+        RecentMealsViewModel recentMealsViewModel = new ViewModelProvider(requireActivity()).get(RecentMealsViewModel.class);
 
-        // Fetch image bitmaps from ViewModel
-//        ImageBitmapsViewModel imageBitmapsViewModel = new ViewModelProvider(requireActivity()).get(ImageBitmapsViewModel.class);
-//        List<Bitmap> imageBitmaps = imageBitmapsViewModel.getImageBitmaps();
-
-        // Set meal admin adapter
-        mealAdminAdapter = new MealAdminAdapter(subList);
+// Initialize RecyclerView
         recyclerViewMeals = view.findViewById(R.id.recyclerViewMeals);
         recyclerViewMeals.setLayoutManager(new LinearLayoutManager(getContext()));
+
+// Initialize Adapter with an empty list
+        mealAdminAdapter = new MealAdminAdapter(new ArrayList<>());
         recyclerViewMeals.setAdapter(mealAdminAdapter);
+
+// Observe LiveData and update adapter
+        recentMealsViewModel.getMeals().observe(getViewLifecycleOwner(), recentMeals -> {
+            if (recentMeals != null) {
+                mealAdminAdapter.updateMeals(recentMeals); // Update data instead of recreating adapter
+            }
+        });
+
 
 
 

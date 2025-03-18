@@ -1,6 +1,6 @@
 package com.jg.dietapp.dialogs;
 
-import static com.jg.dietapp.MainActivity.sharedDataDialog;
+import static com.jg.dietapp.UserInputActivity.dialogViewModel;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -78,7 +78,7 @@ public class DialogWeight extends com.google.android.material.bottomsheet.Bottom
 
         okButton.setOnClickListener(v -> {
 
-            double lbsValue = sharedDataDialog.getLbs();
+            double lbsValue = dialogViewModel.getLbs();
 
             if(Objects.equals(selectedUnit.get(), "kg")){
 

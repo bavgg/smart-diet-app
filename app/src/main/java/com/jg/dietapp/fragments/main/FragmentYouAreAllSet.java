@@ -1,7 +1,7 @@
 package com.jg.dietapp.fragments.main;
 
-import static com.jg.dietapp.MainActivity.sharedUserPrefs;
-import static com.jg.dietapp.MainActivity.userInput;
+import static com.jg.dietapp.UserInputActivity.sharedUserPrefs;
+import static com.jg.dietapp.UserInputActivity.userInput;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,7 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.jg.dietapp.HomeActivity;
+import com.jg.dietapp.MainActivity;
 import com.jg.dietapp.R;
 
 public class FragmentYouAreAllSet extends Fragment {
@@ -43,7 +43,7 @@ public class FragmentYouAreAllSet extends Fragment {
 //        }
 
         nextButton.setOnClickListener(v -> {
-            Intent intent = new Intent(getContext(), HomeActivity.class);
+            Intent intent = new Intent(getContext(), MainActivity.class);
             startActivity(intent);
         });
 

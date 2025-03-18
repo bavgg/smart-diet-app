@@ -1,6 +1,7 @@
 package com.jg.dietapp.adapters;
 
 import android.graphics.Bitmap;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import com.jg.dietapp.R;
 import com.jg.dietapp.models.Meal;
 import com.jg.dietapp.utils.Utils;
 
+import java.io.File;
 import java.util.List;
 
 public class MealAdminAdapter extends RecyclerView.Adapter<MealAdminAdapter.MealViewHolder> {
@@ -41,9 +43,13 @@ public class MealAdminAdapter extends RecyclerView.Adapter<MealAdminAdapter.Meal
         holder.mealNameText.setText(meal.getName());
 //        holder.mealImage.setImageBitmap(imageBitmap);
 
+
+        String imageFileName = Utils.getImageFile(holder.itemView.getContext(),  meal.getImageName());
+
+
         // Use Glide for lazy loading of images
         Glide.with(holder.itemView.getContext())
-                .load(Utils.getImageFile(holder.itemView.getContext(), "pre-images", meal.getImageName())) // Get image file path
+                .load(imageFileName) // Get image file path
                 .diskCacheStrategy(DiskCacheStrategy.ALL) // Cache for better performance
                 .into(holder.mealImage);
     }
@@ -66,4 +72,11 @@ public class MealAdminAdapter extends RecyclerView.Adapter<MealAdminAdapter.Meal
 
         }
     }
+
+    public void updateMeals(List<Meal> newMeals) {
+        this.mealList.clear();
+        this.mealList.addAll(newMeals);
+        notifyDataSetChanged();
+    }
+
 }

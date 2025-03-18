@@ -1,9 +1,9 @@
-package com.jg.dietapp.shared;
+package com.jg.dietapp.prefs;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 
-public class SharedPrefsNutrients {
+public class GoalNutrientsPrefs {
     private static final String PREFS_NAME = "nutrition_prefs";
     private static final String KEY_KCAL = "kcal";
     private static final String KEY_PROTEIN = "protein";
@@ -12,7 +12,7 @@ public class SharedPrefsNutrients {
 
     private final SharedPreferences sharedPreferences;
 
-    public SharedPrefsNutrients(Context context) {
+    public GoalNutrientsPrefs(Context context) {
         sharedPreferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
     }
 
