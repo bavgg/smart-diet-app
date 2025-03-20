@@ -1,4 +1,4 @@
-package com.jg.dietapp.fragments.main;
+package com.jg.dietapp.fragments.user_input;
 import static com.jg.dietapp.UserInputActivity.increaseProgress;
 
 import android.os.Bundle;

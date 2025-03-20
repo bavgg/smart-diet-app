@@ -44,16 +44,14 @@ public class Utils {
 //    imageView.setImageBitmap(loadImageFromAssets("meal1.jpg"));
 
 
-
-
     public static Bitmap loadImageFromInternalStorage(Context context, String imageFolder, String filename) {
         String imagePath = new File(context.getFilesDir(), imageFolder + "/" + filename).getAbsolutePath();
         return BitmapFactory.decodeFile(imagePath);
     }
 
-    private static final ExecutorService executor = Executors.newSingleThreadExecutor();
+    public static ExecutorService executor = Executors.newFixedThreadPool(4);
 
-    public static void loadImagesFromAssetToInternalStorage(Context context) {
+    public static   void loadImagesFromAssetToInternalStorage(Context context) {
         executor.execute(() -> {
             try {
                 String[] assetFiles = context.getAssets().list(""); // Root of assets folder

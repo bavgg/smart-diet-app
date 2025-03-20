@@ -7,35 +7,38 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.jg.dietapp.prefs.GoalNutrientsPrefs;
+import com.jg.dietapp.prefs.FirebaseDataPrefs;
 
-public class NutritionViewModel extends AndroidViewModel {
+public class CurrentNutritionViewModel extends AndroidViewModel {
     private final MutableLiveData<Integer> kcal = new MutableLiveData<>(0);
     private final MutableLiveData<Integer> protein = new MutableLiveData<>(0);
     private final MutableLiveData<Integer> carbs = new MutableLiveData<>(0);
     private final MutableLiveData<Integer> fat = new MutableLiveData<>(0);
 
-    private final GoalNutrientsPrefs sharedPrefsNutrients;
+    private final FirebaseDataPrefs firebaseDataPrefs;
 
-    public NutritionViewModel(@NonNull Application application) {
+    public CurrentNutritionViewModel(@NonNull Application application) {
         super(application);
-        sharedPrefsNutrients = new GoalNutrientsPrefs(application);
-        loadNutritionData();
+        firebaseDataPrefs = new FirebaseDataPrefs(application);
+        kcal.setValue(firebaseDataPrefs.getKcal());
+        protein.setValue(firebaseDataPrefs.getProtein());
+        carbs.setValue(firebaseDataPrefs.getCarbs());
+        fat.setValue(firebaseDataPrefs.getFat());
     }
 
-    public LiveData<Integer> getKcal() {
+    public LiveData<Integer> getCurrentKcal() {
         return kcal;
     }
 
-    public LiveData<Integer> getProtein() {
+    public LiveData<Integer> getCurrentProtein() {
         return protein;
     }
 
-    public LiveData<Integer> getCarbs() {
+    public LiveData<Integer> getCurrentCarbs() {
         return carbs;
     }
 
-    public LiveData<Integer> getFat() {
+    public LiveData<Integer> getCurrentFat() {
         return fat;
     }
 
@@ -57,13 +60,8 @@ public class NutritionViewModel extends AndroidViewModel {
         carbs.setValue(newCarbs);
         fat.setValue(newFat);
 
-        sharedPrefsNutrients.saveNutritionData(newKcal, newProtein, newCarbs, newFat);
+        firebaseDataPrefs.saveNutritionData(newKcal, newProtein, newCarbs, newFat);
     }
 
-    private void loadNutritionData() {
-        kcal.setValue(sharedPrefsNutrients.getKcal());
-        protein.setValue(sharedPrefsNutrients.getProtein());
-        carbs.setValue(sharedPrefsNutrients.getCarbs());
-        fat.setValue(sharedPrefsNutrients.getFat());
-    }
+
 }

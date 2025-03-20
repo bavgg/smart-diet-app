@@ -1,6 +1,6 @@
 package com.jg.dietapp.adapters;
 
-import static com.jg.dietapp.fragments.home.FragmentPlan.selectedMeals;
+import static com.jg.dietapp.fragments.main.FragmentPlan.selectedMealsID;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -17,21 +17,21 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.jg.dietapp.R;
 import com.jg.dietapp.models.Meal;
-import com.jg.dietapp.prefs.SelectedMealsPrefs;
+import com.jg.dietapp.prefs.FirebaseDataPrefs;
 import com.jg.dietapp.utils.Utils;
-import com.jg.dietapp.viewmodel.NutritionViewModel;
+import com.jg.dietapp.viewmodel.CurrentNutritionViewModel;
 
 import java.util.List;
 
 public class MealAdapter extends RecyclerView.Adapter<MealAdapter.MealViewHolder> {
     private List<Meal> mealList;
-    private NutritionViewModel nutritionViewModel;
-    private SelectedMealsPrefs selectedMealsPrefs;
+    private CurrentNutritionViewModel nutritionViewModel;
+    private FirebaseDataPrefs firebaseDataPrefs;
 
-    public MealAdapter(Context context, List<Meal> mealList, NutritionViewModel nutritionViewModel, LifecycleOwner lifecycleOwner) {
+    public MealAdapter(Context context, List<Meal> mealList, CurrentNutritionViewModel nutritionViewModel, LifecycleOwner lifecycleOwner) {
         this.mealList = mealList;
         this.nutritionViewModel = nutritionViewModel;
-        this.selectedMealsPrefs = new SelectedMealsPrefs(context);
+        this.firebaseDataPrefs = new FirebaseDataPrefs(context);
 
     }
 
@@ -49,7 +49,7 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.MealViewHolder
         holder.mealCalories.setText(meal.getCalories() + " ");
 
         int mealId = meal.getId();
-        boolean isSelected = selectedMeals.contains(mealId);
+        boolean isSelected = selectedMealsID.contains(mealId);
 
         holder.checkBox.setOnCheckedChangeListener(null);
         holder.checkBox.setChecked(isSelected);
@@ -63,12 +63,12 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.MealViewHolder
         holder.checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
                 System.out.println(mealId);
-                selectedMeals.add(Integer.valueOf(mealId));
+                selectedMealsID.add(Integer.valueOf(mealId));
             } else {
-                selectedMeals.remove(Integer.valueOf(mealId));
+                selectedMealsID.remove(Integer.valueOf(mealId));
             }
 
-            selectedMealsPrefs.saveSelectedMeals(selectedMeals);
+            firebaseDataPrefs.saveSelectedMealsID(selectedMealsID);
 
             int calories = isChecked ? (int) meal.getCalories() : -(int) meal.getCalories();
             int protein = isChecked ? meal.getProtein() : -meal.getProtein();

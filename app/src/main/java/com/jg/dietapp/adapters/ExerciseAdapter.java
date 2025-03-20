@@ -14,8 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.jg.dietapp.R;
 import com.jg.dietapp.models.Meal;
-import com.jg.dietapp.prefs.SelectedMealsPrefs;
-import com.jg.dietapp.viewmodel.NutritionViewModel;
+import com.jg.dietapp.prefs.FirebaseDataPrefs;
+import com.jg.dietapp.viewmodel.CurrentNutritionViewModel;
 
 import java.util.List;
 
@@ -23,13 +23,13 @@ import java.util.List;
 
 public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.ExerciseViewHolder> {
     private List<Meal> mealList;
-    private NutritionViewModel nutritionViewModel;
-    private SelectedMealsPrefs selectedMealsPrefs;
+    private CurrentNutritionViewModel nutritionViewModel;
+    private FirebaseDataPrefs firebaseDataPrefs;
 
-    public ExerciseAdapter(Context context, List<Meal> mealList, NutritionViewModel nutritionViewModel, LifecycleOwner lifecycleOwner) {
+    public ExerciseAdapter(Context context, List<Meal> mealList, CurrentNutritionViewModel nutritionViewModel, LifecycleOwner lifecycleOwner) {
         this.mealList = mealList;
         this.nutritionViewModel = nutritionViewModel;
-        this.selectedMealsPrefs = new SelectedMealsPrefs(context);
+        this.firebaseDataPrefs = new FirebaseDataPrefs(context);
 
     }
 

@@ -1,6 +1,5 @@
-package com.jg.dietapp.fragments.main;
+package com.jg.dietapp.fragments.user_input;
 
-import static com.jg.dietapp.UserInputActivity.sharedUserPrefs;
 import static com.jg.dietapp.UserInputActivity.userInput;
 
 import android.content.Intent;
@@ -16,6 +15,7 @@ import androidx.fragment.app.Fragment;
 
 import com.jg.dietapp.MainActivity;
 import com.jg.dietapp.R;
+import com.jg.dietapp.prefs.FirebaseDataPrefs;
 
 public class FragmentYouAreAllSet extends Fragment {
 
@@ -30,17 +30,14 @@ public class FragmentYouAreAllSet extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        FirebaseDataPrefs firebaseDataPrefs = new FirebaseDataPrefs(view.getContext());
+
         nextButton = view.findViewById(R.id.nextButton);
 
 
         userInput.setUserSubmitted(true);
 
-        sharedUserPrefs.saveUser(userInput);
-
-
-//        for (ModelMeal meal : meals) {
-//            System.out.println("Meal: " + meal.getName() + ", Calories: " + meal.getCalories());
-//        }
+        firebaseDataPrefs.saveUser(userInput);
 
         nextButton.setOnClickListener(v -> {
             Intent intent = new Intent(getContext(), MainActivity.class);
@@ -48,7 +45,6 @@ public class FragmentYouAreAllSet extends Fragment {
         });
 
 
-        System.out.println(userInput);
 
     }
 }

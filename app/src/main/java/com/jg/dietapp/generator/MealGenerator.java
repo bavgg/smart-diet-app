@@ -13,16 +13,16 @@ import java.util.stream.Collectors;
 
 public class MealGenerator {
     private final UserInput userInput;
-    private double baseCalories;
     private List<Meal> mealOptions;
+
+    private double baseCalories;
+    List<Meal> breakfastMeals;
+    List<Meal> lunchMeals;
+    List<Meal> dinnerMeals;
 
     public MealGenerator(UserInput userInput, List<Meal> mealOptions) {
         this.userInput = userInput;
         this.mealOptions = mealOptions;
-    }
-
-    public List<Meal>[] generateMealPlan() {
-
 
         double tdee = calculateTDEE();
         baseCalories = adjustCaloriesForGoal(tdee);
@@ -31,13 +31,13 @@ public class MealGenerator {
         double lunchCalories = baseCalories * 0.4;
         double dinnerCalories = baseCalories * 0.3;
 
-        List<Meal> breakfastMeals = getMealsByMealtime("Breakfast");
+        List<Meal> breakfastMealsR = getMealsByMealtime("Breakfast");
         List<Meal> lunchDinnerMeals = getMealsByMealtime("Lunch/Dinner");
         List<Meal> allMeals = getMealsByMealtime("All Meals");
 
         int mid = lunchDinnerMeals.size() / 2;
-        List<Meal> lunchMeals = new ArrayList<>(lunchDinnerMeals.subList(0, mid));   // First half
-        List<Meal> dinnerMeals = new ArrayList<>(lunchDinnerMeals.subList(mid, lunchDinnerMeals.size()));
+        List<Meal> lunchMealsR = new ArrayList<>(lunchDinnerMeals.subList(0, mid));   // First half
+        List<Meal> dinnerMealsR = new ArrayList<>(lunchDinnerMeals.subList(mid, lunchDinnerMeals.size()));
 
 
         int size = allMeals.size();
@@ -47,15 +47,24 @@ public class MealGenerator {
         List<Meal> secondPartAllMeals = new ArrayList<>(allMeals.subList(partSize, partSize * 2));  // Second 1/3
         List<Meal> thirdPartAllMeals = new ArrayList<>(allMeals.subList(partSize * 2, size));
 
-        breakfastMeals.addAll(firstPartAllMeals);
-        lunchMeals.addAll(secondPartAllMeals);
-        dinnerMeals.addAll(thirdPartAllMeals);
+        breakfastMealsR.addAll(firstPartAllMeals);
+        lunchMealsR.addAll(secondPartAllMeals);
+        dinnerMealsR.addAll(thirdPartAllMeals);
 
-        return new List[]{
-                selectMeals("Breakfast", breakfastMeals, breakfastCalories, 1001),
-                selectMeals("Lunch", lunchMeals, lunchCalories, 1002),
-                selectMeals("Dinner", dinnerMeals, dinnerCalories, 1003)
-        };
+        breakfastMeals = selectMeals("Breakfast", breakfastMealsR, breakfastCalories, 1001);
+        lunchMeals = selectMeals("Lunch", lunchMealsR, lunchCalories, 1002);
+        dinnerMeals = selectMeals("Dinner", dinnerMealsR, dinnerCalories, 1003);
+    }
+
+
+    public List<Meal> getBreakfastMeals() {
+        return breakfastMeals;
+    }
+    public List<Meal> getLunchMeals() {
+        return lunchMeals;
+    }
+    public List<Meal> getDinnerMeals() {
+        return dinnerMeals;
     }
 
     public double getBaseCalories() {
@@ -71,7 +80,6 @@ public class MealGenerator {
 
     private double calculateTDEE() {
         double bmr = calculateBMR();
-        System.out.println("BMR: " + bmr);
 
         switch (userInput.getActivityLevel()) {
             case SEDENTARY: return bmr * 1.2;

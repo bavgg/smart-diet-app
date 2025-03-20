@@ -1,4 +1,4 @@
-package com.jg.dietapp.fragments.home;
+package com.jg.dietapp.fragments.main;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -15,13 +15,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.jg.dietapp.R;
 import com.jg.dietapp.adapters.MealAdminAdapter;
-import com.jg.dietapp.dialogs.DialogAge;
 import com.jg.dietapp.dialogs.DialogCreateMeal;
-import com.jg.dietapp.models.Meal;
 import com.jg.dietapp.viewmodel.RecentMealsViewModel;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class FragmentMeals extends Fragment {
     RecyclerView recyclerViewMeals;
@@ -42,7 +39,6 @@ public class FragmentMeals extends Fragment {
         addMealButton = view.findViewById(R.id.addMealButton);
 
 
-        System.out.println("Fragment Meals exec");
 
         // Fetch meals from ViewModel
         RecentMealsViewModel recentMealsViewModel = new ViewModelProvider(requireActivity()).get(RecentMealsViewModel.class);
