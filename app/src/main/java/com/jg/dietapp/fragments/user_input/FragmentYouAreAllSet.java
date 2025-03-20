@@ -4,6 +4,7 @@ import static com.jg.dietapp.UserInputActivity.userInput;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,11 +14,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.google.gson.Gson;
 import com.jg.dietapp.MainActivity;
 import com.jg.dietapp.R;
 import com.jg.dietapp.prefs.FirebaseDataPrefs;
+import com.jg.dietapp.utils.FirebaseUtils;
 
 public class FragmentYouAreAllSet extends Fragment {
+    FirebaseUtils firebaseUtils;
 
     Button nextButton;
     @Nullable
@@ -31,6 +35,7 @@ public class FragmentYouAreAllSet extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         FirebaseDataPrefs firebaseDataPrefs = new FirebaseDataPrefs(view.getContext());
+        firebaseUtils = new FirebaseUtils(view.getContext());
 
         nextButton = view.findViewById(R.id.nextButton);
 
@@ -38,6 +43,10 @@ public class FragmentYouAreAllSet extends Fragment {
         userInput.setUserSubmitted(true);
 
         firebaseDataPrefs.saveUser(userInput);
+        System.out.println("You are all set: FirebaseDataPrefs: " + firebaseDataPrefs.getUser());
+        firebaseUtils.syncUserInput();
+
+        Log.i("TAG", "FragmentYouAreAllSet FirebaseDataPrefs: " + new Gson().toJson(firebaseDataPrefs));
 
         nextButton.setOnClickListener(v -> {
             Intent intent = new Intent(getContext(), MainActivity.class);

@@ -65,6 +65,7 @@ public class UserInput {
     @Override
     public String toString() {
         return "ModelUserInput{" +
+                "user=" + userSubmitted +
                 "goal=" + goal +
                 ", sex=" + sex +
                 ", age=" + age +

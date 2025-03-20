@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.jg.dietapp.models.Exercise;
 import com.jg.dietapp.models.Meal;
 import com.jg.dietapp.models.UserInput;
 
@@ -27,6 +28,7 @@ public class FirebaseDataPrefs {
     private static final String KEY_LUNCH_MEALS = "lunch_meals";
     private static final String KEY_DINNER_MEALS = "dinner_meals";
     private static final String KEY_BASE_CALORIES = "base_calories";
+    private static final String KEY_EXERCISES = "exercises";
 
     private final SharedPreferences sharedPreferences;
 
@@ -63,6 +65,9 @@ public class FirebaseDataPrefs {
                 .remove(KEY_FAT)
                 .apply();
     }
+    public void clearAllData() {
+        sharedPreferences.edit().clear().apply();
+    }
 
     public UserInput getUser() {
         String userJson = sharedPreferences.getString(KEY_USER_INPUTS, null);
@@ -98,7 +103,7 @@ public class FirebaseDataPrefs {
         sharedPreferences.edit().putStringSet(KEY_SELECTED_MEALS_ID, mealIdSet).apply();
     }
 
-    public void clearSelectedMeals() {
+    public void clearSelectedMealIDs() {
         sharedPreferences.edit().remove(KEY_SELECTED_MEALS_ID).apply();
     }
 
@@ -122,6 +127,22 @@ public class FirebaseDataPrefs {
         editor.putString(KEY_DINNER_MEALS, gson.toJson(dinnerMeals));
         editor.putInt(KEY_BASE_CALORIES, baseCalories);
         editor.apply();
+    }
+    public void saveExercises(List<Exercise> exercises) {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        Gson gson = new Gson();
+        editor.putString(KEY_EXERCISES, gson.toJson(exercises));
+        editor.apply();
+    }
+    public List<Exercise> getExercises() {
+        String json = sharedPreferences.getString(KEY_EXERCISES, null);
+        if (json == null) {
+            return new ArrayList<>(); // Return an empty list if no data is found
+        }
+
+        Gson gson = new Gson();
+        Type type = new TypeToken<List<Exercise>>() {}.getType();
+        return gson.fromJson(json, type);
     }
 
     private List<Meal> getMealList(String key) {

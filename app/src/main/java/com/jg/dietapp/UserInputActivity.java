@@ -13,6 +13,7 @@ import com.jg.dietapp.fragments.user_input.FragmentStart;
 import com.jg.dietapp.models.UserInput;
 import com.jg.dietapp.prefs.ConfigurationPrefs;
 import com.jg.dietapp.prefs.FirebaseDataPrefs;
+import com.jg.dietapp.utils.FirebaseUtils;
 import com.jg.dietapp.viewmodel.DialogViewModel;
 
 public class UserInputActivity extends AppCompatActivity {
@@ -26,18 +27,25 @@ public class UserInputActivity extends AppCompatActivity {
     FirebaseDataPrefs firebaseDataPrefs;
     ConfigurationPrefs configurationPrefs;
 
-    @Override
-    public void onStart(){
-        super.onStart();
-        UserInput user = firebaseDataPrefs.getUser();
+    FirebaseUtils firebaseUtils;;
 
-        if(user.getUserSubmitted()) {
-            Intent intent = new Intent(UserInputActivity.this, MainActivity.class);
-            startActivity(intent);
-            finish();
-        }
-
-    }
+//    @Override
+//    public void onStart(){
+//        super.onStart();
+//        firebaseUtils.loadPreferencesFromFirebase();
+//        System.out.println(firebaseDataPrefs);
+//        UserInput user = firebaseDataPrefs.getUser();
+//
+//        System.out.println("This is the man: " + firebaseDataPrefs.getBreakfastMeals());
+//
+//        if(user.getUserSubmitted()) {
+//            Intent intent = new Intent(UserInputActivity.this, MainActivity.class);
+//            startActivity(intent);
+//            finish();
+//        }
+//
+//
+//    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,8 +53,19 @@ public class UserInputActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
+        firebaseUtils = new FirebaseUtils(this);
         firebaseDataPrefs = new FirebaseDataPrefs(this);
         configurationPrefs = new ConfigurationPrefs(this);
+
+        firebaseUtils.loadPreferencesFromFirebase(() -> {
+            UserInput user = firebaseDataPrefs.getUser();
+
+            if (user != null && user.getUserSubmitted()) {
+                Intent intent = new Intent(UserInputActivity.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
 
         // ASYNCHRONOUS
         // Load images from assets to internal storage

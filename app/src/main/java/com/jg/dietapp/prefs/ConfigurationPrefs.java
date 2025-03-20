@@ -8,6 +8,7 @@ public class ConfigurationPrefs {
     private static final String KEY_ASSET_LOADED = "is_asset_loaded";
     private static final String KEY_INITIALIZED = "has_initialized";
     private static final String KEY_INITIALIZED_ONLINE = "initialized_online";
+    private static final String KEY_DB_SEEDED = "has_seeded";
 
     private final SharedPreferences sharedPreferences;
 
@@ -35,5 +36,11 @@ public class ConfigurationPrefs {
     }
     public void setIsInitializedOnline(boolean initializedOnline) {
         sharedPreferences.edit().putBoolean(KEY_INITIALIZED_ONLINE, initializedOnline).apply();
+    }
+    public boolean hasSeeded() {
+        return sharedPreferences.getBoolean(KEY_DB_SEEDED, false);
+    }
+    public void setHasSeeded(boolean initializedOnline) {
+        sharedPreferences.edit().putBoolean(KEY_DB_SEEDED, initializedOnline).apply();
     }
 }

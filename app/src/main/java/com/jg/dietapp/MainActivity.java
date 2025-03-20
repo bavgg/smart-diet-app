@@ -9,12 +9,14 @@ import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.jg.dietapp.data.DAOExercise;
 import com.jg.dietapp.data.DAOMeal;
 import com.jg.dietapp.data.DatabaseHelper;
 import com.jg.dietapp.fragments.main.FragmentMeals;
 import com.jg.dietapp.fragments.main.FragmentPlan;
 import com.jg.dietapp.fragments.main.FragmentSettings;
 import com.jg.dietapp.generator.MealGenerator;
+import com.jg.dietapp.models.Exercise;
 import com.jg.dietapp.models.Meal;
 import com.jg.dietapp.prefs.FirebaseDataPrefs;
 import com.jg.dietapp.models.UserInput;
@@ -32,13 +34,16 @@ public class MainActivity extends AppCompatActivity {
     private Fragment activeFragment = fragmentPlan;  // Track active fragment
 
     private DAOMeal mealDAO;
+    private DAOExercise exerciseDAO;
     FirebaseUtils firebaseUtils;
+    FirebaseDataPrefs firebaseDataPrefs;
 
     @Override
     protected void onResume() {
         super.onResume();
-        System.out.println("onResume Hello world");
+
         firebaseUtils.loadPreferencesFromFirebase();
+        System.out.println("onResume Hello world: dataPrefs: " + firebaseDataPrefs.getUser());
     }
 
     @Override
@@ -46,6 +51,9 @@ public class MainActivity extends AppCompatActivity {
         super.onStop();
         System.out.println("onStop Hello world");
         firebaseUtils.syncPreferencesToFirebase();
+        firebaseUtils.syncGeneratedData();
+        System.out.println("You are all set: FirebaseDataPrefs: " + firebaseDataPrefs.getUser());
+
     }
 
     @Override
@@ -55,23 +63,30 @@ public class MainActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_home);
 
+        firebaseDataPrefs = new FirebaseDataPrefs(this);
         firebaseUtils = new FirebaseUtils(this);
         DatabaseHelper dbHelper = new DatabaseHelper(this);
         mealDAO = new DAOMeal(dbHelper);
+        exerciseDAO = new DAOExercise(dbHelper);
 
-        FirebaseDataPrefs firebaseDataPrefs = new FirebaseDataPrefs(this);
         UserInput userInputs = firebaseDataPrefs.getUser();
         System.out.println(userInputs);
+
         List<Meal> filteredMeals = mealDAO.getMealsByDietAndAllergens(userInputs);
+        List<Exercise> filteredExercises = exerciseDAO.getExercisesByActivityLevel(userInputs.getActivityLevel().toString());
+        firebaseDataPrefs.saveExercises(filteredExercises);
 
         // Set generated meals data
-        MealGenerator mealGenerator = new MealGenerator(userInputs, filteredMeals);
-        GeneratedPlanViewModel generatedPlanViewModel = new ViewModelProvider(this).get(GeneratedPlanViewModel.class);
-        generatedPlanViewModel.setBreakfastMeals(mealGenerator.getBreakfastMeals());
-        generatedPlanViewModel.setLunchMeals(mealGenerator.getLunchMeals());
-        generatedPlanViewModel.setDinnerMeals(mealGenerator.getDinnerMeals());
-        generatedPlanViewModel.setBaseCalories((int) mealGenerator.getBaseCalories());
-        firebaseDataPrefs.saveGeneratedMealPlan(mealGenerator.getBreakfastMeals(), mealGenerator.getLunchMeals(), mealGenerator.getDinnerMeals(), (int) mealGenerator.getBaseCalories());
+        if(firebaseDataPrefs.getBreakfastMeals().isEmpty()) {
+            MealGenerator mealGenerator = new MealGenerator(userInputs, filteredMeals);
+            GeneratedPlanViewModel generatedPlanViewModel = new ViewModelProvider(this).get(GeneratedPlanViewModel.class);
+            generatedPlanViewModel.setBreakfastMeals(mealGenerator.getBreakfastMeals());
+            generatedPlanViewModel.setLunchMeals(mealGenerator.getLunchMeals());
+            generatedPlanViewModel.setDinnerMeals(mealGenerator.getDinnerMeals());
+            generatedPlanViewModel.setBaseCalories((int) mealGenerator.getBaseCalories());
+            firebaseDataPrefs.saveGeneratedMealPlan(mealGenerator.getBreakfastMeals(), mealGenerator.getLunchMeals(), mealGenerator.getDinnerMeals(), (int) mealGenerator.getBaseCalories());
+            firebaseUtils.syncGeneratedData();
+        }
 
         // Set recent meals data
         List<Meal> recentMeals = mealDAO.getRecentMeals();
@@ -101,6 +116,8 @@ public class MainActivity extends AppCompatActivity {
             }
             return true;
         });
+
+        System.out.println("User final: " + userInputs);
     }
 
 

@@ -34,14 +34,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         db.execSQL("CREATE TABLE exercises (" +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "name TEXT, " +
-                "category TEXT, " +
+                "name TEXT UNIQUE, " +
+                "activity_level TEXT CHECK(activity_level IN ('SEDENTARY', 'LIGHT_ACTIVITY', 'MODERATE_ACTIVITY', 'HEAVY_ACTIVITY', 'EXCESSIVE_ACTIVITY')), " +
                 "duration INTEGER, " +
                 "calories_burned INTEGER, " +
-                "created_at DATETIME DEFAULT CURRENT_TIMESTAMP)");
+                "image_name TEXT, " +
+                "created_at DATETIME DEFAULT CURRENT_TIMESTAMP)"
+        );
 
-        seedDatabase(db); // ✅ Seeding the database
+        seedMealsTable(db); // ✅ Seeding the database
+        seedExercisesTable(db);
     }
+
 
 
     @Override
@@ -51,8 +55,44 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+    private void seedExercisesTable(SQLiteDatabase db) {
+        db.execSQL("INSERT INTO exercises (name, activity_level, duration, calories_burned, image_name) VALUES " +
+                // 🚶‍♂️ SEDENTARY (Minimal movement)
+                "('Sitting', 'SEDENTARY', 60, 20, 'Sitting.png'), " +
+                "('Reading', 'SEDENTARY', 45, 30, 'Reading.png'), " +
+                "('Watching TV', 'SEDENTARY', 60, 25, 'Watching TV.png'), " +
 
-    public void seedDatabase(SQLiteDatabase db) {
+                // 🚶 LIGHT_ACTIVITY (Low effort movements)
+                "('Walking (slow)', 'LIGHT_ACTIVITY', 30, 100, 'WalkingSlow.png'), " +
+                "('Stretching', 'LIGHT_ACTIVITY', 20, 80, 'Stretching.png'), " +
+                "('Yoga', 'LIGHT_ACTIVITY', 30, 120, 'Yoga.png'), " +
+                "('Leisure Cycling', 'LIGHT_ACTIVITY', 30, 150, 'Leisure Cycling.png'), " +
+
+                // 🏃 MODERATE_ACTIVITY (Steady movement, moderate exertion)
+                "('Brisk Walking', 'MODERATE_ACTIVITY', 30, 200, 'Brisk Walking.png'), " +
+                "('Dancing', 'MODERATE_ACTIVITY', 40, 250, 'Dancing.png'), " +
+                "('Swimming (casual)', 'MODERATE_ACTIVITY', 30, 300, 'Swimming (casual).png'), " +
+                "('Rowing (moderate)', 'MODERATE_ACTIVITY', 30, 350, 'Rowing (moderate).png'), " +
+                "('Weight Lifting (light)', 'MODERATE_ACTIVITY', 30, 200, 'Weight Lifting (light).png'), " +
+
+                // 🏋️ HEAVY_ACTIVITY (High effort, full-body engagement)
+                "('Running', 'HEAVY_ACTIVITY', 30, 400, 'Running.png'), " +
+                "('Jump Rope', 'HEAVY_ACTIVITY', 20, 350, 'Jump Rope.png'), " +
+                "('Squats', 'HEAVY_ACTIVITY', 20, 250, 'Squats.png'), " +
+                "('Push-ups', 'HEAVY_ACTIVITY', 15, 200, 'Pushups.png'), " +
+                "('Deadlifts', 'HEAVY_ACTIVITY', 30, 500, 'Deadlifts.png'), " +
+                "('Swimming (intense)', 'HEAVY_ACTIVITY', 40, 450, 'Swimming (intense).png'), " +
+
+                // 🏋️‍♂️💪 EXCESSIVE_ACTIVITY (Extreme endurance/intensity)
+                "('Marathon Running', 'EXCESSIVE_ACTIVITY', 120, 1500, 'Marathon Running.png'), " +
+                "('Triathlon', 'EXCESSIVE_ACTIVITY', 180, 2000, 'Triathlon.png'), " +
+                "('Hiit Workout', 'EXCESSIVE_ACTIVITY', 45, 600, 'Hiit Workout.png'), " +
+                "('CrossFit', 'EXCESSIVE_ACTIVITY', 60, 700, 'Crossfit.png'), " +
+                "('Ironman Competition', 'EXCESSIVE_ACTIVITY', 240, 3000, 'Ironman Competition.png')"
+        );
+    }
+
+    public void seedMealsTable(SQLiteDatabase db) {
         db.beginTransaction(); // ✅ Begin transaction for performance
         try {
             // Manually inserting 50 meals with different cuisines
@@ -201,16 +241,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     "('Maja Blanca', 200, 5, 30, 8, 'Vegetarian', 'Coconut', 30, 'Chavacano', 'Mindanao', 150, 'Breakfast', 'Maja Blanca.jpg')");
 
 
-            // Manually inserting exercises
-            db.execSQL("INSERT INTO exercises (name, category, duration, calories_burned) VALUES " +
-                    "('Running', 'CARDIO', 30, 300), " +
-                    "('Push-ups', 'STRENGTH', 15, 150), " +
-                    "('Jump Rope', 'CARDIO', 20, 250), " +
-                    "('Weight Lifting', 'STRENGTH', 40, 400), " +
-                    "('Cycling', 'CARDIO', 45, 500), " +
-                    "('Pull-ups', 'STRENGTH', 10, 100), " +
-                    "('Swimming', 'CARDIO', 60, 600), " +
-                    "('Deadlifts', 'STRENGTH', 35, 350)");
 
             db.setTransactionSuccessful(); // ✅ Commit the batch
         } finally {

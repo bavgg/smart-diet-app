@@ -3,24 +3,27 @@ package com.jg.dietapp.models;
 
 public class Exercise {
     private String name;
-    private String type;
+    private String activityLevel;
     private int duration;  // in minutes
     private int caloriesBurned;
+    private String imageName;
 
-    public Exercise(String name, String type, int duration, int caloriesBurned) {
+    public Exercise(String name, String activityLevel, int duration, int caloriesBurned) {
         this.name = name;
-        this.type = type;
+        this.activityLevel = activityLevel;
         this.duration = duration;
         this.caloriesBurned = caloriesBurned;
+        this.imageName = name + ".jpg";
     }
 
     public String getName() { return name; }
-    public String getType() { return type; }
+    public String getActivityLevel() { return activityLevel; }
     public int getDuration() { return duration; }
     public int getCaloriesBurned() { return caloriesBurned; }
+    public String getImageName() { return imageName; }
 
     @Override
     public String toString() {
-        return name + " (" + type + ") - " + duration + " mins | Burns " + caloriesBurned + " kcal";
+        return name + " (" + activityLevel + ") - " + duration + " mins | Burns " + caloriesBurned + " kcal";
     }
 }

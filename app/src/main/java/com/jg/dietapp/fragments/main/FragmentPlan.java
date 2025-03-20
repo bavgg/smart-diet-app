@@ -17,7 +17,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.progressindicator.CircularProgressIndicator;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.jg.dietapp.R;
+import com.jg.dietapp.adapters.ExerciseAdapter;
 import com.jg.dietapp.adapters.MealAdapter;
+import com.jg.dietapp.enums.EnumActivityLevel;
+import com.jg.dietapp.models.Exercise;
 import com.jg.dietapp.models.Meal;
 import com.jg.dietapp.prefs.ConfigurationPrefs;
 import com.jg.dietapp.prefs.FirebaseDataPrefs;
@@ -26,12 +29,14 @@ import com.jg.dietapp.utils.MacronutrientCalculator;
 import com.jg.dietapp.viewmodel.GeneratedPlanViewModel;
 import com.jg.dietapp.viewmodel.CurrentNutritionViewModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class FragmentPlan extends Fragment {
 
-    private RecyclerView recyclerViewBreakfast, recyclerViewLunch, recyclerViewDinner;
+    private RecyclerView recyclerViewBreakfast, recyclerViewLunch, recyclerViewDinner, recyclerViewExercises;
     private MealAdapter breakfastAdapter, lunchAdapter, dinnerAdapter;
+    private ExerciseAdapter exerciseAdapter;
     private TextView currentProteinText, currentCarbsText, currentFatText, currentCaloriesText;
     private TextView goalProteinText, goalCarbsText, goalFatText, goalCaloriesText;
     private LinearProgressIndicator progressProtein, progressCarbs, progressFat;
@@ -65,11 +70,16 @@ public class FragmentPlan extends Fragment {
         firebaseUtils = new FirebaseUtils(view.getContext());
 
 
-        GeneratedPlanViewModel generatedPlanViewModel = new ViewModelProvider(requireActivity()).get(GeneratedPlanViewModel.class);
-        breakfastMeals = generatedPlanViewModel.getBreakfastMeals();
-        lunchMeals = generatedPlanViewModel.getLunchMeals();
-        dinnerMeals = generatedPlanViewModel.getDinnerMeals();
-        baseCalories = generatedPlanViewModel.getBaseCalories();
+//        GeneratedPlanViewModel generatedPlanViewModel = new ViewModelProvider(requireActivity()).get(GeneratedPlanViewModel.class);
+//        breakfastMeals = generatedPlanViewModel.getBreakfastMeals();
+//        lunchMeals = generatedPlanViewModel.getLunchMeals();
+//        dinnerMeals = generatedPlanViewModel.getDinnerMeals();
+//        baseCalories = generatedPlanViewModel.getBaseCalories();
+
+        breakfastMeals = firebaseDataPrefs.getBreakfastMeals();
+        lunchMeals = firebaseDataPrefs.getLunchMeals();
+        dinnerMeals = firebaseDataPrefs.getDinnerMeals();
+        baseCalories = firebaseDataPrefs.getBaseCalories();
 
         selectedMealsID = firebaseDataPrefs.getSelectedMealsID();
 
@@ -128,6 +138,16 @@ public class FragmentPlan extends Fragment {
         recyclerViewBreakfast = setupRecyclerView(view, R.id.recyclerViewBreakfastMeals, breakfastAdapter);
         recyclerViewLunch = setupRecyclerView(view, R.id.recyclerViewLunchMeals, lunchAdapter);
         recyclerViewDinner = setupRecyclerView(view, R.id.recyclerViewDinnerMeals, dinnerAdapter);
+//
+//        List<Exercise> exerciseList = new ArrayList<>(List.of(
+//                new Exercise("Push-ups", EnumActivityLevel.HEAVY_ACTIVITY),
+//                new Exercise("Squats"),
+//                new Exercise("Plank")
+//        ));
+        // Adapter for exercise
+
+        exerciseAdapter = new ExerciseAdapter(getContext(), firebaseDataPrefs.getExercises());
+        recyclerViewExercises = setupRecyclerView(view, R.id.recyclerViewExercises, exerciseAdapter);
 
 
         // Observe nutrition data
@@ -152,6 +172,12 @@ public class FragmentPlan extends Fragment {
         });
     }
 
+    private RecyclerView setupRecyclerView(View view, int recyclerViewId, ExerciseAdapter adapter) {
+        RecyclerView recyclerView = view.findViewById(recyclerViewId);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setAdapter(adapter);
+        return recyclerView;
+    }
     private RecyclerView setupRecyclerView(View view, int recyclerViewId, MealAdapter adapter) {
         RecyclerView recyclerView = view.findViewById(recyclerViewId);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
