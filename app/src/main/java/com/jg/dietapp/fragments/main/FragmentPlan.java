@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -19,9 +20,14 @@ import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.jg.dietapp.R;
 import com.jg.dietapp.adapters.ExerciseAdapter;
 import com.jg.dietapp.adapters.MealAdapter;
+import com.jg.dietapp.data.DAOExercise;
+import com.jg.dietapp.data.DAOMeal;
+import com.jg.dietapp.data.DatabaseHelper;
 import com.jg.dietapp.enums.EnumActivityLevel;
+import com.jg.dietapp.generator.MealGenerator;
 import com.jg.dietapp.models.Exercise;
 import com.jg.dietapp.models.Meal;
+import com.jg.dietapp.models.UserInput;
 import com.jg.dietapp.prefs.ConfigurationPrefs;
 import com.jg.dietapp.prefs.FirebaseDataPrefs;
 import com.jg.dietapp.utils.FirebaseUtils;
@@ -47,10 +53,13 @@ public class FragmentPlan extends Fragment {
     private int goalProtein, goalCarbs, goalFat;
     private List<Meal> breakfastMeals, lunchMeals, dinnerMeals;
     private int baseCalories;
+    private Button regenerateButton;
 
     public static List<Integer> selectedMealsID;
 
     FirebaseUtils firebaseUtils;
+    DAOExercise exerciseDAO;
+    DAOMeal mealDAO;
 
     @Nullable
     @Override
@@ -63,6 +72,32 @@ public class FragmentPlan extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         System.out.println("Fragment Plan");
         super.onViewCreated(view, savedInstanceState);
+
+
+
+        firebaseDataPrefs = new FirebaseDataPrefs(view.getContext());
+        UserInput userInputs = firebaseDataPrefs.getUser();
+        firebaseUtils = new FirebaseUtils(view.getContext());
+        DatabaseHelper dbHelper = new DatabaseHelper(view.getContext());
+        mealDAO = new DAOMeal(dbHelper);
+        exerciseDAO = new DAOExercise(dbHelper);
+
+        List<Meal> filteredMeals = mealDAO.getMealsByDietAndAllergens(userInputs);
+        List<Exercise> filteredExercises = exerciseDAO.getExercisesByActivityLevel(userInputs.getActivityLevel().toString());
+        firebaseDataPrefs.saveExercises(filteredExercises);
+        MealGenerator mealGenerator = new MealGenerator(userInputs, filteredMeals);
+        // Set generated meals data
+        if(firebaseDataPrefs.getBreakfastMeals().isEmpty()) {
+
+//            GeneratedPlanViewModel generatedPlanViewModel = new ViewModelProvider(this).get(GeneratedPlanViewModel.class);
+//            generatedPlanViewModel.setBreakfastMeals(mealGenerator.getBreakfastMeals());
+//            generatedPlanViewModel.setLunchMeals(mealGenerator.getLunchMeals());
+//            generatedPlanViewModel.setDinnerMeals(mealGenerator.getDinnerMeals());
+//            generatedPlanViewModel.setBaseCalories((int) mealGenerator.getBaseCalories());
+            mealGenerator.generateMeals();
+            firebaseDataPrefs.saveGeneratedMealPlan(mealGenerator.getBreakfastMeals(), mealGenerator.getLunchMeals(), mealGenerator.getDinnerMeals(), (int) mealGenerator.getBaseCalories());
+            firebaseUtils.syncGeneratedData();
+        }
 
 
         firebaseDataPrefs = new FirebaseDataPrefs(view.getContext());
@@ -124,6 +159,8 @@ public class FragmentPlan extends Fragment {
         goalCarbsText = view.findViewById(R.id.carbs_goal_text);
         goalFatText = view.findViewById(R.id.fat_goal_text);
         goalCaloriesText = view.findViewById(R.id.goal_calories);
+        regenerateButton = view.findViewById(R.id.regenerateButton);
+
 
         // Set Goals UI
         goalProteinText.setText(String.valueOf(goalProtein));
@@ -149,6 +186,11 @@ public class FragmentPlan extends Fragment {
         exerciseAdapter = new ExerciseAdapter(getContext(), firebaseDataPrefs.getExercises());
         recyclerViewExercises = setupRecyclerView(view, R.id.recyclerViewExercises, exerciseAdapter);
 
+        regenerateButton.setOnClickListener(v -> {
+            mealGenerator.generateMeals();
+            firebaseDataPrefs.saveGeneratedMealPlan(mealGenerator.getBreakfastMeals(), mealGenerator.getLunchMeals(), mealGenerator.getDinnerMeals(), (int) mealGenerator.getBaseCalories());
+            firebaseUtils.syncGeneratedData();
+        });
 
         // Observe nutrition data
         currentNutritionViewModel.getCurrentKcal().observe(getViewLifecycleOwner(), kcal -> {

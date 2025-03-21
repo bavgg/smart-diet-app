@@ -3,6 +3,8 @@ package com.jg.dietapp.utils;
 import android.content.Context;
 import android.util.Log;
 
+import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -46,47 +48,92 @@ public class FirebaseUtils {
         }
     }
 
-    // Sync local data to Firebase
-    public void syncPreferencesToFirebase() {
-        if (databaseRef == null) return;
+
+    // Sync local preferences to Firebase
+    public Task<Void> syncPreferencesToFirebase() {
+        if (databaseRef == null) {
+            return Tasks.forException(new Exception("Database reference is null"));
+        }
 
         Map<String, Object> preferences = new HashMap<>();
         preferences.put("kcal", prefs.getKcal());
         preferences.put("protein", prefs.getProtein());
         preferences.put("carbs", prefs.getCarbs());
         preferences.put("fat", prefs.getFat());
-        preferences.put("user_inputs", new Gson().toJson(prefs.getUser()));
         preferences.put("selected_meals_id", new Gson().toJson(prefs.getSelectedMealsID()));
 
-        databaseRef.updateChildren(preferences)
+        return databaseRef.updateChildren(preferences)
                 .addOnSuccessListener(aVoid -> Log.d(TAG, "Preferences uploaded successfully"))
                 .addOnFailureListener(e -> Log.e(TAG, "Failed to sync preferences", e));
     }
 
-    public void syncGeneratedData() {
-        if (databaseRef == null) return;
+    // Sync generated meal data to Firebase
+    public Task<Void> syncGeneratedData() {
+        if (databaseRef == null) {
+            return Tasks.forException(new Exception("Database reference is null"));
+        }
 
-        Map<String, Object> preferences = new HashMap<>();
-        preferences.put("base_calories", prefs.getBaseCalories());
-        preferences.put("breakfast_meals", new Gson().toJson(prefs.getBreakfastMeals()));
-        preferences.put("lunch_meals", new Gson().toJson(prefs.getLunchMeals()));
-        preferences.put("dinner_meals", new Gson().toJson(prefs.getDinnerMeals()));
+        Map<String, Object> generatedData = new HashMap<>();
+        generatedData.put("base_calories", prefs.getBaseCalories());
+        generatedData.put("breakfast_meals", new Gson().toJson(prefs.getBreakfastMeals()));
+        generatedData.put("lunch_meals", new Gson().toJson(prefs.getLunchMeals()));
+        generatedData.put("dinner_meals", new Gson().toJson(prefs.getDinnerMeals()));
 
-        databaseRef.updateChildren(preferences)
+        return databaseRef.updateChildren(generatedData)
                 .addOnSuccessListener(aVoid -> Log.d(TAG, "Generated data uploaded successfully"))
                 .addOnFailureListener(e -> Log.e(TAG, "Failed to sync generated data", e));
     }
 
-    public void syncUserInput() {
-        if (databaseRef == null) return;
+
+    public Task<Void> syncUserInput() {
+        if (databaseRef == null) {
+            return Tasks.forException(new Exception("Database reference is null"));
+        }
 
         Map<String, Object> preferences = new HashMap<>();
         preferences.put("user_inputs", new Gson().toJson(prefs.getUser()));
 
-        databaseRef.updateChildren(preferences)
-                .addOnSuccessListener(aVoid -> Log.d(TAG, "User input uploaded successfully"))
-                .addOnFailureListener(e -> Log.e(TAG, "Failed to sync user input", e));
+        return databaseRef.updateChildren(preferences)
+                .addOnSuccessListener(aVoid -> Log.d(TAG, "User data uploaded successfully"))
+                .addOnFailureListener(e -> Log.e(TAG, "Failed to sync preferences", e));
     }
+
+    public Task<Void> syncAllData() {
+        if (databaseRef == null) {
+            return Tasks.forException(new Exception("Database reference is null"));
+        }
+
+        // Prepare data to sync
+        Map<String, Object> dataToSync = new HashMap<>();
+
+        // Preferences data
+        if (prefs.getKcal() != 0) dataToSync.put("kcal", prefs.getKcal());
+        if (prefs.getProtein() != 0) dataToSync.put("protein", prefs.getProtein());
+        if (prefs.getCarbs() != 0) dataToSync.put("carbs", prefs.getCarbs());
+        if (prefs.getFat() != 0) dataToSync.put("fat", prefs.getFat());
+        if (prefs.getSelectedMealsID() != null)
+            dataToSync.put("selected_meals_id", new Gson().toJson(prefs.getSelectedMealsID()));
+
+        // Generated meal data
+        if (prefs.getBaseCalories() != 0) dataToSync.put("base_calories", prefs.getBaseCalories());
+        if (prefs.getBreakfastMeals() != null)
+            dataToSync.put("breakfast_meals", new Gson().toJson(prefs.getBreakfastMeals()));
+        if (prefs.getLunchMeals() != null)
+            dataToSync.put("lunch_meals", new Gson().toJson(prefs.getLunchMeals()));
+        if (prefs.getDinnerMeals() != null)
+            dataToSync.put("dinner_meals", new Gson().toJson(prefs.getDinnerMeals()));
+
+        // User input data
+        if (prefs.getUser() != null)
+            dataToSync.put("user_inputs", new Gson().toJson(prefs.getUser()));
+
+        // Sync all data in ONE request
+        return databaseRef.updateChildren(dataToSync)
+                .addOnSuccessListener(aVoid -> Log.d(TAG, "All data uploaded successfully"))
+                .addOnFailureListener(e -> Log.e(TAG, "Failed to sync all data", e));
+    }
+
+
 
     public interface OnDataLoadedListener {
         void onDataLoaded();

@@ -52,20 +52,30 @@ public class FragmentSettings extends Fragment {
         });
 
         logoutButton.setOnClickListener(v -> {
-            firebaseUtils.syncGeneratedData();
-            firebaseUtils.syncPreferencesToFirebase();
-            firebaseDataPrefs.clearAllData();
 
-            FirebaseAuth.getInstance().signOut(); // Sign out the user
 
-            // Show a toast message for confirmation
-            Toast.makeText(getContext(), "Logged out successfully", Toast.LENGTH_SHORT).show();
+            firebaseUtils.syncAllData().addOnCompleteListener(task -> {
 
-            // Redirect user to LoginActivity and clear back stack
-            Intent intent = new Intent(getContext(), LoginActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
+                        if (task.isSuccessful() && task.isSuccessful()) {
+                            FirebaseAuth.getInstance().signOut();
+//                            firebaseDataPrefs.clearAllData(); // Only clear data after sync completes
+
+                            // Sign out the user
+
+                            Toast.makeText(getContext(), "Logged out successfully", Toast.LENGTH_SHORT).show();
+
+                            Intent intent = new Intent(getContext(), LoginActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            startActivity(intent);
+                        } else {
+                            Toast.makeText(getContext(), "Sync failed, try again!", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
+
+
         });
+
 
 
     }

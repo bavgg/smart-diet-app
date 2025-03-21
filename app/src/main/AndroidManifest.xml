@@ -20,10 +20,22 @@
 
 
         <activity
+            android:name=".LoginLoadingActivity"
+            android:exported="false" />
+        <activity
+            android:name=".YouAreAllSetActivity"
+            android:exported="false" />
+        <activity
+            android:name=".FoodRestrictionsLoadingActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="false" />
         <activity
             android:name=".UserInputActivity"
+            android:exported="false" />
+        <activity
+            android:name=".LoadingActivity"
             android:exported="false" />
         <activity
             android:name=".RegisterActivity"

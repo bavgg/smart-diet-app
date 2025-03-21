@@ -51,21 +51,23 @@ public class UserInputActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_user_input);
 
-        firebaseUtils = new FirebaseUtils(this);
-        firebaseDataPrefs = new FirebaseDataPrefs(this);
+
         configurationPrefs = new ConfigurationPrefs(this);
 
-        firebaseUtils.loadPreferencesFromFirebase(() -> {
-            UserInput user = firebaseDataPrefs.getUser();
-
-            if (user != null && user.getUserSubmitted()) {
-                Intent intent = new Intent(UserInputActivity.this, MainActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        });
+//        firebaseUtils = new FirebaseUtils(this);
+//        firebaseDataPrefs = new FirebaseDataPrefs(this);
+//
+//        firebaseUtils.loadPreferencesFromFirebase(() -> {
+//            UserInput user = firebaseDataPrefs.getUser();
+//
+//            if (user != null && user.getUserSubmitted()) {
+//                Intent intent = new Intent(UserInputActivity.this, MainActivity.class);
+//                startActivity(intent);
+//                finish();
+//            }
+//        });
 
         // ASYNCHRONOUS
         // Load images from assets to internal storage

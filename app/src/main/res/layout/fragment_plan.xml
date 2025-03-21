@@ -262,11 +262,12 @@
         </LinearLayout>
 
         <!-- Breakfast -->
-<!--        <Button-->
-<!--            android:layout_gravity="end"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="Shuffle" />-->
+        <Button
+            android:id="@+id/regenerateButton"
+            android:layout_gravity="end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Regenerate" />
 
         <TextView
             android:layout_width="match_parent"

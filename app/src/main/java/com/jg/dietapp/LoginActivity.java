@@ -29,10 +29,11 @@ public class LoginActivity extends AppCompatActivity {
     public void onStart(){
         super.onStart();
 
+        mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
 
         if(currentUser != null) {
-            Intent intent = new Intent(LoginActivity.this, UserInputActivity.class);
+            Intent intent = new Intent(LoginActivity.this, LoadingActivity.class);
             startActivity(intent);
             finish();
         }
@@ -47,8 +48,6 @@ public class LoginActivity extends AppCompatActivity {
         passwordEditText = findViewById(R.id.passwordTextField);
         loginButton = findViewById(R.id.loginButton);
         registerLink = findViewById(R.id.registerLink);
-
-        mAuth = FirebaseAuth.getInstance();
 
         registerLink.setOnClickListener(v -> {
             Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
@@ -69,19 +68,10 @@ public class LoginActivity extends AppCompatActivity {
                 return;
             }
 
-            mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
-                    if(task.isSuccessful()){
-                        Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(LoginActivity.this, UserInputActivity.class);
-                        startActivity(intent);
-                    }else {
-                        Toast.makeText(LoginActivity.this, "Login Failed", Toast.LENGTH_SHORT).show();
-                    }
-
-                }
-            });
+            Intent intent = new Intent(LoginActivity.this, LoginLoadingActivity.class);
+            intent.putExtra("email", email);
+            intent.putExtra("password", password);
+            startActivity(intent);
 
         });
 

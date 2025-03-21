@@ -40,13 +40,13 @@ public class FragmentYouAreAllSet extends Fragment {
         nextButton = view.findViewById(R.id.nextButton);
 
 
-        userInput.setUserSubmitted(true);
+//        userInput.setUserSubmitted(true);
 
-        firebaseDataPrefs.saveUser(userInput);
-        System.out.println("You are all set: FirebaseDataPrefs: " + firebaseDataPrefs.getUser());
-        firebaseUtils.syncUserInput();
-
-        Log.i("TAG", "FragmentYouAreAllSet FirebaseDataPrefs: " + new Gson().toJson(firebaseDataPrefs));
+//        firebaseDataPrefs.saveUser(userInput);
+//        System.out.println("You are all set: FirebaseDataPrefs: " + firebaseDataPrefs.getUser());
+//        firebaseUtils.syncUserInput();
+//
+//        Log.i("TAG", "FragmentYouAreAllSet FirebaseDataPrefs: " + new Gson().toJson(firebaseDataPrefs));
 
         nextButton.setOnClickListener(v -> {
             Intent intent = new Intent(getContext(), MainActivity.class);
