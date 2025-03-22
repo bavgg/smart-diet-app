@@ -20,6 +20,9 @@
 
 
         <activity
+            android:name=".RegisterLoadingActivity"
+            android:exported="false" />
+        <activity
             android:name=".LoginLoadingActivity"
             android:exported="false" />
         <activity

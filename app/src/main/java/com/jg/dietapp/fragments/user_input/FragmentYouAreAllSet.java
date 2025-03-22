@@ -18,10 +18,8 @@ import com.google.gson.Gson;
 import com.jg.dietapp.MainActivity;
 import com.jg.dietapp.R;
 import com.jg.dietapp.prefs.FirebaseDataPrefs;
-import com.jg.dietapp.utils.FirebaseUtils;
 
 public class FragmentYouAreAllSet extends Fragment {
-    FirebaseUtils firebaseUtils;
 
     Button nextButton;
     @Nullable
@@ -34,8 +32,7 @@ public class FragmentYouAreAllSet extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        FirebaseDataPrefs firebaseDataPrefs = new FirebaseDataPrefs(view.getContext());
-        firebaseUtils = new FirebaseUtils(view.getContext());
+
 
         nextButton = view.findViewById(R.id.nextButton);
 

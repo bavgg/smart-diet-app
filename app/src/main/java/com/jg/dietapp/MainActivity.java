@@ -15,7 +15,6 @@ import com.jg.dietapp.fragments.main.FragmentMeals;
 import com.jg.dietapp.fragments.main.FragmentPlan;
 import com.jg.dietapp.fragments.main.FragmentSettings;
 import com.jg.dietapp.prefs.FirebaseDataPrefs;
-import com.jg.dietapp.utils.FirebaseUtils;
 import com.jg.dietapp.utils.ProfileUtils;
 
 public class MainActivity extends AppCompatActivity {
@@ -24,29 +23,6 @@ public class MainActivity extends AppCompatActivity {
     private FragmentSettings fragmentSettings = new FragmentSettings();
     private FragmentMeals fragmentMeals = new FragmentMeals();
     private Fragment activeFragment = fragmentPlan;  // Track active fragment
-
-    private DAOMeal mealDAO;
-    private DAOExercise exerciseDAO;
-    FirebaseUtils firebaseUtils;
-    FirebaseDataPrefs firebaseDataPrefs;
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        System.out.println("onStop Hello world");
-        firebaseUtils.syncAllData();
-//        firebaseUtils.syncGeneratedData();
-
-    }
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,11 +33,6 @@ public class MainActivity extends AppCompatActivity {
 
         ProfileUtils profileUtils = new ProfileUtils();
         profileUtils.getUserName();
-
-
-
-        firebaseUtils = new FirebaseUtils(this);
-
 
         // Set UI
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
@@ -81,15 +52,10 @@ public class MainActivity extends AppCompatActivity {
             } else if (item.getItemId() == R.id.nav_settings) {
                 switchFragment(fragmentSettings);
             }
-//            else if (item.getItemId() == R.id.nav_meals) {
-//                switchFragment(fragmentMeals);
-//            }
             return true;
         });
 
     }
-
-
 
     private void switchFragment(Fragment targetFragment) {
         if (targetFragment != activeFragment) {

@@ -1,12 +1,17 @@
 package com.jg.dietapp.data;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "diet-app.db";
     private static final int DATABASE_VERSION = 1;
+    private static final String USER_COL_EMAIL = "email";
+    private static final String USER_COL_PASSWORD = "password";
+    private static final String USER_TABLE_NAME = "users";
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -14,6 +19,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+        db.execSQL("CREATE TABLE " + USER_TABLE_NAME + " (" +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "email TEXT UNIQUE, " +
+                "password TEXT, " +
+                "created_at DATETIME DEFAULT CURRENT_TIMESTAMP)"
+        );
         db.execSQL("CREATE TABLE meals (" +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "name TEXT UNIQUE, " +
@@ -53,6 +64,26 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS meals");
         db.execSQL("DROP TABLE IF EXISTS exercises");
         onCreate(db);
+    }
+
+    public boolean registerUser(String username, String password) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("email", username);
+        values.put("password", password);
+
+        long result = db.insert(USER_TABLE_NAME, null, values);
+        return result != -1;
+    }
+
+    public boolean loginUser(String username, String password) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM " + USER_TABLE_NAME + " WHERE " +
+                USER_COL_EMAIL + "=? AND " + USER_COL_PASSWORD + "=?", new String[]{username, password});
+
+        boolean isValid = cursor.getCount() > 0;
+        cursor.close();
+        return isValid;
     }
 
     private void seedExercisesTable(SQLiteDatabase db) {

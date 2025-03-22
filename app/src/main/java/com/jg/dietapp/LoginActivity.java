@@ -17,6 +17,8 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.jg.dietapp.data.DatabaseHelper;
+import com.jg.dietapp.prefs.AuthPrefs;
 
 public class LoginActivity extends AppCompatActivity {
     FirebaseAuth mAuth;
@@ -24,25 +26,28 @@ public class LoginActivity extends AppCompatActivity {
     TextView registerLink;
 
     private TextInputEditText emailEditText, passwordEditText;
+    private AuthPrefs authPrefs;
 
     @Override
     public void onStart(){
         super.onStart();
 
-        mAuth = FirebaseAuth.getInstance();
-        FirebaseUser currentUser = mAuth.getCurrentUser();
+        authPrefs = new AuthPrefs(this);
 
-        if(currentUser != null) {
+        // Redirect if user is already logged in
+        if (authPrefs.isLoggedIn()) {
             Intent intent = new Intent(LoginActivity.this, LoadingActivity.class);
             startActivity(intent);
             finish();
         }
+
     }
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_login);
+
 
         emailEditText = findViewById(R.id.emailTextField);
         passwordEditText = findViewById(R.id.passwordTextField);
@@ -53,6 +58,7 @@ public class LoginActivity extends AppCompatActivity {
             Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
             startActivity(intent);
         });
+
 
         loginButton.setOnClickListener(v -> {
             String email = emailEditText.getText().toString().trim();

@@ -17,7 +17,6 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class RegisterActivity extends AppCompatActivity {
-    FirebaseAuth mAuth;
     Button registerButton;
     private TextInputEditText emailTextField, passwordTextField;
 
@@ -31,10 +30,8 @@ public class RegisterActivity extends AppCompatActivity {
         passwordTextField = findViewById(R.id.passwordTextField);
         registerButton = findViewById(R.id.registerButton);
 
-        mAuth = FirebaseAuth.getInstance();
 
         registerButton.setOnClickListener(v -> {
-            System.out.println("Culprit");
             String email = emailTextField.getText().toString().trim();
             String password = passwordTextField.getText().toString().trim();
 
@@ -48,20 +45,11 @@ public class RegisterActivity extends AppCompatActivity {
                 return;
             }
 
-            System.out.println("Culprit");
 
-            mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
-                    if(task.isSuccessful()){
-                        Toast.makeText(RegisterActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-                        startActivity(intent);
-                    }else {
-                        Toast.makeText(RegisterActivity.this, "Login Failed", Toast.LENGTH_SHORT).show();
-                    }
-                }
-            });
+            Intent intent = new Intent(RegisterActivity.this, RegisterLoadingActivity.class);
+            intent.putExtra("email", email);
+            intent.putExtra("password", password);
+            startActivity(intent);
 
 
         });

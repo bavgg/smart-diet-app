@@ -29,7 +29,6 @@ import com.jg.dietapp.models.Meal;
 import com.jg.dietapp.models.UserInput;
 import com.jg.dietapp.prefs.ConfigurationPrefs;
 import com.jg.dietapp.prefs.FirebaseDataPrefs;
-import com.jg.dietapp.utils.FirebaseUtils;
 import com.jg.dietapp.utils.MacronutrientCalculator;
 import com.jg.dietapp.viewmodel.CurrentNutritionViewModel;
 import com.jg.dietapp.viewmodel.GeneratedMealsViewModel;
@@ -56,7 +55,6 @@ public class FragmentPlan extends Fragment {
 
     public static List<Integer> selectedMealsID;
 
-    FirebaseUtils firebaseUtils;
     DAOExercise exerciseDAO;
     DAOMeal mealDAO;
 
@@ -74,7 +72,6 @@ public class FragmentPlan extends Fragment {
 
         // Initialize objects
         firebaseDataPrefs = new FirebaseDataPrefs(view.getContext());
-        firebaseUtils = new FirebaseUtils(view.getContext());
         configurationPrefs = new ConfigurationPrefs(view.getContext());
         DatabaseHelper dbHelper = new DatabaseHelper(view.getContext());
         mealDAO = new DAOMeal(dbHelper);
@@ -92,7 +89,6 @@ public class FragmentPlan extends Fragment {
         if(firebaseDataPrefs.getBreakfastMeals().isEmpty()) {
             mealGenerator.generateMeals();
             firebaseDataPrefs.saveGeneratedMealPlan(mealGenerator.getBreakfastMeals(), mealGenerator.getLunchMeals(), mealGenerator.getDinnerMeals(), (int) mealGenerator.getBaseCalories());
-            firebaseUtils.syncGeneratedData();
         }
 
 
@@ -168,7 +164,6 @@ public class FragmentPlan extends Fragment {
             currentNutritionViewModel.clearNutritionData();
 
             firebaseDataPrefs.saveGeneratedMealPlan(mealGenerator.getBreakfastMeals(), mealGenerator.getLunchMeals(), mealGenerator.getDinnerMeals(), (int) mealGenerator.getBaseCalories());
-            firebaseUtils.syncGeneratedData();
             firebaseDataPrefs.clearSelectedMealIDs();
         });
 

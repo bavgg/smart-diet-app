@@ -17,13 +17,13 @@ import com.jg.dietapp.LoginActivity;
 import com.jg.dietapp.MainActivity;
 import com.jg.dietapp.UserInputActivity;
 import com.jg.dietapp.R;
+import com.jg.dietapp.data.DatabaseHelper;
+import com.jg.dietapp.prefs.AuthPrefs;
 import com.jg.dietapp.prefs.FirebaseDataPrefs;
-import com.jg.dietapp.utils.FirebaseUtils;
 
 public class FragmentSettings extends Fragment {
     Button resetButton, logoutButton;
     FirebaseDataPrefs firebaseDataPrefs;
-    FirebaseUtils firebaseUtils;
 
 
     @Nullable
@@ -39,11 +39,10 @@ public class FragmentSettings extends Fragment {
         resetButton = view.findViewById(R.id.resetButton);
         logoutButton = view.findViewById(R.id.logoutButton);
         firebaseDataPrefs = new FirebaseDataPrefs(view.getContext());
-        firebaseUtils = new FirebaseUtils(view.getContext());
+        AuthPrefs authPrefs = new AuthPrefs(view.getContext());
 
         resetButton.setOnClickListener(v -> {
 
-            firebaseUtils.clearUserData();
             firebaseDataPrefs.clearAllData();
 
 
@@ -53,24 +52,14 @@ public class FragmentSettings extends Fragment {
 
         logoutButton.setOnClickListener(v -> {
 
+            authPrefs.logout();
 
-            firebaseUtils.syncAllData().addOnCompleteListener(task -> {
+            Toast.makeText(getContext(), "Logged out successfully", Toast.LENGTH_SHORT).show();
 
-                        if (task.isSuccessful() && task.isSuccessful()) {
-                            FirebaseAuth.getInstance().signOut();
-//                            firebaseDataPrefs.clearAllData(); // Only clear data after sync completes
+            Intent intent = new Intent(getContext(), LoginActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
 
-                            // Sign out the user
-
-                            Toast.makeText(getContext(), "Logged out successfully", Toast.LENGTH_SHORT).show();
-
-                            Intent intent = new Intent(getContext(), LoginActivity.class);
-                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                            startActivity(intent);
-                        } else {
-                            Toast.makeText(getContext(), "Sync failed, try again!", Toast.LENGTH_SHORT).show();
-                        }
-                    });
 
 
 
