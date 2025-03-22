@@ -54,7 +54,7 @@ public class UserInputActivity extends AppCompatActivity {
         setContentView(R.layout.activity_user_input);
 
 
-        configurationPrefs = new ConfigurationPrefs(this);
+//        configurationPrefs = new ConfigurationPrefs(this);
 
 //        firebaseUtils = new FirebaseUtils(this);
 //        firebaseDataPrefs = new FirebaseDataPrefs(this);
@@ -72,10 +72,10 @@ public class UserInputActivity extends AppCompatActivity {
         // ASYNCHRONOUS
         // Load images from assets to internal storage
 
-        if(!configurationPrefs.isAssetLoaded()) {
-            loadImagesFromAssetToInternalStorage(this);
-            configurationPrefs.setAssetLoaded(true);
-        }
+//        if(!configurationPrefs.isAssetLoaded()) {
+//            loadImagesFromAssetToInternalStorage(this);
+//            configurationPrefs.setAssetLoaded(true);
+//        }
 
         // Initialize progress indicator component
         progressIndicator = findViewById(R.id.progressIndicator);

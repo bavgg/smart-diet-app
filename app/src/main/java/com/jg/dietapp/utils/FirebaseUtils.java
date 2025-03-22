@@ -137,7 +137,9 @@ public class FirebaseUtils {
 
     public interface OnDataLoadedListener {
         void onDataLoaded();
+        void onDataLoadFailed(); // Handle failure case
     }
+
 
     public void loadPreferencesFromFirebase() {
         if (databaseRef == null) return;
@@ -168,7 +170,13 @@ public class FirebaseUtils {
 
     // Load data from Firebase and update SharedPreferences
     public void loadPreferencesFromFirebase(OnDataLoadedListener listener) {
-        if (databaseRef == null) return;
+        if (databaseRef == null) {
+            Log.e(TAG, "Database reference is null.");
+            if (listener != null) {
+                listener.onDataLoadFailed();
+            }
+            return;
+        }
 
         databaseRef.get().addOnCompleteListener(task -> {
             if (task.isSuccessful() && task.getResult().exists()) {
@@ -188,15 +196,19 @@ public class FirebaseUtils {
 
                 Log.d(TAG, "Preferences loaded from Firebase and saved locally!");
 
-                // Notify that data has been loaded
+                // Notify success
                 if (listener != null) {
                     listener.onDataLoaded();
                 }
             } else {
-                Log.e(TAG, "Failed to load preferences from Firebase.");
+                Log.e(TAG, "Failed to load preferences from Firebase.", task.getException());
+                if (listener != null) {
+                    listener.onDataLoadFailed();
+                }
             }
         });
     }
+
 
     public void clearUserData() {
         if (databaseRef == null) return;

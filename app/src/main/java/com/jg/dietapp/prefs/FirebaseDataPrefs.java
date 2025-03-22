@@ -57,7 +57,7 @@ public class FirebaseDataPrefs {
     public int getFat() { return sharedPreferences.getInt(KEY_FAT, 0); }
     public void setFat(int fat) { sharedPreferences.edit().putInt(KEY_FAT, fat).apply(); }
 
-    public void clearNutritionData() {
+    public void clearGeneratedData() {
         sharedPreferences.edit()
                 .remove(KEY_KCAL)
                 .remove(KEY_PROTEIN)

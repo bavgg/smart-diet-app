@@ -46,6 +46,7 @@ public class Utils {
 
     public static Bitmap loadImageFromInternalStorage(Context context, String imageFolder, String filename) {
         String imagePath = new File(context.getFilesDir(), imageFolder + "/" + filename).getAbsolutePath();
+        System.out.println(imagePath);
         return BitmapFactory.decodeFile(imagePath);
     }
 

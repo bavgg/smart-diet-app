@@ -92,6 +92,48 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         );
     }
 
+    private void seedIngredientsTable(SQLiteDatabase db) {
+        db.beginTransaction(); // Begin transaction for performance
+        try {
+            // Insert initial ingredients data
+            db.execSQL("INSERT OR IGNORE INTO ingredients (name, calories_per_100g, protein_per_100g, carbs_per_100g, fats_per_100g, allergens, category) VALUES " +
+                    "('Chicken Breast', 165, 31, 0, 3.6, 'None', 'Meat'), " +
+                    "('Brown Rice', 112, 2.6, 23, 0.9, 'None', 'Grain'), " +
+                    "('Broccoli', 34, 2.8, 6.6, 0.4, 'None', 'Vegetable'), " +
+                    "('Salmon', 208, 20, 0, 13, 'Fish', 'Seafood'), " +
+                    "('Egg', 155, 13, 1.1, 11, 'Egg', 'Dairy/Egg'), " +
+                    "('Almonds', 579, 21, 22, 50, 'Nuts', 'Nuts/Seeds'), " +
+                    "('Quinoa', 120, 4.4, 21, 1.9, 'None', 'Grain'), " +
+                    "('Spinach', 23, 2.9, 3.6, 0.4, 'None', 'Vegetable'), " +
+                    "('Sweet Potato', 86, 1.6, 20, 0.1, 'None', 'Vegetable'), " +
+                    "('Avocado', 160, 2, 9, 15, 'None', 'Fruit'), " +
+                    "('Olive Oil', 884, 0, 0, 100, 'None', 'Oil'), " +
+                    "('Greek Yogurt', 59, 10, 3.6, 0.4, 'Dairy', 'Dairy/Egg'), " +
+                    "('Oats', 389, 17, 66, 7, 'Gluten', 'Grain'), " +
+                    "('Banana', 89, 1.1, 23, 0.3, 'None', 'Fruit'), " +
+                    "('Peanut Butter', 588, 25, 20, 50, 'Peanuts', 'Nuts/Seeds'), " +
+                    "('Tofu', 76, 8, 1.9, 4.8, 'Soy', 'Protein'), " +
+                    "('Lentils', 116, 9, 20, 0.4, 'None', 'Legume'), " +
+                    "('Tomato', 18, 0.9, 3.9, 0.2, 'None', 'Vegetable'), " +
+                    "('Garlic', 149, 6.4, 33, 0.5, 'None', 'Vegetable'), " +
+                    "('Onion', 40, 1.1, 9.3, 0.1, 'None', 'Vegetable'), " +
+                    "('Mushroom', 22, 3.1, 3.3, 0.3, 'None', 'Vegetable'), " +
+                    "('Cucumber', 16, 0.7, 3.6, 0.1, 'None', 'Vegetable'), " +
+                    "('Bell Pepper', 20, 0.9, 4.6, 0.2, 'None', 'Vegetable'), " +
+                    "('Carrot', 41, 0.9, 10, 0.2, 'None', 'Vegetable'), " +
+                    "('Apple', 52, 0.3, 14, 0.2, 'None', 'Fruit'), " +
+                    "('Blueberries', 57, 0.7, 14, 0.3, 'None', 'Fruit'), " +
+                    "('Strawberries', 32, 0.7, 7.7, 0.3, 'None', 'Fruit'), " +
+                    "('Pineapple', 50, 0.5, 13, 0.1, 'None', 'Fruit'), " +
+                    "('Coconut Milk', 230, 2.3, 3.3, 24, 'Coconut', 'Dairy/Egg'), " +
+                    "('Chia Seeds', 486, 17, 42, 31, 'None', 'Nuts/Seeds')"
+            );
+
+            db.setTransactionSuccessful(); // Commit the batch
+        } finally {
+            db.endTransaction(); // End transaction
+        }
+    }
     public void seedMealsTable(SQLiteDatabase db) {
         db.beginTransaction(); // ✅ Begin transaction for performance
         try {

@@ -6,45 +6,58 @@
     android:layout_height="wrap_content"
     android:padding="26dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <androidx.core.widget.NestedScrollView
         android:layout_weight="1"
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintTop_toTopOf="parent">
-        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 
+        <LinearLayout
             android:layout_width="match_parent"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:orientation="vertical"
-
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
             <TextView
-                android:layout_marginBottom="12dp"
+                android:id="@+id/exercise_name_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Push-Ups"
                 android:textSize="28dp"
                 android:textStyle="bold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Meal name"/>
+                android:layout_marginBottom="12dp" />
 
+            <!-- Workout Video -->
+            <VideoView
+                android:id="@+id/workoutVideo"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:layout_marginBottom="10dp" />
 
+            <!-- Duration -->
             <TextView
-                android:textSize="20dp"
-                android:textStyle="bold"
+                android:id="@+id/exercise_duration"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Ingredients:"/>
+                android:text="Duration: 30 seconds"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:layout_marginBottom="10dp" />
 
+            <!-- Instructions -->
+            <TextView
+                android:id="@+id/exercise_instructions"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Start in a high plank position with your hands shoulder-width apart. Keep your back straight and engage your core. Slowly lower your body until your chest is just above the floor.
 
-
+Then, push yourself back up to the starting position. Move in a controlled manner and breathe steadily to maintain good form."
+                android:textSize="16dp"
+                android:lineSpacingExtra="4dp"
+                android:layout_marginBottom="10dp" />
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
-
 </LinearLayout>
-
-

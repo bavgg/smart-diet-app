@@ -80,9 +80,10 @@ public class MainActivity extends AppCompatActivity {
                 switchFragment(fragmentPlan);
             } else if (item.getItemId() == R.id.nav_settings) {
                 switchFragment(fragmentSettings);
-            } else if (item.getItemId() == R.id.nav_meals) {
-                switchFragment(fragmentMeals);
             }
+//            else if (item.getItemId() == R.id.nav_meals) {
+//                switchFragment(fragmentMeals);
+//            }
             return true;
         });
 

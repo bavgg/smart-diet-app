@@ -23,7 +23,6 @@ import com.jg.dietapp.adapters.MealAdapter;
 import com.jg.dietapp.data.DAOExercise;
 import com.jg.dietapp.data.DAOMeal;
 import com.jg.dietapp.data.DatabaseHelper;
-import com.jg.dietapp.enums.EnumActivityLevel;
 import com.jg.dietapp.generator.MealGenerator;
 import com.jg.dietapp.models.Exercise;
 import com.jg.dietapp.models.Meal;
@@ -32,14 +31,14 @@ import com.jg.dietapp.prefs.ConfigurationPrefs;
 import com.jg.dietapp.prefs.FirebaseDataPrefs;
 import com.jg.dietapp.utils.FirebaseUtils;
 import com.jg.dietapp.utils.MacronutrientCalculator;
-import com.jg.dietapp.viewmodel.GeneratedPlanViewModel;
 import com.jg.dietapp.viewmodel.CurrentNutritionViewModel;
+import com.jg.dietapp.viewmodel.GeneratedMealsViewModel;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class FragmentPlan extends Fragment {
 
+    // Initialize UI
     private RecyclerView recyclerViewBreakfast, recyclerViewLunch, recyclerViewDinner, recyclerViewExercises;
     private MealAdapter breakfastAdapter, lunchAdapter, dinnerAdapter;
     private ExerciseAdapter exerciseAdapter;
@@ -73,71 +72,41 @@ public class FragmentPlan extends Fragment {
         System.out.println("Fragment Plan");
         super.onViewCreated(view, savedInstanceState);
 
-
-
+        // Initialize objects
         firebaseDataPrefs = new FirebaseDataPrefs(view.getContext());
-        UserInput userInputs = firebaseDataPrefs.getUser();
         firebaseUtils = new FirebaseUtils(view.getContext());
+        configurationPrefs = new ConfigurationPrefs(view.getContext());
         DatabaseHelper dbHelper = new DatabaseHelper(view.getContext());
         mealDAO = new DAOMeal(dbHelper);
         exerciseDAO = new DAOExercise(dbHelper);
 
+        // Get meals and exercises database data
+        UserInput userInputs = firebaseDataPrefs.getUser();
         List<Meal> filteredMeals = mealDAO.getMealsByDietAndAllergens(userInputs);
         List<Exercise> filteredExercises = exerciseDAO.getExercisesByActivityLevel(userInputs.getActivityLevel().toString());
         firebaseDataPrefs.saveExercises(filteredExercises);
-        MealGenerator mealGenerator = new MealGenerator(userInputs, filteredMeals);
-        // Set generated meals data
-        if(firebaseDataPrefs.getBreakfastMeals().isEmpty()) {
 
-//            GeneratedPlanViewModel generatedPlanViewModel = new ViewModelProvider(this).get(GeneratedPlanViewModel.class);
-//            generatedPlanViewModel.setBreakfastMeals(mealGenerator.getBreakfastMeals());
-//            generatedPlanViewModel.setLunchMeals(mealGenerator.getLunchMeals());
-//            generatedPlanViewModel.setDinnerMeals(mealGenerator.getDinnerMeals());
-//            generatedPlanViewModel.setBaseCalories((int) mealGenerator.getBaseCalories());
+
+        // Generate meals data with user inputs and filtered meals database data
+        MealGenerator mealGenerator = new MealGenerator(userInputs, filteredMeals);
+        if(firebaseDataPrefs.getBreakfastMeals().isEmpty()) {
             mealGenerator.generateMeals();
             firebaseDataPrefs.saveGeneratedMealPlan(mealGenerator.getBreakfastMeals(), mealGenerator.getLunchMeals(), mealGenerator.getDinnerMeals(), (int) mealGenerator.getBaseCalories());
             firebaseUtils.syncGeneratedData();
         }
 
 
-        firebaseDataPrefs = new FirebaseDataPrefs(view.getContext());
-        configurationPrefs = new ConfigurationPrefs(view.getContext());
-        firebaseUtils = new FirebaseUtils(view.getContext());
-
-
-//        GeneratedPlanViewModel generatedPlanViewModel = new ViewModelProvider(requireActivity()).get(GeneratedPlanViewModel.class);
-//        breakfastMeals = generatedPlanViewModel.getBreakfastMeals();
-//        lunchMeals = generatedPlanViewModel.getLunchMeals();
-//        dinnerMeals = generatedPlanViewModel.getDinnerMeals();
-//        baseCalories = generatedPlanViewModel.getBaseCalories();
-
+        // Get generated meals data
         breakfastMeals = firebaseDataPrefs.getBreakfastMeals();
         lunchMeals = firebaseDataPrefs.getLunchMeals();
         dinnerMeals = firebaseDataPrefs.getDinnerMeals();
         baseCalories = firebaseDataPrefs.getBaseCalories();
 
+        // Get selected meals id
         selectedMealsID = firebaseDataPrefs.getSelectedMealsID();
 
-////        Initialized meal generation
-//        if(firebaseDataPrefs.getBreakfastMeals().isEmpty()) {
-//
-//
-//            firebaseDataPrefs.saveGeneratedMealPlan(breakfastMeals, lunchMeals, dinnerMeals, baseCalories);
-//        }else {
-//            breakfastMeals = firebaseDataPrefs.getBreakfastMeals();
-//            lunchMeals = firebaseDataPrefs.getLunchMeals();
-//            dinnerMeals = firebaseDataPrefs.getDinnerMeals();
-//            baseCalories = firebaseDataPrefs.getBaseCalories();
-//
-////            selectedMealsID = firebaseDataPrefs.getSelectedMealsID();
-//        }
 
-        // Get current macros
-
-
-
-
-        // Get macros
+        // Get macros base on baseCalories
         MacronutrientCalculator macronutrientCalculator = new MacronutrientCalculator(baseCalories);
         goalProtein = (int) macronutrientCalculator.getProtein();
         goalCarbs = (int) macronutrientCalculator.getCarbs();
@@ -161,36 +130,62 @@ public class FragmentPlan extends Fragment {
         goalCaloriesText = view.findViewById(R.id.goal_calories);
         regenerateButton = view.findViewById(R.id.regenerateButton);
 
-
         // Set Goals UI
         goalProteinText.setText(String.valueOf(goalProtein));
         goalCarbsText.setText(String.valueOf(goalCarbs));
         goalFatText.setText(String.valueOf(goalFat));
         goalCaloriesText.setText(String.valueOf(baseCalories));
 
-        // Set recycler views
-        breakfastAdapter = new MealAdapter(getContext(), breakfastMeals, currentNutritionViewModel, this);
-        lunchAdapter = new MealAdapter(getContext(), lunchMeals, currentNutritionViewModel, this);
-        dinnerAdapter = new MealAdapter(getContext(), dinnerMeals, currentNutritionViewModel, this);
+        // Set meals UI
+        breakfastAdapter = new MealAdapter(getContext(), breakfastMeals, currentNutritionViewModel, getParentFragmentManager());
+        lunchAdapter = new MealAdapter(getContext(), lunchMeals, currentNutritionViewModel, getParentFragmentManager());
+        dinnerAdapter = new MealAdapter(getContext(), dinnerMeals, currentNutritionViewModel, getParentFragmentManager());
         recyclerViewBreakfast = setupRecyclerView(view, R.id.recyclerViewBreakfastMeals, breakfastAdapter);
         recyclerViewLunch = setupRecyclerView(view, R.id.recyclerViewLunchMeals, lunchAdapter);
         recyclerViewDinner = setupRecyclerView(view, R.id.recyclerViewDinnerMeals, dinnerAdapter);
-//
-//        List<Exercise> exerciseList = new ArrayList<>(List.of(
-//                new Exercise("Push-ups", EnumActivityLevel.HEAVY_ACTIVITY),
-//                new Exercise("Squats"),
-//                new Exercise("Plank")
-//        ));
-        // Adapter for exercise
 
-        exerciseAdapter = new ExerciseAdapter(getContext(), firebaseDataPrefs.getExercises());
+        // Set exercises UI
+        exerciseAdapter = new ExerciseAdapter(getContext(), firebaseDataPrefs.getExercises(), getParentFragmentManager());
         recyclerViewExercises = setupRecyclerView(view, R.id.recyclerViewExercises, exerciseAdapter);
 
+        // Regenerate button listener
+        GeneratedMealsViewModel generatedMealsViewModel = new GeneratedMealsViewModel();
         regenerateButton.setOnClickListener(v -> {
             mealGenerator.generateMeals();
+
+            List<Meal> breakfastMeals = mealGenerator.getBreakfastMeals();
+            List<Meal> lunchMeals = mealGenerator.getLunchMeals();
+            List<Meal> dinnerMeals = mealGenerator.getDinnerMeals();
+            int baseCalories = (int) mealGenerator.getBaseCalories();
+
+            selectedMealsID.clear();
+
+            generatedMealsViewModel.setBreakfastMeals(breakfastMeals);
+            generatedMealsViewModel.setLunchMeals(lunchMeals);
+            generatedMealsViewModel.setDinnerMeals(dinnerMeals);
+            generatedMealsViewModel.setBaseCalories(baseCalories);
+
+            currentNutritionViewModel.clearNutritionData();
+
             firebaseDataPrefs.saveGeneratedMealPlan(mealGenerator.getBreakfastMeals(), mealGenerator.getLunchMeals(), mealGenerator.getDinnerMeals(), (int) mealGenerator.getBaseCalories());
             firebaseUtils.syncGeneratedData();
+            firebaseDataPrefs.clearSelectedMealIDs();
         });
+
+        // Observe breakfast meals generated
+        generatedMealsViewModel.getBreakfastMeals().observe(getViewLifecycleOwner(), meals -> {
+            breakfastAdapter.setMeals(meals);
+            breakfastAdapter.notifyDataSetChanged();
+        });
+        generatedMealsViewModel.getDinnerMeals().observe(getViewLifecycleOwner(), meals -> {
+            lunchAdapter.setMeals(meals);
+            lunchAdapter.notifyDataSetChanged();
+        });
+        generatedMealsViewModel.getLunchMeals().observe(getViewLifecycleOwner(), meals -> {
+            dinnerAdapter.setMeals(meals);
+            dinnerAdapter.notifyDataSetChanged();
+        });
+
 
         // Observe nutrition data
         currentNutritionViewModel.getCurrentKcal().observe(getViewLifecycleOwner(), kcal -> {

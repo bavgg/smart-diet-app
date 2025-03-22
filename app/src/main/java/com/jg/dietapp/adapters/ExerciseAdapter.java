@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -17,6 +18,8 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.android.material.card.MaterialCardView;
 import com.jg.dietapp.R;
+import com.jg.dietapp.dialogs.DialogExercise;
+import com.jg.dietapp.dialogs.DialogRecipe;
 import com.jg.dietapp.models.Exercise;
 import com.jg.dietapp.models.Meal;
 import com.jg.dietapp.prefs.FirebaseDataPrefs;
@@ -29,14 +32,11 @@ import java.util.List;
 
 public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.ExerciseViewHolder> {
     private List<Exercise> exerciseList;
-//    private CurrentNutritionViewModel nutritionViewModel;
-//    private FirebaseDataPrefs firebaseDataPrefs;
+    FragmentManager fragmentManager;
 
-    public ExerciseAdapter(Context context, List<Exercise> exerciseList) {
+    public ExerciseAdapter(Context context, List<Exercise> exerciseList, FragmentManager fragmentManager) {
         this.exerciseList = exerciseList;
-//        this.nutritionViewModel = nutritionViewModel;
-//        this.firebaseDataPrefs = new FirebaseDataPrefs(context);
-
+        this.fragmentManager = fragmentManager;
     }
 
     @NonNull
@@ -60,8 +60,9 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.Exerci
                 .into(holder.exerciseImage);
 
         // Listener
-        holder.card.setOnClickListener(v -> {
-
+        holder.card.setOnClickListener(v ->  {
+            DialogExercise dialogExercise = DialogExercise.newInstance(exercise.getName());
+            dialogExercise.show(fragmentManager, "DialogRecipe");
         });
 
     }

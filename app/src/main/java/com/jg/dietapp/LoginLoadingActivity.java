@@ -43,6 +43,8 @@ public class LoginLoadingActivity extends AppCompatActivity {
                             startActivity(intent);
                         } else {
                             Toast.makeText(LoginLoadingActivity.this, "Login Failed", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(LoginLoadingActivity.this, LoginActivity.class);
+                            startActivity(intent);
                         }
                     });
         } else {

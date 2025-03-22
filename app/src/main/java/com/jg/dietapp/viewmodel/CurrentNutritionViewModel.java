@@ -42,12 +42,16 @@ public class CurrentNutritionViewModel extends AndroidViewModel {
         return fat;
     }
 
-//    public void updateNutrition(int deltaKcal, int deltaProtein, int deltaCarbs, int deltaFat) {
-//        kcal.setValue((kcal.getValue() != null ? kcal.getValue() : 0) + deltaKcal);
-//        protein.setValue((protein.getValue() != null ? protein.getValue() : 0) + deltaProtein);
-//        carbs.setValue((carbs.getValue() != null ? carbs.getValue() : 0) + deltaCarbs);
-//        fat.setValue((fat.getValue() != null ? fat.getValue() : 0) + deltaFat);
-//    }
+
+
+    public void clearNutritionData() {
+        kcal.setValue(0);
+        protein.setValue(0);
+        carbs.setValue(0);
+        fat.setValue(0);
+
+        firebaseDataPrefs.saveNutritionData(0, 0, 0, 0);
+    }
 
     public void updateNutrition(int deltaKcal, int deltaProtein, int deltaCarbs, int deltaFat) {
         int newKcal = (kcal.getValue() != null ? kcal.getValue() : 0) + deltaKcal;
