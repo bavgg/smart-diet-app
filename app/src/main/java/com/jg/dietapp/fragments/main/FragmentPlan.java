@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.progressindicator.CircularProgressIndicator;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
+import com.jg.dietapp.LoadingActivity;
 import com.jg.dietapp.R;
 import com.jg.dietapp.adapters.ExerciseAdapter;
 import com.jg.dietapp.adapters.MealAdapter;
@@ -24,11 +25,10 @@ import com.jg.dietapp.data.DAOExercise;
 import com.jg.dietapp.data.DAOMeal;
 import com.jg.dietapp.data.DatabaseHelper;
 import com.jg.dietapp.generator.MealGenerator;
-import com.jg.dietapp.models.Exercise;
 import com.jg.dietapp.models.Meal;
 import com.jg.dietapp.models.UserInput;
 import com.jg.dietapp.prefs.ConfigurationPrefs;
-import com.jg.dietapp.prefs.FirebaseDataPrefs;
+import com.jg.dietapp.prefs.LoadPrefs;
 import com.jg.dietapp.utils.MacronutrientCalculator;
 import com.jg.dietapp.viewmodel.CurrentNutritionViewModel;
 import com.jg.dietapp.viewmodel.GeneratedMealsViewModel;
@@ -46,7 +46,7 @@ public class FragmentPlan extends Fragment {
     private LinearProgressIndicator progressProtein, progressCarbs, progressFat;
     private CircularProgressIndicator progressCircular;
     private CurrentNutritionViewModel currentNutritionViewModel;
-    private FirebaseDataPrefs firebaseDataPrefs;
+    private LoadPrefs loadPrefs;
     private ConfigurationPrefs configurationPrefs;
     private int goalProtein, goalCarbs, goalFat;
     private List<Meal> breakfastMeals, lunchMeals, dinnerMeals;
@@ -70,36 +70,19 @@ public class FragmentPlan extends Fragment {
         System.out.println("Fragment Plan");
         super.onViewCreated(view, savedInstanceState);
 
-        // Initialize objects
-        firebaseDataPrefs = new FirebaseDataPrefs(view.getContext());
-        configurationPrefs = new ConfigurationPrefs(view.getContext());
         DatabaseHelper dbHelper = new DatabaseHelper(view.getContext());
+        loadPrefs = new LoadPrefs(view.getContext());
         mealDAO = new DAOMeal(dbHelper);
-        exerciseDAO = new DAOExercise(dbHelper);
-
-        // Get meals and exercises database data
-        UserInput userInputs = firebaseDataPrefs.getUser();
-        List<Meal> filteredMeals = mealDAO.getMealsByDietAndAllergens(userInputs);
-        List<Exercise> filteredExercises = exerciseDAO.getExercisesByActivityLevel(userInputs.getActivityLevel().toString());
-        firebaseDataPrefs.saveExercises(filteredExercises);
-
-
-        // Generate meals data with user inputs and filtered meals database data
-        MealGenerator mealGenerator = new MealGenerator(userInputs, filteredMeals);
-        if(firebaseDataPrefs.getBreakfastMeals().isEmpty()) {
-            mealGenerator.generateMeals();
-            firebaseDataPrefs.saveGeneratedMealPlan(mealGenerator.getBreakfastMeals(), mealGenerator.getLunchMeals(), mealGenerator.getDinnerMeals(), (int) mealGenerator.getBaseCalories());
-        }
 
 
         // Get generated meals data
-        breakfastMeals = firebaseDataPrefs.getBreakfastMeals();
-        lunchMeals = firebaseDataPrefs.getLunchMeals();
-        dinnerMeals = firebaseDataPrefs.getDinnerMeals();
-        baseCalories = firebaseDataPrefs.getBaseCalories();
+        breakfastMeals = loadPrefs.getGeneratedBreakfastMeals();
+        lunchMeals = loadPrefs.getGeneratedLunchMeals();
+        dinnerMeals = loadPrefs.getGeneratedDinnerMeals();
+        baseCalories = loadPrefs.getBaseCalories();
 
         // Get selected meals id
-        selectedMealsID = firebaseDataPrefs.getSelectedMealsID();
+        selectedMealsID = loadPrefs.getSelectedMealsID();
 
 
         // Get macros base on baseCalories
@@ -141,12 +124,15 @@ public class FragmentPlan extends Fragment {
         recyclerViewDinner = setupRecyclerView(view, R.id.recyclerViewDinnerMeals, dinnerAdapter);
 
         // Set exercises UI
-        exerciseAdapter = new ExerciseAdapter(getContext(), firebaseDataPrefs.getExercises(), getParentFragmentManager());
+        exerciseAdapter = new ExerciseAdapter(getContext(), loadPrefs.getGeneratedExercises(), getParentFragmentManager());
         recyclerViewExercises = setupRecyclerView(view, R.id.recyclerViewExercises, exerciseAdapter);
 
         // Regenerate button listener
         GeneratedMealsViewModel generatedMealsViewModel = new GeneratedMealsViewModel();
         regenerateButton.setOnClickListener(v -> {
+            UserInput userInput = loadPrefs.getUserInput();
+            List<Meal> filteredMeals = mealDAO.getMealsByDietAndAllergens(userInput);
+            MealGenerator mealGenerator = new MealGenerator(loadPrefs.getUserInput(), filteredMeals);
             mealGenerator.generateMeals();
 
             List<Meal> breakfastMeals = mealGenerator.getBreakfastMeals();
@@ -163,8 +149,9 @@ public class FragmentPlan extends Fragment {
 
             currentNutritionViewModel.clearNutritionData();
 
-            firebaseDataPrefs.saveGeneratedMealPlan(mealGenerator.getBreakfastMeals(), mealGenerator.getLunchMeals(), mealGenerator.getDinnerMeals(), (int) mealGenerator.getBaseCalories());
-            firebaseDataPrefs.clearSelectedMealIDs();
+            loadPrefs.saveGeneratedMealPlan(mealGenerator.getBreakfastMeals(), mealGenerator.getLunchMeals(), mealGenerator.getDinnerMeals());
+            loadPrefs.setBaseCalories((int) mealGenerator.getBaseCalories());
+            loadPrefs.clearSelectedMealIDs();
         });
 
         // Observe breakfast meals generated

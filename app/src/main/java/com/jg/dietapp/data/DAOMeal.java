@@ -88,7 +88,6 @@ public class DAOMeal {
 
     public List<Meal> getMealsByDietAndAllergens(UserInput userInput) {
 
-        System.out.println("UserInput " + userInput);
         String dietType = userInput.getDietType().toString();
 
         String foodAllergens = userInput.getFoodAllergens();

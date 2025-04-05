@@ -13,15 +13,25 @@ public class UserInput {
     private int age;
     private int height;
     private double weight;
-    private double goalWeight; // to ve remove
     private EnumActivityLevel activityLevel;
     private EnumDietType dietType;
-//    private EnumFoodAllergen[] foodAllergens;
     private boolean userSubmitted = false;
     private String foodAllergens;
 
     public UserInput(){
 
+    }
+    public UserInput(EnumGoal goal, EnumSex sex, int age, int height, int weight,
+                     EnumActivityLevel activityLevel, EnumDietType dietType, String foodAllergens, boolean userSubmitted) {
+        this.goal = goal;
+        this.sex = sex;
+        this.age = age;
+        this.height = height;
+        this.weight = weight;
+        this.activityLevel = activityLevel;
+        this.dietType = dietType;
+        this.foodAllergens = foodAllergens;
+        this.userSubmitted = userSubmitted;
     }
     public UserInput(EnumGoal goal, EnumSex sex, int age, int height, int weight, double goalWeight,
                      EnumActivityLevel activityLevel, EnumDietType dietType, String foodAllergens) {
@@ -30,7 +40,6 @@ public class UserInput {
         this.age = age;
         this.height = height;
         this.weight = weight;
-        this.goalWeight = goalWeight;
         this.activityLevel = activityLevel;
         this.dietType = dietType;
         this.foodAllergens = foodAllergens;
@@ -43,7 +52,6 @@ public class UserInput {
     public int getAge() { return age; }
     public int getHeight() { return height; }
     public double getWeight() { return weight; }
-    public double getGoalWeight() { return goalWeight; }
     public EnumActivityLevel getActivityLevel() { return activityLevel; }
     public EnumDietType getDietType() { return dietType; }
     public String getFoodAllergens() { return foodAllergens; }
@@ -55,7 +63,6 @@ public class UserInput {
     public void setAge(int age) { this.age = age; }
     public void setHeight(int height) { this.height = height; }
     public void setWeight(double weight) { this.weight = weight; }
-    public void setGoalWeight(double goalWeight) { this.goalWeight = goalWeight; }
     public void setActivityLevel(EnumActivityLevel activityLevel) { this.activityLevel = activityLevel; }
     public void setDietType(EnumDietType dietType) { this.dietType = dietType; }
     public void setFoodAllergens(String foodAllergens) { this.foodAllergens = foodAllergens; }
@@ -71,7 +78,6 @@ public class UserInput {
                 ", age=" + age +
                 ", height=" + height +
                 ", weight=" + weight +
-                ", goalWeight=" + goalWeight +
                 ", activityLevel=" + activityLevel +
                 ", dietType=" + dietType +
                 ", foodAllergens=" + foodAllergens +

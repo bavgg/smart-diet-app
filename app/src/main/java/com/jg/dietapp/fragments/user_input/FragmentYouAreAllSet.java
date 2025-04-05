@@ -4,7 +4,6 @@ import static com.jg.dietapp.UserInputActivity.userInput;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,10 +13,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.google.gson.Gson;
-import com.jg.dietapp.MainActivity;
+import com.jg.dietapp.LoadingActivity;
 import com.jg.dietapp.R;
-import com.jg.dietapp.prefs.FirebaseDataPrefs;
+import com.jg.dietapp.prefs.LoadPrefs;
 
 public class FragmentYouAreAllSet extends Fragment {
 
@@ -32,21 +30,16 @@ public class FragmentYouAreAllSet extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-
+        LoadPrefs firebaseDataPrefs = new LoadPrefs(view.getContext());
 
         nextButton = view.findViewById(R.id.nextButton);
 
-
-//        userInput.setUserSubmitted(true);
-
-//        firebaseDataPrefs.saveUser(userInput);
-//        System.out.println("You are all set: FirebaseDataPrefs: " + firebaseDataPrefs.getUser());
-//        firebaseUtils.syncUserInput();
-//
-//        Log.i("TAG", "FragmentYouAreAllSet FirebaseDataPrefs: " + new Gson().toJson(firebaseDataPrefs));
-
         nextButton.setOnClickListener(v -> {
-            Intent intent = new Intent(getContext(), MainActivity.class);
+            // Save user inputs to shared prefs
+            userInput.setUserSubmitted(true);
+            firebaseDataPrefs.saveUserInput(userInput);
+
+            Intent intent = new Intent(getContext(), LoadingActivity.class);
             startActivity(intent);
         });
 

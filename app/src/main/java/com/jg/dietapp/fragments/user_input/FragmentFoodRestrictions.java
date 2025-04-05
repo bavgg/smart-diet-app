@@ -2,9 +2,7 @@ package com.jg.dietapp.fragments.user_input;
 
 import static com.jg.dietapp.UserInputActivity.decreaseProgress;
 import static com.jg.dietapp.UserInputActivity.increaseProgress;
-import static com.jg.dietapp.UserInputActivity.userInput;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,10 +14,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.jg.dietapp.FoodRestrictionsLoadingActivity;
+import com.jg.dietapp.UserInputActivity;
 import com.jg.dietapp.components.CustomCard;
 import com.jg.dietapp.R;
-import com.jg.dietapp.prefs.FirebaseDataPrefs;
 
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -37,7 +34,6 @@ public class FragmentFoodRestrictions extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        FirebaseDataPrefs firebaseDataPrefs = new FirebaseDataPrefs(view.getContext());
 
         soyCard = view.findViewById(R.id.soyCard);
         glutenCard = view.findViewById(R.id.glutenCard);
@@ -119,15 +115,15 @@ public class FragmentFoodRestrictions extends Fragment {
                 foodAllergens.updateAndGet(value -> value + ",Fish");
             }
 
-            userInput.setFoodAllergens(foodAllergens.get());
-            userInput.setUserSubmitted(true);
-            firebaseDataPrefs.saveUser(userInput);
-
-            Intent intent = new Intent(requireContext(), FoodRestrictionsLoadingActivity.class);
-            startActivity(intent);
-            requireActivity().finish();
-//            nextFragment(new FragmentYouAreAllSet());
-//            increaseProgress();
+            UserInputActivity.userInput.setFoodAllergens(foodAllergens.get());
+//            userInput.setUserSubmitted(true);
+//            firebaseDataPrefs.saveUser(userInput);
+//
+//            Intent intent = new Intent(requireContext(), FoodRestrictionsLoadingActivity.class);
+//            startActivity(intent);
+//            requireActivity().finish();
+            nextFragment(new FragmentYouAreAllSet());
+            increaseProgress();
         });
     }
     private void nextFragment(Fragment nextFragment) {

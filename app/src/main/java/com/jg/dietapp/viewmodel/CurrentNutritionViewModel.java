@@ -7,7 +7,8 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.jg.dietapp.prefs.FirebaseDataPrefs;
+import com.jg.dietapp.models.DietaryTrack;
+import com.jg.dietapp.prefs.LoadPrefs;
 
 public class CurrentNutritionViewModel extends AndroidViewModel {
     private final MutableLiveData<Integer> kcal = new MutableLiveData<>(0);
@@ -15,15 +16,16 @@ public class CurrentNutritionViewModel extends AndroidViewModel {
     private final MutableLiveData<Integer> carbs = new MutableLiveData<>(0);
     private final MutableLiveData<Integer> fat = new MutableLiveData<>(0);
 
-    private final FirebaseDataPrefs firebaseDataPrefs;
+    private final LoadPrefs loadPrefs;
 
     public CurrentNutritionViewModel(@NonNull Application application) {
         super(application);
-        firebaseDataPrefs = new FirebaseDataPrefs(application);
-        kcal.setValue(firebaseDataPrefs.getKcal());
-        protein.setValue(firebaseDataPrefs.getProtein());
-        carbs.setValue(firebaseDataPrefs.getCarbs());
-        fat.setValue(firebaseDataPrefs.getFat());
+        loadPrefs = new LoadPrefs(application);
+        DietaryTrack currentDietaryTrack = loadPrefs.getCurrentDietaryTrack();
+        kcal.setValue(currentDietaryTrack.getCalories());
+        protein.setValue(currentDietaryTrack.getProtein());
+        carbs.setValue(currentDietaryTrack.getCarbs());
+        fat.setValue(currentDietaryTrack.getFat());
     }
 
     public LiveData<Integer> getCurrentKcal() {
@@ -50,7 +52,8 @@ public class CurrentNutritionViewModel extends AndroidViewModel {
         carbs.setValue(0);
         fat.setValue(0);
 
-        firebaseDataPrefs.saveNutritionData(0, 0, 0, 0);
+        DietaryTrack currentDietaryTrack = new DietaryTrack(0, 0, 0, 0);
+        loadPrefs.saveCurrentDietaryTrack(currentDietaryTrack);
     }
 
     public void updateNutrition(int deltaKcal, int deltaProtein, int deltaCarbs, int deltaFat) {
@@ -64,7 +67,9 @@ public class CurrentNutritionViewModel extends AndroidViewModel {
         carbs.setValue(newCarbs);
         fat.setValue(newFat);
 
-        firebaseDataPrefs.saveNutritionData(newKcal, newProtein, newCarbs, newFat);
+        DietaryTrack currentDietaryTrack = new DietaryTrack(newKcal, newProtein, newCarbs, newFat);
+
+        loadPrefs.saveCurrentDietaryTrack(currentDietaryTrack);
     }
 
 

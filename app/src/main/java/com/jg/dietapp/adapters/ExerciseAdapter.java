@@ -5,13 +5,11 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentManager;
-import androidx.lifecycle.LifecycleOwner;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -19,12 +17,8 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.android.material.card.MaterialCardView;
 import com.jg.dietapp.R;
 import com.jg.dietapp.dialogs.DialogExercise;
-import com.jg.dietapp.dialogs.DialogRecipe;
 import com.jg.dietapp.models.Exercise;
-import com.jg.dietapp.models.Meal;
-import com.jg.dietapp.prefs.FirebaseDataPrefs;
 import com.jg.dietapp.utils.Utils;
-import com.jg.dietapp.viewmodel.CurrentNutritionViewModel;
 
 import java.util.List;
 

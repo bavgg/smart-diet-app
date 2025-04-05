@@ -8,6 +8,12 @@ public class Exercise {
     private int caloriesBurned;
     private String imageName;
 
+    public Exercise(String name, int duration, int caloriesBurned) {
+        this.name = name;
+        this.duration = duration;
+        this.caloriesBurned = caloriesBurned;
+        this.imageName = name + ".jpg";
+    }
     public Exercise(String name, String activityLevel, int duration, int caloriesBurned) {
         this.name = name;
         this.activityLevel = activityLevel;

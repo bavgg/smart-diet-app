@@ -18,8 +18,9 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.android.material.card.MaterialCardView;
 import com.jg.dietapp.R;
 import com.jg.dietapp.dialogs.DialogRecipe;
+import com.jg.dietapp.models.GeneratedMeal;
 import com.jg.dietapp.models.Meal;
-import com.jg.dietapp.prefs.FirebaseDataPrefs;
+import com.jg.dietapp.prefs.LoadPrefs;
 import com.jg.dietapp.utils.Utils;
 import com.jg.dietapp.viewmodel.CurrentNutritionViewModel;
 
@@ -27,13 +28,13 @@ import java.util.List;
 public class MealAdapter extends RecyclerView.Adapter<MealAdapter.MealViewHolder> {
     private List<Meal> mealList;
     private CurrentNutritionViewModel currentNutritionViewModel;
-    private FirebaseDataPrefs firebaseDataPrefs;
+    private LoadPrefs firebaseDataPrefs;
     private FragmentManager fragmentManager;
 
     public MealAdapter(Context context, List<Meal> mealList, CurrentNutritionViewModel nutritionViewModel, FragmentManager fragmentManager) {
         this.mealList = mealList;
         this.currentNutritionViewModel = nutritionViewModel;
-        this.firebaseDataPrefs = new FirebaseDataPrefs(context);
+        this.firebaseDataPrefs = new LoadPrefs(context);
         this.fragmentManager = fragmentManager;
     }
 

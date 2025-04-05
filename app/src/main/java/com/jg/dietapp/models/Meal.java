@@ -35,6 +35,21 @@ public class Meal {
         this.imageName = this.name + ".jpg";
     }
 
+    public Meal(String name, String culture, String region, String dietType, String mealtime, String allergens, double calories, int carbs, int fats, int protein, int prepTime, int servingsGrams) {
+        this.name = name;
+        this.calories = calories;
+        this.protein = protein;
+        this.carbs = carbs;
+        this.fats = fats;
+        this.dietType = dietType;
+        this.allergens = allergens;
+        this.prepTime = prepTime;
+        this.culture = culture;
+        this.region = region;
+        this.servingsGrams = servingsGrams;
+        this.mealtime = mealtime;
+        this.imageName = this.name + ".jpg";
+    }
     public Meal(int id, String name, double calories, int protein, int carbs, int fats, String dietType, String allergens, int prepTime, String culture, String region, int servingsGrams, String mealtime) {
         this.id = id;
         this.name = name;

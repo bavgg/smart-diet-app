@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -19,6 +20,7 @@ import com.google.firebase.auth.FirebaseAuth;
 public class RegisterActivity extends AppCompatActivity {
     Button registerButton;
     private TextInputEditText emailTextField, passwordTextField;
+    private TextView loginLink;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -29,7 +31,13 @@ public class RegisterActivity extends AppCompatActivity {
         emailTextField = findViewById(R.id.emailTextField);
         passwordTextField = findViewById(R.id.passwordTextField);
         registerButton = findViewById(R.id.registerButton);
+        loginLink = findViewById(R.id.loginLink);
 
+
+        loginLink.setOnClickListener(v -> {
+            Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+            startActivity(intent);
+        });
 
         registerButton.setOnClickListener(v -> {
             String email = emailTextField.getText().toString().trim();
